@@ -1,0 +1,682 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3ADDFADF0ED9886C71FBB6B3 /* libPods-XZXDailyBlock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61DAD466FC8C797782EAFD58 /* libPods-XZXDailyBlock.a */; };
+		E003F1131D0BF4B300C4D140 /* XZXCalendarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F1111D0BF4B300C4D140 /* XZXCalendarVC.m */; };
+		E003F11C1D0C110400C4D140 /* XZXDate.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F11B1D0C110400C4D140 /* XZXDate.m */; };
+		E003F11F1D0C2B5F00C4D140 /* XZXDateBlockCV.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F11E1D0C2B5F00C4D140 /* XZXDateBlockCV.m */; };
+		E003F1231D0C35D900C4D140 /* XZXDateBlockCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F1211D0C35D900C4D140 /* XZXDateBlockCVCell.m */; };
+		E003F1241D0C35D900C4D140 /* XZXDateBlockCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E003F1221D0C35D900C4D140 /* XZXDateBlockCVCell.xib */; };
+		E003F12F1D0D5A0B00C4D140 /* XZXTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F12E1D0D5A0B00C4D140 /* XZXTransitionAnimator.m */; };
+		E085F0971D07EAF200E91362 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0961D07EAF200E91362 /* main.m */; };
+		E085F09A1D07EAF200E91362 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* AppDelegate.m */; };
+		E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F09E1D07EAF200E91362 /* Main.storyboard */; };
+		E085F0A21D07EAF200E91362 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E085F0A11D07EAF200E91362 /* Assets.xcassets */; };
+		E085F0A51D07EAF200E91362 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F0A31D07EAF200E91362 /* LaunchScreen.storyboard */; };
+		E085F0B01D07EAF200E91362 /* XZXDailyBlockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0AF1D07EAF200E91362 /* XZXDailyBlockTests.m */; };
+		E085F0BB1D07EAF200E91362 /* XZXDailyBlockUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0BA1D07EAF200E91362 /* XZXDailyBlockUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E085F0AC1D07EAF200E91362 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E085F08A1D07EAF200E91362 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E085F0911D07EAF200E91362;
+			remoteInfo = XZXDailyBlock;
+		};
+		E085F0B71D07EAF200E91362 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E085F08A1D07EAF200E91362 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E085F0911D07EAF200E91362;
+			remoteInfo = XZXDailyBlock;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		61DAD466FC8C797782EAFD58 /* libPods-XZXDailyBlock.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XZXDailyBlock.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7AA9EA26FE8C894537708B90 /* Pods-XZXDailyBlock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlock/Pods-XZXDailyBlock.debug.xcconfig"; sourceTree = "<group>"; };
+		AA7FB275B6980A618D84E228 /* Pods-XZXDailyBlock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlock.release.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlock/Pods-XZXDailyBlock.release.xcconfig"; sourceTree = "<group>"; };
+		E003F1101D0BF4B300C4D140 /* XZXCalendarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXCalendarVC.h; sourceTree = "<group>"; };
+		E003F1111D0BF4B300C4D140 /* XZXCalendarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXCalendarVC.m; sourceTree = "<group>"; };
+		E003F11A1D0C110400C4D140 /* XZXDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDate.h; sourceTree = "<group>"; };
+		E003F11B1D0C110400C4D140 /* XZXDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDate.m; sourceTree = "<group>"; };
+		E003F11D1D0C2B5F00C4D140 /* XZXDateBlockCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDateBlockCV.h; sourceTree = "<group>"; };
+		E003F11E1D0C2B5F00C4D140 /* XZXDateBlockCV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDateBlockCV.m; sourceTree = "<group>"; };
+		E003F1201D0C35D900C4D140 /* XZXDateBlockCVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDateBlockCVCell.h; sourceTree = "<group>"; };
+		E003F1211D0C35D900C4D140 /* XZXDateBlockCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDateBlockCVCell.m; sourceTree = "<group>"; };
+		E003F1221D0C35D900C4D140 /* XZXDateBlockCVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XZXDateBlockCVCell.xib; sourceTree = "<group>"; };
+		E003F12D1D0D5A0B00C4D140 /* XZXTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXTransitionAnimator.h; sourceTree = "<group>"; };
+		E003F12E1D0D5A0B00C4D140 /* XZXTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXTransitionAnimator.m; sourceTree = "<group>"; };
+		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E085F0981D07EAF200E91362 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E085F0991D07EAF200E91362 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E085F09F1D07EAF200E91362 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E085F0A11D07EAF200E91362 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E085F0A41D07EAF200E91362 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E085F0A61D07EAF200E91362 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E085F0AB1D07EAF200E91362 /* XZXDailyBlockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XZXDailyBlockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E085F0AF1D07EAF200E91362 /* XZXDailyBlockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XZXDailyBlockTests.m; sourceTree = "<group>"; };
+		E085F0B11D07EAF200E91362 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E085F0B61D07EAF200E91362 /* XZXDailyBlockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XZXDailyBlockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E085F0BA1D07EAF200E91362 /* XZXDailyBlockUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XZXDailyBlockUITests.m; sourceTree = "<group>"; };
+		E085F0BC1D07EAF200E91362 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E085F0C81D07EC5400E91362 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		E085F0C91D07EC5500E91362 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E085F08F1D07EAF200E91362 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3ADDFADF0ED9886C71FBB6B3 /* libPods-XZXDailyBlock.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E085F0A81D07EAF200E91362 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E085F0B31D07EAF200E91362 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C4D3C9AC2440097D3DE6B2B1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61DAD466FC8C797782EAFD58 /* libPods-XZXDailyBlock.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E003F1261D0D3F6600C4D140 /* TransitionAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				E003F12D1D0D5A0B00C4D140 /* XZXTransitionAnimator.h */,
+				E003F12E1D0D5A0B00C4D140 /* XZXTransitionAnimator.m */,
+			);
+			name = TransitionAnimation;
+			sourceTree = "<group>";
+		};
+		E085F0891D07EAF200E91362 = {
+			isa = PBXGroup;
+			children = (
+				E085F0941D07EAF200E91362 /* XZXDailyBlock */,
+				E085F0AE1D07EAF200E91362 /* XZXDailyBlockTests */,
+				E085F0B91D07EAF200E91362 /* XZXDailyBlockUITests */,
+				E085F0931D07EAF200E91362 /* Products */,
+				F94EC78D6ABC4090F24164C7 /* Pods */,
+				C4D3C9AC2440097D3DE6B2B1 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E085F0931D07EAF200E91362 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E085F0921D07EAF200E91362 /* XZXDailyBlock.app */,
+				E085F0AB1D07EAF200E91362 /* XZXDailyBlockTests.xctest */,
+				E085F0B61D07EAF200E91362 /* XZXDailyBlockUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E085F0941D07EAF200E91362 /* XZXDailyBlock */ = {
+			isa = PBXGroup;
+			children = (
+				E0B904851D08411C002CFE5D /* DailyBlock */,
+				E0B904821D0840AE002CFE5D /* Model */,
+				E0B904831D0840FA002CFE5D /* View */,
+				E0B904841D084108002CFE5D /* ViewModel */,
+				E003F1261D0D3F6600C4D140 /* TransitionAnimation */,
+				E0B904871D084652002CFE5D /* Recource */,
+				E085F0951D07EAF200E91362 /* Supporting Files */,
+			);
+			path = XZXDailyBlock;
+			sourceTree = "<group>";
+		};
+		E085F0951D07EAF200E91362 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E085F0961D07EAF200E91362 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E085F0AE1D07EAF200E91362 /* XZXDailyBlockTests */ = {
+			isa = PBXGroup;
+			children = (
+				E085F0AF1D07EAF200E91362 /* XZXDailyBlockTests.m */,
+				E085F0B11D07EAF200E91362 /* Info.plist */,
+			);
+			path = XZXDailyBlockTests;
+			sourceTree = "<group>";
+		};
+		E085F0B91D07EAF200E91362 /* XZXDailyBlockUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E085F0BA1D07EAF200E91362 /* XZXDailyBlockUITests.m */,
+				E085F0BC1D07EAF200E91362 /* Info.plist */,
+			);
+			path = XZXDailyBlockUITests;
+			sourceTree = "<group>";
+		};
+		E0B904821D0840AE002CFE5D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E003F11A1D0C110400C4D140 /* XZXDate.h */,
+				E003F11B1D0C110400C4D140 /* XZXDate.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E0B904831D0840FA002CFE5D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E085F09E1D07EAF200E91362 /* Main.storyboard */,
+				E003F1101D0BF4B300C4D140 /* XZXCalendarVC.h */,
+				E003F1111D0BF4B300C4D140 /* XZXCalendarVC.m */,
+				E003F11D1D0C2B5F00C4D140 /* XZXDateBlockCV.h */,
+				E003F11E1D0C2B5F00C4D140 /* XZXDateBlockCV.m */,
+				E003F1201D0C35D900C4D140 /* XZXDateBlockCVCell.h */,
+				E003F1211D0C35D900C4D140 /* XZXDateBlockCVCell.m */,
+				E003F1221D0C35D900C4D140 /* XZXDateBlockCVCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		E0B904841D084108002CFE5D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		E0B904851D08411C002CFE5D /* DailyBlock */ = {
+			isa = PBXGroup;
+			children = (
+				E085F0981D07EAF200E91362 /* AppDelegate.h */,
+				E085F0991D07EAF200E91362 /* AppDelegate.m */,
+				E085F0A31D07EAF200E91362 /* LaunchScreen.storyboard */,
+				E085F0A61D07EAF200E91362 /* Info.plist */,
+			);
+			name = DailyBlock;
+			sourceTree = "<group>";
+		};
+		E0B904871D084652002CFE5D /* Recource */ = {
+			isa = PBXGroup;
+			children = (
+				E085F0A11D07EAF200E91362 /* Assets.xcassets */,
+			);
+			name = Recource;
+			sourceTree = "<group>";
+		};
+		F94EC78D6ABC4090F24164C7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7AA9EA26FE8C894537708B90 /* Pods-XZXDailyBlock.debug.xcconfig */,
+				AA7FB275B6980A618D84E228 /* Pods-XZXDailyBlock.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E085F0911D07EAF200E91362 /* XZXDailyBlock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E085F0BF1D07EAF200E91362 /* Build configuration list for PBXNativeTarget "XZXDailyBlock" */;
+			buildPhases = (
+				4AE4612C4F0C2704B3EC7E51 /* [CP] Check Pods Manifest.lock */,
+				E085F08E1D07EAF200E91362 /* Sources */,
+				E085F08F1D07EAF200E91362 /* Frameworks */,
+				E085F0901D07EAF200E91362 /* Resources */,
+				EDCB40B9EDAA8ADD973121D9 /* [CP] Embed Pods Frameworks */,
+				F65CABAEF22D7611891840DA /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = XZXDailyBlock;
+			productName = XZXDailyBlock;
+			productReference = E085F0921D07EAF200E91362 /* XZXDailyBlock.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E085F0AA1D07EAF200E91362 /* XZXDailyBlockTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E085F0C21D07EAF200E91362 /* Build configuration list for PBXNativeTarget "XZXDailyBlockTests" */;
+			buildPhases = (
+				E085F0A71D07EAF200E91362 /* Sources */,
+				E085F0A81D07EAF200E91362 /* Frameworks */,
+				E085F0A91D07EAF200E91362 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E085F0AD1D07EAF200E91362 /* PBXTargetDependency */,
+			);
+			name = XZXDailyBlockTests;
+			productName = XZXDailyBlockTests;
+			productReference = E085F0AB1D07EAF200E91362 /* XZXDailyBlockTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E085F0B51D07EAF200E91362 /* XZXDailyBlockUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E085F0C51D07EAF200E91362 /* Build configuration list for PBXNativeTarget "XZXDailyBlockUITests" */;
+			buildPhases = (
+				E085F0B21D07EAF200E91362 /* Sources */,
+				E085F0B31D07EAF200E91362 /* Frameworks */,
+				E085F0B41D07EAF200E91362 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E085F0B81D07EAF200E91362 /* PBXTargetDependency */,
+			);
+			name = XZXDailyBlockUITests;
+			productName = XZXDailyBlockUITests;
+			productReference = E085F0B61D07EAF200E91362 /* XZXDailyBlockUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E085F08A1D07EAF200E91362 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = XZX;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "陈知行";
+				TargetAttributes = {
+					E085F0911D07EAF200E91362 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					E085F0AA1D07EAF200E91362 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = E085F0911D07EAF200E91362;
+					};
+					E085F0B51D07EAF200E91362 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = E085F0911D07EAF200E91362;
+					};
+				};
+			};
+			buildConfigurationList = E085F08D1D07EAF200E91362 /* Build configuration list for PBXProject "XZXDailyBlock" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E085F0891D07EAF200E91362;
+			productRefGroup = E085F0931D07EAF200E91362 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E085F0911D07EAF200E91362 /* XZXDailyBlock */,
+				E085F0AA1D07EAF200E91362 /* XZXDailyBlockTests */,
+				E085F0B51D07EAF200E91362 /* XZXDailyBlockUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E085F0901D07EAF200E91362 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E085F0A51D07EAF200E91362 /* LaunchScreen.storyboard in Resources */,
+				E085F0A21D07EAF200E91362 /* Assets.xcassets in Resources */,
+				E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */,
+				E003F1241D0C35D900C4D140 /* XZXDateBlockCVCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E085F0A91D07EAF200E91362 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E085F0B41D07EAF200E91362 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4AE4612C4F0C2704B3EC7E51 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EDCB40B9EDAA8ADD973121D9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XZXDailyBlock/Pods-XZXDailyBlock-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F65CABAEF22D7611891840DA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XZXDailyBlock/Pods-XZXDailyBlock-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E085F08E1D07EAF200E91362 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E085F09A1D07EAF200E91362 /* AppDelegate.m in Sources */,
+				E003F1231D0C35D900C4D140 /* XZXDateBlockCVCell.m in Sources */,
+				E003F12F1D0D5A0B00C4D140 /* XZXTransitionAnimator.m in Sources */,
+				E003F1131D0BF4B300C4D140 /* XZXCalendarVC.m in Sources */,
+				E003F11F1D0C2B5F00C4D140 /* XZXDateBlockCV.m in Sources */,
+				E085F0971D07EAF200E91362 /* main.m in Sources */,
+				E003F11C1D0C110400C4D140 /* XZXDate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E085F0A71D07EAF200E91362 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E085F0B01D07EAF200E91362 /* XZXDailyBlockTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E085F0B21D07EAF200E91362 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E085F0BB1D07EAF200E91362 /* XZXDailyBlockUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E085F0AD1D07EAF200E91362 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E085F0911D07EAF200E91362 /* XZXDailyBlock */;
+			targetProxy = E085F0AC1D07EAF200E91362 /* PBXContainerItemProxy */;
+		};
+		E085F0B81D07EAF200E91362 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E085F0911D07EAF200E91362 /* XZXDailyBlock */;
+			targetProxy = E085F0B71D07EAF200E91362 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E085F09E1D07EAF200E91362 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E085F09F1D07EAF200E91362 /* Base */,
+				E085F0C81D07EC5400E91362 /* zh-Hans */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E085F0A31D07EAF200E91362 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E085F0A41D07EAF200E91362 /* Base */,
+				E085F0C91D07EC5500E91362 /* zh-Hans */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E085F0BD1D07EAF200E91362 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E085F0BE1D07EAF200E91362 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E085F0C01D07EAF200E91362 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AA9EA26FE8C894537708B90 /* Pods-XZXDailyBlock.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				INFOPLIST_FILE = XZXDailyBlock/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zx.iOSDev.XZXDailyBlock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E085F0C11D07EAF200E91362 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA7FB275B6980A618D84E228 /* Pods-XZXDailyBlock.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				INFOPLIST_FILE = XZXDailyBlock/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zx.iOSDev.XZXDailyBlock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E085F0C31D07EAF200E91362 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = XZXDailyBlockTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zx.iOSDev.XZXDailyBlockTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XZXDailyBlock.app/XZXDailyBlock";
+			};
+			name = Debug;
+		};
+		E085F0C41D07EAF200E91362 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = XZXDailyBlockTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zx.iOSDev.XZXDailyBlockTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XZXDailyBlock.app/XZXDailyBlock";
+			};
+			name = Release;
+		};
+		E085F0C61D07EAF200E91362 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = XZXDailyBlockUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zx.iOSDev.XZXDailyBlockUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = XZXDailyBlock;
+			};
+			name = Debug;
+		};
+		E085F0C71D07EAF200E91362 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = XZXDailyBlockUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zx.iOSDev.XZXDailyBlockUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = XZXDailyBlock;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E085F08D1D07EAF200E91362 /* Build configuration list for PBXProject "XZXDailyBlock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E085F0BD1D07EAF200E91362 /* Debug */,
+				E085F0BE1D07EAF200E91362 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E085F0BF1D07EAF200E91362 /* Build configuration list for PBXNativeTarget "XZXDailyBlock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E085F0C01D07EAF200E91362 /* Debug */,
+				E085F0C11D07EAF200E91362 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E085F0C21D07EAF200E91362 /* Build configuration list for PBXNativeTarget "XZXDailyBlockTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E085F0C31D07EAF200E91362 /* Debug */,
+				E085F0C41D07EAF200E91362 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E085F0C51D07EAF200E91362 /* Build configuration list for PBXNativeTarget "XZXDailyBlockUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E085F0C61D07EAF200E91362 /* Debug */,
+				E085F0C71D07EAF200E91362 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E085F08A1D07EAF200E91362 /* Project object */;
+}
