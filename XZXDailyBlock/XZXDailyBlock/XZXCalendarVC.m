@@ -17,48 +17,70 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 
 
-@interface XZXCalendarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerTransitioningDelegate>
+@interface XZXCalendarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate>
 @property (nonatomic) BOOL isMonthMode;
 
 @property (weak, nonatomic) IBOutlet XZXDateBlockCV *dateBlockCV;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *dateBlockBottomLC;
+@property (nonatomic, weak) UINavigationBar *navigationBar;
 
-@property (nonatomic, strong) id dateBlockCVDelegate;
+@property (nonatomic, assign) CGFloat sideLength;
+@property (nonatomic, assign) CGFloat collectionViewSplitY;
 @end
 
 @implementation XZXCalendarVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.title = @"Date";
-
-    //[self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
     
     [self.dateBlockCV registerNib:[UINib nibWithNibName:kDateBlockCellNibName bundle:nil] forCellWithReuseIdentifier:kDateBlockCellIdentifier];
     
     
     self.isMonthMode = YES;
-    self.automaticallyAdjustsScrollViewInsets = NO;
     
     // 透明navigationBar
-    self.navigationController.navigationBar.translucent = YES;
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//    self.navigationController.navigationBar.translucent = YES;
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     
-    @weakify(self);
-    [[self rac_signalForSelector:@selector(collectionView:didSelectItemAtIndexPath:) fromProtocol:@protocol(UICollectionViewDelegate)] subscribeNext:^(RACTuple *value) {
-        @strongify(self);
-        //NSLog(@"vcDelegate %@--%@",value.first,value.second);
-        UIViewController *vc = [[UIViewController alloc] init];
-        vc.view.backgroundColor = [UIColor orangeColor];
-        vc.modalPresentationStyle = UIModalPresentationFullScreen;
-        vc.transitioningDelegate = self;
+    //
+    self.navigationController.delegate = self;
+    self.navigationBar = self.navigationController.navigationBar;
+    
+    //
+    CGFloat width = [[UIScreen mainScreen] bounds].size.width;
+    self.sideLength = (width - 80) / 7;
+    
+    
+    // React collectionView:didSelectItemAtIndexPath:
+    @weakify(self)
+    [[self rac_signalForSelector:@selector(collectionView:didSelectItemAtIndexPath:) fromProtocol:@protocol(UICollectionViewDelegate)]
+     subscribeNext:^(RACTuple *value) {
+         @strongify(self)
+         
+         self.collectionViewSplitY = ([(NSIndexPath *)value.second row] / 7 + 1) * (self.sideLength + 10) + 5;
+         //NSLog(@"x : %f", self.collectionViewSplitY);
         
-        [self presentViewController:vc animated:YES completion:NULL];
+         UIViewController *vc = [[UIViewController alloc] init];
+         vc.view.backgroundColor = [UIColor orangeColor];
+         vc.modalPresentationStyle = UIModalPresentationFullScreen;
+         //vc.transitioningDelegate = self;
+        
+         UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+         [backBtn setTitle:@"BACK" forState:UIControlStateNormal];
+         [[backBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+             //[vc dismissViewControllerAnimated:YES completion:NULL];
+             [vc.navigationController popViewControllerAnimated:YES];
+         }];
+         [vc.view addSubview:backBtn];
+
+         //[self presentViewController:vc animated:YES completion:NULL];
+         [self.navigationController pushViewController:vc animated:YES];
     }];
     
-    //self.dateBlockCV.delegate = nil;
+    self.dateBlockCV.delegate = nil;
     self.dateBlockCV.delegate = self;
 }
 
@@ -77,19 +99,27 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateBlockCellIdentifier forIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor blueColor];
+    if (indexPath.row == 0) {
+        cell.backgroundColor = [UIColor blackColor];
+    } else if (indexPath.row == 7){
+        cell.backgroundColor = [UIColor redColor];
+    } else {
+        cell.backgroundColor = [UIColor blueColor];
+    }
+    
     return cell;
 }
+
+
+#pragma mark - 
+
+//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 
 #pragma mark - UICollectionView Delegate FlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    
-    CGFloat width = [[UIScreen mainScreen] bounds].size.width;
-    CGFloat sideLength = (width - 80) / 7;
-    
-    return CGSizeMake(sideLength, sideLength);
+    return CGSizeMake(_sideLength, _sideLength);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -103,5 +133,17 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     return [XZXTransitionAnimator new];
 }
 
+#pragma mark - 
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
+    if (UINavigationControllerOperationPush == operation) {
+        return [[XZXTransitionAnimator alloc] initWithDuration:0.5 splitLineY:_collectionViewSplitY];
+    }
+    
+    if (UINavigationControllerOperationPop == operation) {
+        return nil;
+    }
+    return nil;
+}
 
 @end

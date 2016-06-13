@@ -8,11 +8,28 @@
 
 #import "XZXTransitionAnimator.h"
 
+@interface XZXTransitionAnimator()
+
+@property (nonatomic, assign) NSTimeInterval duration;
+@property (nonatomic, assign) CGFloat splitLineY;
+
+@end
+
 
 @implementation XZXTransitionAnimator
+
+- (instancetype)initWithDuration:(NSTimeInterval)duration splitLineY:(CGFloat)splitLineY {
+    if (self = [super init]) {
+        self.duration = duration;
+        self.splitLineY = splitLineY;
+    }
+    return self;
+}
+
+
 //| ----------------------------------------------------------------------------
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 0.5;
+    return _duration;
 }
 
 
@@ -58,25 +75,27 @@
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     // Add a reduced snapshot of the toView to the container
-    UIView *toViewSnapshot = [toView resizableSnapshotViewFromRect:toView.frame afterScreenUpdates:YES withCapInsets:UIEdgeInsetsZero];
-    CATransform3D scale = CATransform3DIdentity;
-    toViewSnapshot.layer.transform = CATransform3DScale(scale, 0.8, 0.8, 1);
-    [containerView addSubview:toViewSnapshot];
-    [containerView sendSubviewToBack:toViewSnapshot];
+//    UIView *toViewSnapshot = [toView resizableSnapshotViewFromRect:toView.frame afterScreenUpdates:YES withCapInsets:UIEdgeInsetsZero];
+//    CATransform3D scale = CATransform3DIdentity;
+//    toViewSnapshot.layer.transform = CATransform3DScale(scale, 0.8, 0.8, 1);
+//    [containerView addSubview:toViewSnapshot];
+//    [containerView sendSubviewToBack:toViewSnapshot];
+    toView.frame = CGRectOffset(toView.frame, 0, _splitLineY - 64);
+    [containerView addSubview:toView];
     
     
     // Create two-part snapshots of the from- view
     
     // snapshot the upper-hand side of the from- view
-    CGRect upperSnapshotRegion = CGRectMake(0, 0, fromView.frame.size.width, fromView.frame.size.height / 2);
+    CGRect upperSnapshotRegion = CGRectMake(0, 0, fromView.frame.size.width, _splitLineY);
     UIView *upperHandView = [fromView resizableSnapshotViewFromRect:upperSnapshotRegion  afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
-    upperHandView.frame = upperSnapshotRegion;
+    upperHandView.frame = CGRectOffset(upperSnapshotRegion, 0, 64);
     [containerView addSubview:upperHandView];
     
     // snapshot the bottom-hand side of the from- view
-    CGRect bottomSnapshotRegion = CGRectMake(0, fromView.frame.size.height / 2, fromView.frame.size.width, fromView.frame.size.height / 2);
+    CGRect bottomSnapshotRegion = CGRectMake(0, _splitLineY, fromView.frame.size.width, fromView.frame.size.height - _splitLineY);
     UIView *bottomHandView = [fromView resizableSnapshotViewFromRect:bottomSnapshotRegion  afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
-    bottomHandView.frame = bottomSnapshotRegion;
+    bottomHandView.frame = CGRectOffset(bottomSnapshotRegion, 0, 64);
     [containerView addSubview:bottomHandView];
     
     // remove the view that was snapshotted
@@ -87,15 +106,17 @@
     
     [UIView animateWithDuration:duration
                           delay:0.0
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          // Open the portal doors of the from-view
                          upperHandView.frame = CGRectOffset(upperHandView.frame, 0, - upperHandView.frame.size.height);
                          bottomHandView.frame = CGRectOffset(bottomHandView.frame, 0, bottomHandView.frame.size.height);
                          
                          // zoom in the to-view
-                         toViewSnapshot.center = toView.center;
-                         toViewSnapshot.frame = toView.frame;
+//                         toViewSnapshot.center = toView.center;
+//                         toViewSnapshot.frame = toView.frame;
+                         // toView跟随upperHandView上升
+                         toView.frame = CGRectOffset(toView.frame, 0, - self->_splitLineY + 64);
                          
                      } completion:^(BOOL finished) {
                          

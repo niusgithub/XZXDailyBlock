@@ -10,4 +10,7 @@
 @import UIKit;
 
 @interface XZXTransitionAnimator : NSObject <UIViewControllerAnimatedTransitioning>
+
+- (instancetype)initWithDuration:(NSTimeInterval)duration splitLineY:(CGFloat)splitLineY;
+
 @end
