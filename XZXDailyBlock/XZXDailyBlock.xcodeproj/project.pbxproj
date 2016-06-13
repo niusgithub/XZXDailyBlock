@@ -14,6 +14,8 @@
 		E003F1231D0C35D900C4D140 /* XZXDateBlockCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F1211D0C35D900C4D140 /* XZXDateBlockCVCell.m */; };
 		E003F1241D0C35D900C4D140 /* XZXDateBlockCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E003F1221D0C35D900C4D140 /* XZXDateBlockCVCell.xib */; };
 		E003F12F1D0D5A0B00C4D140 /* XZXTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F12E1D0D5A0B00C4D140 /* XZXTransitionAnimator.m */; };
+		E003F13F1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F13E1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m */; };
+		E003F1421D0F441300C4D140 /* XZXDayEventVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F1411D0F441300C4D140 /* XZXDayEventVC.m */; };
 		E085F0971D07EAF200E91362 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0961D07EAF200E91362 /* main.m */; };
 		E085F09A1D07EAF200E91362 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* AppDelegate.m */; };
 		E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F09E1D07EAF200E91362 /* Main.storyboard */; };
@@ -55,6 +57,10 @@
 		E003F1221D0C35D900C4D140 /* XZXDateBlockCVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XZXDateBlockCVCell.xib; sourceTree = "<group>"; };
 		E003F12D1D0D5A0B00C4D140 /* XZXTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXTransitionAnimator.h; sourceTree = "<group>"; };
 		E003F12E1D0D5A0B00C4D140 /* XZXTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXTransitionAnimator.m; sourceTree = "<group>"; };
+		E003F13D1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXHorizontalWeekCV.h; sourceTree = "<group>"; };
+		E003F13E1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXHorizontalWeekCV.m; sourceTree = "<group>"; };
+		E003F1401D0F441300C4D140 /* XZXDayEventVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDayEventVC.h; sourceTree = "<group>"; };
+		E003F1411D0F441300C4D140 /* XZXDayEventVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDayEventVC.m; sourceTree = "<group>"; };
 		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E085F0981D07EAF200E91362 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -198,6 +204,10 @@
 				E003F1201D0C35D900C4D140 /* XZXDateBlockCVCell.h */,
 				E003F1211D0C35D900C4D140 /* XZXDateBlockCVCell.m */,
 				E003F1221D0C35D900C4D140 /* XZXDateBlockCVCell.xib */,
+				E003F13D1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.h */,
+				E003F13E1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m */,
+				E003F1401D0F441300C4D140 /* XZXDayEventVC.h */,
+				E003F1411D0F441300C4D140 /* XZXDayEventVC.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -421,11 +431,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E085F09A1D07EAF200E91362 /* AppDelegate.m in Sources */,
+				E003F1421D0F441300C4D140 /* XZXDayEventVC.m in Sources */,
 				E003F1231D0C35D900C4D140 /* XZXDateBlockCVCell.m in Sources */,
 				E003F12F1D0D5A0B00C4D140 /* XZXTransitionAnimator.m in Sources */,
 				E003F1131D0BF4B300C4D140 /* XZXCalendarVC.m in Sources */,
 				E003F11F1D0C2B5F00C4D140 /* XZXDateBlockCV.m in Sources */,
 				E085F0971D07EAF200E91362 /* main.m in Sources */,
+				E003F13F1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m in Sources */,
 				E003F11C1D0C110400C4D140 /* XZXDate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

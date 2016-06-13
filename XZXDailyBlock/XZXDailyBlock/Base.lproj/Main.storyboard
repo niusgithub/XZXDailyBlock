@@ -51,7 +51,64 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Udb-Ba-6IE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="420" y="104"/>
+            <point key="canvasLocation" x="-118" y="-142"/>
+        </scene>
+        <!--Day EventVC-->
+        <scene sceneID="fhp-35-LCW">
+            <objects>
+                <viewController storyboardIdentifier="XZXDEViewController" id="J7o-bG-HHW" customClass="XZXDayEventVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SQA-Hd-iw1"/>
+                        <viewControllerLayoutGuide type="bottom" id="l3N-dH-6I5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aLW-ba-uBS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yLl-WI-sXg" customClass="XZXHorizontalWeekCV">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <color key="backgroundColor" red="0.80000001190000003" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="BWG-yv-sY0"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1EY-OO-emJ">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="fyo-mG-oeO">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YRo-Zo-PJV">
+                                <rect key="frame" x="0.0" y="50" width="600" height="550"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="YRo-Zo-PJV" firstAttribute="leading" secondItem="aLW-ba-uBS" secondAttribute="leading" id="3dm-RE-LBe"/>
+                            <constraint firstItem="l3N-dH-6I5" firstAttribute="top" secondItem="YRo-Zo-PJV" secondAttribute="bottom" id="7wz-Ai-Zd9"/>
+                            <constraint firstItem="YRo-Zo-PJV" firstAttribute="top" secondItem="yLl-WI-sXg" secondAttribute="bottom" id="7xO-lt-csh"/>
+                            <constraint firstItem="yLl-WI-sXg" firstAttribute="leading" secondItem="aLW-ba-uBS" secondAttribute="leading" id="C3D-A2-CHL"/>
+                            <constraint firstAttribute="trailing" secondItem="yLl-WI-sXg" secondAttribute="trailing" id="F6C-fL-XbF"/>
+                            <constraint firstItem="yLl-WI-sXg" firstAttribute="top" secondItem="aLW-ba-uBS" secondAttribute="top" id="Xun-Vv-40T"/>
+                            <constraint firstAttribute="trailing" secondItem="YRo-Zo-PJV" secondAttribute="trailing" id="g3A-8Z-IkG"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jj1-RB-Qzw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-118" y="559"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="guo-o0-Xax">
@@ -69,7 +126,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DJJ-BM-bLZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-236" y="104"/>
+            <point key="canvasLocation" x="-774" y="-142"/>
         </scene>
     </scenes>
     <resources>

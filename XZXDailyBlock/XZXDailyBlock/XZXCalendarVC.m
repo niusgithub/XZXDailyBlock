@@ -8,6 +8,7 @@
 
 #import "XZXCalendarVC.h"
 #import "XZXDateBlockCV.h"
+#import "XZXDayEventVC.h"
 #import <ReactiveCocoa.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
@@ -63,19 +64,21 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
          self.collectionViewSplitY = ([(NSIndexPath *)value.second row] / 7 + 1) * (self.sideLength + 10) + 5;
          //NSLog(@"x : %f", self.collectionViewSplitY);
         
-         UIViewController *vc = [[UIViewController alloc] init];
-         vc.view.backgroundColor = [UIColor orangeColor];
+         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+         
+         XZXDayEventVC *vc = [sb instantiateViewControllerWithIdentifier:@"XZXDEViewController"];
+         
          vc.modalPresentationStyle = UIModalPresentationFullScreen;
          //vc.transitioningDelegate = self;
         
-         UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-         [backBtn setTitle:@"BACK" forState:UIControlStateNormal];
-         [[backBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-             //[vc dismissViewControllerAnimated:YES completion:NULL];
-             [vc.navigationController popViewControllerAnimated:YES];
-         }];
-         [vc.view addSubview:backBtn];
-
+//         UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+//         [backBtn setTitle:@"BACK" forState:UIControlStateNormal];
+//         [[backBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+//             //[vc dismissViewControllerAnimated:YES completion:NULL];
+//             [vc.navigationController popViewControllerAnimated:YES];
+//         }];
+//         [vc.view addSubview:backBtn];
+         
          //[self presentViewController:vc animated:YES completion:NULL];
          [self.navigationController pushViewController:vc animated:YES];
     }];

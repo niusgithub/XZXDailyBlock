@@ -80,7 +80,7 @@
 //    toViewSnapshot.layer.transform = CATransform3DScale(scale, 0.8, 0.8, 1);
 //    [containerView addSubview:toViewSnapshot];
 //    [containerView sendSubviewToBack:toViewSnapshot];
-    toView.frame = CGRectOffset(toView.frame, 0, _splitLineY - 64);
+    //toView.frame = CGRectOffset(toView.frame, 0, _splitLineY - 64);
     [containerView addSubview:toView];
     
     
@@ -116,7 +116,7 @@
 //                         toViewSnapshot.center = toView.center;
 //                         toViewSnapshot.frame = toView.frame;
                          // toView跟随upperHandView上升
-                         toView.frame = CGRectOffset(toView.frame, 0, - self->_splitLineY + 64);
+                         //toView.frame = CGRectOffset(toView.frame, 0, - self->_splitLineY + 64);
                          
                      } completion:^(BOOL finished) {
                          
