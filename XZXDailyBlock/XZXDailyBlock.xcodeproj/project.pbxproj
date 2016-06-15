@@ -16,8 +16,11 @@
 		E003F12F1D0D5A0B00C4D140 /* XZXTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F12E1D0D5A0B00C4D140 /* XZXTransitionAnimator.m */; };
 		E003F13F1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F13E1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m */; };
 		E003F1421D0F441300C4D140 /* XZXDayEventVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F1411D0F441300C4D140 /* XZXDayEventVC.m */; };
+		E00B22881D1099E300FF8241 /* XZXDateBlockViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22871D1099E300FF8241 /* XZXDateBlockViewModel.m */; };
+		E00B228B1D1099FB00FF8241 /* XZXCalendarViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B228A1D1099FB00FF8241 /* XZXCalendarViewModel.m */; };
+		E00B228F1D1120A500FF8241 /* XZXDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B228E1D1120A500FF8241 /* XZXDateHelper.m */; };
 		E085F0971D07EAF200E91362 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0961D07EAF200E91362 /* main.m */; };
-		E085F09A1D07EAF200E91362 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* AppDelegate.m */; };
+		E085F09A1D07EAF200E91362 /* XZXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* XZXAppDelegate.m */; };
 		E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F09E1D07EAF200E91362 /* Main.storyboard */; };
 		E085F0A21D07EAF200E91362 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E085F0A11D07EAF200E91362 /* Assets.xcassets */; };
 		E085F0A51D07EAF200E91362 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F0A31D07EAF200E91362 /* LaunchScreen.storyboard */; };
@@ -61,10 +64,16 @@
 		E003F13E1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXHorizontalWeekCV.m; sourceTree = "<group>"; };
 		E003F1401D0F441300C4D140 /* XZXDayEventVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDayEventVC.h; sourceTree = "<group>"; };
 		E003F1411D0F441300C4D140 /* XZXDayEventVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDayEventVC.m; sourceTree = "<group>"; };
+		E00B22861D1099E300FF8241 /* XZXDateBlockViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDateBlockViewModel.h; sourceTree = "<group>"; };
+		E00B22871D1099E300FF8241 /* XZXDateBlockViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDateBlockViewModel.m; sourceTree = "<group>"; };
+		E00B22891D1099FB00FF8241 /* XZXCalendarViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXCalendarViewModel.h; sourceTree = "<group>"; };
+		E00B228A1D1099FB00FF8241 /* XZXCalendarViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXCalendarViewModel.m; sourceTree = "<group>"; };
+		E00B228D1D1120A500FF8241 /* XZXDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDateHelper.h; sourceTree = "<group>"; };
+		E00B228E1D1120A500FF8241 /* XZXDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDateHelper.m; sourceTree = "<group>"; };
 		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E085F0981D07EAF200E91362 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		E085F0991D07EAF200E91362 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E085F0981D07EAF200E91362 /* XZXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXAppDelegate.h; sourceTree = "<group>"; };
+		E085F0991D07EAF200E91362 /* XZXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XZXAppDelegate.m; sourceTree = "<group>"; };
 		E085F09F1D07EAF200E91362 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E085F0A11D07EAF200E91362 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E085F0A41D07EAF200E91362 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -122,6 +131,15 @@
 			name = TransitionAnimation;
 			sourceTree = "<group>";
 		};
+		E00B228C1D11201600FF8241 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E00B228D1D1120A500FF8241 /* XZXDateHelper.h */,
+				E00B228E1D1120A500FF8241 /* XZXDateHelper.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		E085F0891D07EAF200E91362 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +169,7 @@
 				E0B904821D0840AE002CFE5D /* Model */,
 				E0B904831D0840FA002CFE5D /* View */,
 				E0B904841D084108002CFE5D /* ViewModel */,
+				E00B228C1D11201600FF8241 /* Utils */,
 				E003F1261D0D3F6600C4D140 /* TransitionAnimation */,
 				E0B904871D084652002CFE5D /* Recource */,
 				E085F0951D07EAF200E91362 /* Supporting Files */,
@@ -215,6 +234,10 @@
 		E0B904841D084108002CFE5D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				E00B22861D1099E300FF8241 /* XZXDateBlockViewModel.h */,
+				E00B22871D1099E300FF8241 /* XZXDateBlockViewModel.m */,
+				E00B22891D1099FB00FF8241 /* XZXCalendarViewModel.h */,
+				E00B228A1D1099FB00FF8241 /* XZXCalendarViewModel.m */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -222,8 +245,8 @@
 		E0B904851D08411C002CFE5D /* DailyBlock */ = {
 			isa = PBXGroup;
 			children = (
-				E085F0981D07EAF200E91362 /* AppDelegate.h */,
-				E085F0991D07EAF200E91362 /* AppDelegate.m */,
+				E085F0981D07EAF200E91362 /* XZXAppDelegate.h */,
+				E085F0991D07EAF200E91362 /* XZXAppDelegate.m */,
 				E085F0A31D07EAF200E91362 /* LaunchScreen.storyboard */,
 				E085F0A61D07EAF200E91362 /* Info.plist */,
 			);
@@ -430,10 +453,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E085F09A1D07EAF200E91362 /* AppDelegate.m in Sources */,
+				E085F09A1D07EAF200E91362 /* XZXAppDelegate.m in Sources */,
+				E00B22881D1099E300FF8241 /* XZXDateBlockViewModel.m in Sources */,
 				E003F1421D0F441300C4D140 /* XZXDayEventVC.m in Sources */,
 				E003F1231D0C35D900C4D140 /* XZXDateBlockCVCell.m in Sources */,
+				E00B228B1D1099FB00FF8241 /* XZXCalendarViewModel.m in Sources */,
 				E003F12F1D0D5A0B00C4D140 /* XZXTransitionAnimator.m in Sources */,
+				E00B228F1D1120A500FF8241 /* XZXDateHelper.m in Sources */,
 				E003F1131D0BF4B300C4D140 /* XZXCalendarVC.m in Sources */,
 				E003F11F1D0C2B5F00C4D140 /* XZXDateBlockCV.m in Sources */,
 				E085F0971D07EAF200E91362 /* main.m in Sources */,

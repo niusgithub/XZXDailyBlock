@@ -1,18 +1,18 @@
 //
-//  AppDelegate.m
+//  XZXAppDelegate.m
 //  XZXDailyBlock
 //
 //  Created by 陈知行 on 16/6/8.
 //  Copyright © 2016年 陈知行. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "XZXAppDelegate.h"
 
-@interface AppDelegate ()
+@interface XZXAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation XZXAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {

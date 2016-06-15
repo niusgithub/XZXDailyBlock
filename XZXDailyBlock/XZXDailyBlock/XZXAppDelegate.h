@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  XZXAppDelegate.h
 //  XZXDailyBlock
 //
 //  Created by 陈知行 on 16/6/8.
@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface XZXAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
 
 @end
 

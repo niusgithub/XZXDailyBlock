@@ -45,7 +45,6 @@
                         <barButtonItem key="rightBarButtonItem" title="Clock" id="8Br-hi-jEi"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="dateBlockBottomLC" destination="bbR-gf-DcN" id="lIL-Az-RU2"/>
                         <outlet property="dateBlockCV" destination="JaZ-zO-bpV" id="LgP-Qh-8St"/>
                     </connections>
                 </viewController>

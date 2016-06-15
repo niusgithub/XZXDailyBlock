@@ -9,38 +9,45 @@
 #import "XZXCalendarVC.h"
 #import "XZXDateBlockCV.h"
 #import "XZXDayEventVC.h"
-#import <ReactiveCocoa.h>
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
+#import "XZXDateHelper.h"
 #import "XZXTransitionAnimator.h"
+
+#import <ReactiveCocoa.h>
 
 NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 
 
 @interface XZXCalendarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate>
-@property (nonatomic) BOOL isMonthMode;
+
+@property (nonatomic, strong) XZXCalendarViewModel *viewModel;
 
 @property (weak, nonatomic) IBOutlet XZXDateBlockCV *dateBlockCV;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *dateBlockBottomLC;
-@property (nonatomic, weak) UINavigationBar *navigationBar;
-
 @property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
 @end
 
 @implementation XZXCalendarVC
 
+#pragma mark - initialize
+
+- (void)initViewModel {
+#warning temp
+    // self.dateHelper = [XZXDateHelper sharedDateHelper];
+    // self.viewModel = [[XZXCalendarViewModel alloc] initWithDateHelper:_dateHelper];
+    
+    XZXCalendarViewModel *viewModel = [[XZXCalendarViewModel alloc] init];
+    //viewModel.title = @"2016/6/15";
+    self.viewModel = viewModel;
+}
+
+
+#pragma mark - life cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title = @"Date";
-    
-    [self.dateBlockCV registerNib:[UINib nibWithNibName:kDateBlockCellNibName bundle:nil] forCellWithReuseIdentifier:kDateBlockCellIdentifier];
-    
-    
-    self.isMonthMode = YES;
-    
+   
+    [self initViewModel];
     // 透明navigationBar
 //    self.navigationController.navigationBar.translucent = YES;
 //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
@@ -48,12 +55,36 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     
     //
     self.navigationController.delegate = self;
-    self.navigationBar = self.navigationController.navigationBar;
     
     //
     CGFloat width = [[UIScreen mainScreen] bounds].size.width;
     self.sideLength = (width - 80) / 7;
     
+    [self bindViewModel];
+    
+    //2016.6.15
+    NSCalendar *calendar = [[XZXDateHelper sharedDateHelper] calendar];
+    
+    #if DEBUG
+    NSAssert(calendar != nil, @"calendar must not be nil");
+    #endif
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.timeZone = calendar.timeZone;
+    dateFormatter.locale = calendar.locale;
+    
+    NSMutableArray *days = nil;
+    days = [[dateFormatter standaloneMonthSymbols] mutableCopy];
+    
+    [days enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSLog(@"days:%ld--%@", idx, obj);
+    }];
+}
+
+- (void)bindViewModel {
+    self.title = self.viewModel.title;
+    
+    [self.dateBlockCV registerNib:[UINib nibWithNibName:kDateBlockCellNibName bundle:nil] forCellWithReuseIdentifier:kDateBlockCellIdentifier];
     
     // React collectionView:didSelectItemAtIndexPath:
     @weakify(self)
@@ -63,26 +94,12 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
          
          self.collectionViewSplitY = ([(NSIndexPath *)value.second row] / 7 + 1) * (self.sideLength + 10) + 5;
          //NSLog(@"x : %f", self.collectionViewSplitY);
-        
+         
          UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-         
          XZXDayEventVC *vc = [sb instantiateViewControllerWithIdentifier:@"XZXDEViewController"];
-         
          vc.modalPresentationStyle = UIModalPresentationFullScreen;
-         //vc.transitioningDelegate = self;
-        
-//         UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-//         [backBtn setTitle:@"BACK" forState:UIControlStateNormal];
-//         [[backBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-//             //[vc dismissViewControllerAnimated:YES completion:NULL];
-//             [vc.navigationController popViewControllerAnimated:YES];
-//         }];
-//         [vc.view addSubview:backBtn];
-         
-         //[self presentViewController:vc animated:YES completion:NULL];
          [self.navigationController pushViewController:vc animated:YES];
-    }];
-    
+     }];
     self.dateBlockCV.delegate = nil;
     self.dateBlockCV.delegate = self;
 }
@@ -91,6 +108,7 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 #pragma mark - cv
 
@@ -135,6 +153,7 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
     return [XZXTransitionAnimator new];
 }
+
 
 #pragma mark - 
 
