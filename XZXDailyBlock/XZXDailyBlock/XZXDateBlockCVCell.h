@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XZXDateBlockCVCellViewModel.h"
 
 @interface XZXDateBlockCVCell : UICollectionViewCell
+
+- (void)configureCellWithViewModel:(XZXDateBlockCVCellViewModel *)viewModel atIndexPath:(NSIndexPath *)indexPath;
 
 @end

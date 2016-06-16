@@ -8,11 +8,32 @@
 
 #import "XZXDateBlockCVCell.h"
 
+
+@interface XZXDateBlockCVCell ()
+@property (nonatomic, strong) UILabel *titleLabel;
+@end
+
+
 @implementation XZXDateBlockCVCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        UILabel *dateTitle = [[UILabel alloc] initWithFrame:frame];
+        dateTitle.textAlignment = NSTextAlignmentCenter;
+        [self.contentView addSubview:dateTitle];
+        self.titleLabel = dateTitle;
+    }
+    
+    return self;
+}
+
+- (void)configureCellWithViewModel:(XZXDateBlockCVCellViewModel *)viewModel atIndexPath:(NSIndexPath*)indexPath {
+    self.titleLabel.text = viewModel.dataTitle;
+    //self.titleLabel.text = [NSString stringWithFormat:@"%ld" ,indexPath.item];
+}
+
+- (void)layoutSubviews {
+    self.titleLabel.frame = self.bounds;
 }
 
 @end

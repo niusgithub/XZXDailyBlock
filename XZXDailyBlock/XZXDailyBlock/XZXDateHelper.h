@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import UIKit;
 
 @interface XZXDateHelper : NSObject
 
@@ -14,6 +15,8 @@
 
 - (NSCalendar *)calendar;
 
-//- (NSArray *)date;
+- (NSInteger)dayOfDate:(NSDate *)date;
+
+- (NSDate *)dayForIndexPath:(NSIndexPath *)indexPath;
 
 @end

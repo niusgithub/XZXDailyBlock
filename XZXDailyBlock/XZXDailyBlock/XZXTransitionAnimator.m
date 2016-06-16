@@ -109,7 +109,8 @@
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          // Open the portal doors of the from-view
-                         upperHandView.frame = CGRectOffset(upperHandView.frame, 0, - upperHandView.frame.size.height);
+#warning 50是暂定高度
+                         upperHandView.frame = CGRectOffset(upperHandView.frame, 0, - upperHandView.frame.size.height + 50);
                          bottomHandView.frame = CGRectOffset(bottomHandView.frame, 0, bottomHandView.frame.size.height);
                          
                          // zoom in the to-view

@@ -8,9 +8,13 @@
 
 #import "XZXCalendarVC.h"
 #import "XZXDateBlockCV.h"
+#import "XZXDateBlockCVCell.h"
 #import "XZXDayEventVC.h"
 #import "XZXDateHelper.h"
 #import "XZXTransitionAnimator.h"
+
+#import "XZXDateBlockCVCellViewModel.h"
+#import "XZXDateHelper.h"
 
 #import <ReactiveCocoa.h>
 
@@ -76,15 +80,15 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     NSMutableArray *days = nil;
     days = [[dateFormatter standaloneMonthSymbols] mutableCopy];
     
-    [days enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSLog(@"days:%ld--%@", idx, obj);
-    }];
+//    [days enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        NSLog(@"days:%ld--%@", idx, obj);
+//    }];
 }
 
 - (void)bindViewModel {
     self.title = self.viewModel.title;
     
-    [self.dateBlockCV registerNib:[UINib nibWithNibName:kDateBlockCellNibName bundle:nil] forCellWithReuseIdentifier:kDateBlockCellIdentifier];
+    [self.dateBlockCV registerClass:[XZXDateBlockCVCell class] forCellWithReuseIdentifier:kDateBlockCellIdentifier];
     
     // React collectionView:didSelectItemAtIndexPath:
     @weakify(self)
@@ -118,15 +122,24 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateBlockCellIdentifier forIndexPath:indexPath];
+    XZXDateBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateBlockCellIdentifier forIndexPath:indexPath];
     
-    if (indexPath.row == 0) {
+    if (indexPath.item == 0) {
         cell.backgroundColor = [UIColor blackColor];
-    } else if (indexPath.row == 7){
+    } else if (indexPath.item == 7){
         cell.backgroundColor = [UIColor redColor];
     } else {
         cell.backgroundColor = [UIColor blueColor];
     }
+    
+    XZXDateHelper *dateHelper = [[XZXDateHelper alloc] init];
+    NSDate *dateOfCell = [dateHelper dayForIndexPath:indexPath];
+    
+    NSLog(@"date of cell:%@--%ld", dateOfCell, indexPath.item);
+    
+    XZXDateBlockCVCellViewModel *cellViewModel = [[XZXDateBlockCVCellViewModel alloc] initWithDate:dateOfCell];
+    
+    [cell configureCellWithViewModel:nil atIndexPath:indexPath];
     
     return cell;
 }
@@ -134,7 +147,9 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 
 #pragma mark - 
 
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)reloadDateForCell:(XZXDateBlockCVCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
+}
 
 
 #pragma mark - UICollectionView Delegate FlowLayout

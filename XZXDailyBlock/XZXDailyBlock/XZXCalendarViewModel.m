@@ -7,12 +7,15 @@
 //
 
 #import "XZXCalendarViewModel.h"
+#import "XZXDateBlockCVCellViewModel.h"
 
 @implementation XZXCalendarViewModel
 
-- (instancetype)init {
+- (instancetype)initWithDates:(XZXDate *)dates {
     if (self = [super init]) {
         [self initialize];
+        
+//        _dates = [XZXCalendar ]
     }
     return self;
 }

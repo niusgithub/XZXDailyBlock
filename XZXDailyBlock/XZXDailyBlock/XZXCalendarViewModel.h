@@ -7,8 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XZXDateBlockViewModel.h"
+#import "XZXDate.h"
 
 @interface XZXCalendarViewModel : NSObject
+
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSArray *dates;
+
+- (instancetype)initWithDates:(XZXDate *)dates;
+
 @end
