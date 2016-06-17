@@ -11,12 +11,16 @@
 
 @interface XZXDateHelper : NSObject
 
-+ (instancetype)sharedDateHelper;
+//+ (instancetype)sharedDateHelper;
 
-- (NSCalendar *)calendar;
-
+// Date的日期
 - (NSInteger)dayOfDate:(NSDate *)date;
 
+
+// 
 - (NSDate *)dayForIndexPath:(NSIndexPath *)indexPath;
+
+// 当前本地日期
+- (NSDate *)localDate;
 
 @end

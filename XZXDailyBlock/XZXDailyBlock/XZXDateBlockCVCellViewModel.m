@@ -19,7 +19,7 @@
 
 - (NSInteger)dayOfDate:(NSDate *)date {
 #warning temp
-    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *component = [calendar components:NSCalendarUnitDay
                                                    fromDate:date];
     return component.day;

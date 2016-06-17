@@ -124,9 +124,7 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     
     XZXDateBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateBlockCellIdentifier forIndexPath:indexPath];
     
-    if (indexPath.item == 0) {
-        cell.backgroundColor = [UIColor blackColor];
-    } else if (indexPath.item == 7){
+    if (indexPath.item == 7){
         cell.backgroundColor = [UIColor redColor];
     } else {
         cell.backgroundColor = [UIColor blueColor];
@@ -139,7 +137,7 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     
     XZXDateBlockCVCellViewModel *cellViewModel = [[XZXDateBlockCVCellViewModel alloc] initWithDate:dateOfCell];
     
-    [cell configureCellWithViewModel:nil atIndexPath:indexPath];
+    [cell configureCellWithViewModel:cellViewModel atIndexPath:indexPath];
     
     return cell;
 }
