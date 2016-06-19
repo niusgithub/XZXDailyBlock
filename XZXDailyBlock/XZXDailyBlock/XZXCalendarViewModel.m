@@ -11,7 +11,7 @@
 
 @implementation XZXCalendarViewModel
 
-- (instancetype)initWithDates:(XZXDate *)dates {
+- (instancetype)initWithDays:(XZXDay *)days {
     if (self = [super init]) {
         [self initialize];
         

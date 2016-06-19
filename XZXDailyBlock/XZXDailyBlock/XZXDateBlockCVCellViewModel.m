@@ -7,8 +7,16 @@
 //
 
 #import "XZXDateBlockCVCellViewModel.h"
+#import "XZXDay.h"
 
 @implementation XZXDateBlockCVCellViewModel
+
+- (instancetype)initWithDay:(XZXDay *)day {
+    if (self = [super init]) {
+        //
+    }
+    return self;
+}
 
 - (instancetype)initWithDate:(NSDate *)date {
     if (self = [super init]) {
@@ -19,7 +27,7 @@
 
 - (NSInteger)dayOfDate:(NSDate *)date {
 #warning temp
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *component = [calendar components:NSCalendarUnitDay
                                                    fromDate:date];
     return component.day;

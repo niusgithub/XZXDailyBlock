@@ -7,11 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+@class XZXDay;
+
+@import UIKit;
 
 @interface XZXDateBlockCVCellViewModel : NSObject
 
 @property (nonatomic, strong) NSString *dataTitle;
+@property (nonatomic, strong) UIColor *bgColor;
+
+- (instancetype)initWithDay:(XZXDay *)day;
 
 - (instancetype)initWithDate:(NSDate *)date;
+
 
 @end

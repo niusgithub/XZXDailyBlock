@@ -7,20 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+
 @import UIKit;
 
 @interface XZXDateHelper : NSObject
 
-//+ (instancetype)sharedDateHelper;
-
 // Date的日期
 - (NSInteger)dayOfDate:(NSDate *)date;
 
-
 // 
-- (NSDate *)dayForIndexPath:(NSIndexPath *)indexPath;
+- (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath;
 
 // 当前本地日期
-- (NSDate *)localDate;
+- (NSDate *)localDateOfDate:(NSDate *)date;
+
+// date为周几
+- (NSInteger)weekdayOfDate:(NSDate *)date;
 
 @end

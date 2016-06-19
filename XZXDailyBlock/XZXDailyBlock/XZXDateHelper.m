@@ -12,13 +12,21 @@ static id sharedDateHelper;
 
 @interface XZXDateHelper ()
 
+@property (nonatomic, strong) NSTimeZone *timeZone;
+@property (nonatomic, strong) NSLocale *locale;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) NSDateComponents *dateComponents;
-@property (nonatomic, strong) NSTimeZone *timeZone;
-@property (nonatomic, strong) NSDate *minDate;
-@property (nonatomic, strong) NSDate *maxDate;
+//@property (nonatomic, strong) NSDate *minDate;
+//@property (nonatomic, strong) NSDate *maxDate;
 @property (nonatomic, strong) NSDate *today;
+
+// 当前月份的第一天
+@property (nonatomic, strong) NSDate *firstDateOfCurrentMonth;
+// 当前月份第一天开始的偏移天数
+@property (nonatomic, assign) NSInteger numbersOfOffset;
+// 当前页面的第一天
+@property (nonatomic, strong) NSDate *firstDateOfCurrentPage;
 
 @end
 
@@ -42,16 +50,28 @@ static id sharedDateHelper;
 }
 
 - (void)initialize {
-    _calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    _calendar.locale = [NSLocale currentLocale];
-    _calendar.timeZone = [NSTimeZone localTimeZone];
-    _calendar.firstWeekday = 1;
-    
+//    _calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    _timeZone = [NSTimeZone localTimeZone];
+    _locale = [NSLocale currentLocale];
+    _calendar = [NSCalendar currentCalendar];
     _dateComponents = [[NSDateComponents alloc] init];
     _dateFormatter = [[NSDateFormatter alloc] init];
-    _minDate = [self firstDayOfMonth:[self localDate]];
-    _maxDate = [self lastDayOfMonth:[self localDate]];
-    _today = [self dateOfToday:[self localDate]];
+    
+    _calendar.locale = _locale;
+    _calendar.timeZone = _timeZone;
+    _calendar.firstWeekday = 2; //第一个工作日为周一 Sunday=1
+    
+    _dateComponents.calendar = _calendar;
+    _dateComponents.timeZone = _timeZone;
+    _dateFormatter.calendar = _calendar;
+    _dateFormatter.timeZone = _timeZone;
+    _dateFormatter.locale = _locale;
+    
+    _today = [self dateOfToday:[self localDateOfDate:[NSDate date]]];
+//    _minDate = [self firstDayOfMonth:_today];
+//    _maxDate = [self lastDayOfMonth:_today];
+    
+    [self datesAboutToday];
 }
 
 - (NSDate *)firstDayOfMonth:(NSDate *)date {
@@ -74,28 +94,34 @@ static id sharedDateHelper;
     return [self.calendar dateFromComponents:components];
 }
 
-- (NSDate *)dayForIndexPath:(NSIndexPath *)indexPath {
-    // 当前页面的第一天
-    
-    // 当前月份第一天开始的偏移天数
-    NSInteger *numbersOfOffset = 0;
+- (void)datesAboutToday {
     // 当前月份的第一天
-    NSDate *firstDayOfCurrentMonth = [self firstDayOfMonth:[self localDate]];
-    // NSLog(@"firstDayOfCurrentMonth:%@", [NSDate date]);
-    
+    self.firstDateOfCurrentMonth = [self firstDayOfMonth:_today];
+    // 当前月份第一天开始的偏移天数
+    self.numbersOfOffset = [self weekdayOfDate:_firstDateOfCurrentMonth];
+    NSLog(@"numbersOfOffset:%ld", _numbersOfOffset);
+    // 当前页面的第一天
+    self.firstDateOfCurrentPage = [self dateByAddingDays:-_numbersOfOffset toDate:_firstDateOfCurrentMonth];
+    NSLog(@"firstDateOfCurrentPage:%@", [self localDateOfDate:_firstDateOfCurrentPage]);
+}
+
+- (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
     NSUInteger rows = indexPath.item / 7;
     NSUInteger colums = indexPath.item % 7;
     NSUInteger daysOffset = 7*rows + colums;
     
-    NSLog(@"daysOffset:%ld",daysOffset);
-    
-    return [self dateByAddingDays:daysOffset toDate:firstDayOfCurrentMonth];
+    return [self dateByAddingDays:daysOffset toDate:_firstDateOfCurrentPage];
 }
 
+
+//---------------------------
 - (NSInteger)dayOfDate:(NSDate *)date {
-    NSDateComponents *component = [self.calendar components:NSCalendarUnitDay
-                                                   fromDate:date];
+    NSDateComponents *component = [self.calendar components:NSCalendarUnitDay fromDate:date];
     return component.day;
+}
+
+- (NSInteger)weekdayOfDate:(NSDate *)date {
+    return [self.calendar ordinalityOfUnit:NSCalendarUnitWeekday inUnit:NSCalendarUnitWeekOfMonth forDate:date];;
 }
 
 - (NSDate *)dateByAddingDays:(NSUInteger)days toDate:(NSDate *)date {
@@ -107,8 +133,7 @@ static id sharedDateHelper;
     return day;
 }
 
-- (NSDate *)localDate {
-    NSDate *date = [NSDate date];
+- (NSDate *)localDateOfDate:(NSDate *)date {
     NSTimeZone *zone = [NSTimeZone systemTimeZone];
     NSInteger interval = [zone secondsFromGMTForDate:date];
     

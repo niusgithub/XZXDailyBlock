@@ -29,6 +29,8 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 @property (weak, nonatomic) IBOutlet XZXDateBlockCV *dateBlockCV;
 @property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
+
+@property (nonatomic, strong) XZXDateHelper *dateHelper;
 @end
 
 @implementation XZXCalendarVC
@@ -66,19 +68,25 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     
     [self bindViewModel];
     
+    
+    
+    
+    self.dateHelper = [[XZXDateHelper alloc] init];
+    
+    
     //2016.6.15
-    NSCalendar *calendar = [[XZXDateHelper sharedDateHelper] calendar];
+////    NSCalendar *calendar = [[XZXDateHelper sharedDateHelper] calendar];
+//    
+//    #if DEBUG
+//    NSAssert(calendar != nil, @"calendar must not be nil");
+//    #endif
     
-    #if DEBUG
-    NSAssert(calendar != nil, @"calendar must not be nil");
-    #endif
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    dateFormatter.timeZone = calendar.timeZone;
+//    dateFormatter.locale = calendar.locale;
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.timeZone = calendar.timeZone;
-    dateFormatter.locale = calendar.locale;
-    
-    NSMutableArray *days = nil;
-    days = [[dateFormatter standaloneMonthSymbols] mutableCopy];
+//    NSMutableArray *days = nil;
+//    days = [[dateFormatter standaloneMonthSymbols] mutableCopy];
     
 //    [days enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 //        NSLog(@"days:%ld--%@", idx, obj);
@@ -124,16 +132,10 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     
     XZXDateBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateBlockCellIdentifier forIndexPath:indexPath];
     
-    if (indexPath.item == 7){
-        cell.backgroundColor = [UIColor redColor];
-    } else {
-        cell.backgroundColor = [UIColor blueColor];
-    }
+    cell.backgroundColor = [UIColor blueColor];
     
-    XZXDateHelper *dateHelper = [[XZXDateHelper alloc] init];
-    NSDate *dateOfCell = [dateHelper dayForIndexPath:indexPath];
     
-    NSLog(@"date of cell:%@--%ld", dateOfCell, indexPath.item);
+    NSDate *dateOfCell = [_dateHelper dateForIndexPath:indexPath];
     
     XZXDateBlockCVCellViewModel *cellViewModel = [[XZXDateBlockCVCellViewModel alloc] initWithDate:dateOfCell];
     
