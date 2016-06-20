@@ -99,10 +99,10 @@ static id sharedDateHelper;
     self.firstDateOfCurrentMonth = [self firstDayOfMonth:_today];
     // 当前月份第一天开始的偏移天数
     self.numbersOfOffset = [self weekdayOfDate:_firstDateOfCurrentMonth];
-    NSLog(@"numbersOfOffset:%ld", _numbersOfOffset);
+    //NSLog(@"numbersOfOffset:%ld", _numbersOfOffset);
     // 当前页面的第一天
     self.firstDateOfCurrentPage = [self dateByAddingDays:-_numbersOfOffset toDate:_firstDateOfCurrentMonth];
-    NSLog(@"firstDateOfCurrentPage:%@", [self localDateOfDate:_firstDateOfCurrentPage]);
+    //NSLog(@"firstDateOfCurrentPage:%@", [self localDateOfDate:_firstDateOfCurrentPage]);
 }
 
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
@@ -111,17 +111,6 @@ static id sharedDateHelper;
     NSUInteger daysOffset = 7*rows + colums;
     
     return [self dateByAddingDays:daysOffset toDate:_firstDateOfCurrentPage];
-}
-
-
-//---------------------------
-- (NSInteger)dayOfDate:(NSDate *)date {
-    NSDateComponents *component = [self.calendar components:NSCalendarUnitDay fromDate:date];
-    return component.day;
-}
-
-- (NSInteger)weekdayOfDate:(NSDate *)date {
-    return [self.calendar ordinalityOfUnit:NSCalendarUnitWeekday inUnit:NSCalendarUnitWeekOfMonth forDate:date];;
 }
 
 - (NSDate *)dateByAddingDays:(NSUInteger)days toDate:(NSDate *)date {
@@ -133,10 +122,46 @@ static id sharedDateHelper;
     return day;
 }
 
+
+//---------------------------
+//Tool
+//---------------------------
 - (NSDate *)localDateOfDate:(NSDate *)date {
     NSTimeZone *zone = [NSTimeZone systemTimeZone];
     NSInteger interval = [zone secondsFromGMTForDate:date];
     
     return [date dateByAddingTimeInterval:interval];
 }
+
+- (NSInteger)weekdayOfDate:(NSDate *)date {
+    return [self.calendar ordinalityOfUnit:NSCalendarUnitWeekday inUnit:NSCalendarUnitWeekOfMonth forDate:date];;
+}
+
+- (NSInteger)dayOfDate:(NSDate *)date {
+    NSDateComponents *component = [self.calendar components:NSCalendarUnitDay fromDate:date];
+    return component.day;
+}
+
+- (NSInteger)hourOfDate:(NSDate *)date {
+    NSDateComponents *component = [self.calendar components:NSCalendarUnitDay fromDate:date];
+    return component.hour;
+}
+
+//---------------------------
+//Formatter
+//---------------------------
+- (NSString *)dateStringOf24H:(NSDate *)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm"];
+    
+    return [formatter stringFromDate:date];
+}
+
+- (NSString *)dateStringOfMonthAndDay:(NSDate *)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM.dd"];
+    
+    return [formatter stringFromDate:date];
+}
+
 @end

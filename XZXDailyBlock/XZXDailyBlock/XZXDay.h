@@ -21,5 +21,6 @@ typedef NS_ENUM(NSInteger, XZXDayLevel) {
 
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSMutableArray<XZXDayEvent *> *events;
+@property (nonatomic, assign) XZXDayLevel *dayLevel;
 
 @end

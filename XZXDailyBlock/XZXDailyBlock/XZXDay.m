@@ -10,4 +10,8 @@
 
 @implementation XZXDay
 
+- (void)calculateDayLevel {
+    
+}
+
 @end

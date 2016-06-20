@@ -12,16 +12,27 @@
 
 @interface XZXDateHelper : NSObject
 
-// Date的日期
-- (NSInteger)dayOfDate:(NSDate *)date;
-
 // 
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath;
 
-// 当前本地日期
+
+
+// 当前本地日期(除去时间差)
 - (NSDate *)localDateOfDate:(NSDate *)date;
 
-// date为周几
+// 周
 - (NSInteger)weekdayOfDate:(NSDate *)date;
+
+// 日期
+- (NSInteger)dayOfDate:(NSDate *)date;
+
+// 时
+- (NSInteger)hourOfDate:(NSDate *)date;
+
+
+//
+- (NSString *)dateStringOf24H:(NSDate *)date;
+
+- (NSString *)dateStringOfMonthAndDay:(NSDate *)date;
 
 @end

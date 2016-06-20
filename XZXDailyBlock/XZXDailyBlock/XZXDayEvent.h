@@ -10,4 +10,17 @@
 
 @interface XZXDayEvent : NSObject
 
+typedef NS_ENUM(NSInteger, XZXDayEventLevel) {
+    XZXDayEventLevel1,
+    XZXDayEventLevel2,
+    XZXDayEventLevel3,
+    XZXDayEventLevel4
+};
+
+@property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) NSDate *startTime;
+@property (nonatomic, strong) NSDate *endTime;
+@property (nonatomic, assign) XZXDayEventLevel eventLevel;
+@property (nonatomic, copy) NSString *eventAbstruct;
+
 @end
