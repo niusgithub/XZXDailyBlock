@@ -7,9 +7,22 @@
 //
 
 #import "XZXCalendarViewModel.h"
-#import "XZXDateBlockCVCellViewModel.h"
+#import "XZXDayBlockCVCellViewModel.h"
+
+@interface XZXCalendarViewModel ()
+@property (nonatomic, weak) id<XZXCalendarVMServices> services;
+@end
 
 @implementation XZXCalendarViewModel
+
+- (instancetype)initWithServices:(id<XZXCalendarVMServices>)services {
+    if (self = [super init]) {
+        _services = services;
+        [self initialize];
+    }
+    
+    return self;
+}
 
 - (instancetype)initWithDays:(XZXDay *)days {
     if (self = [super init]) {

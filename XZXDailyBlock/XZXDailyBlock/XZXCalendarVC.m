@@ -7,26 +7,31 @@
 //
 
 #import "XZXCalendarVC.h"
-#import "XZXDateBlockCV.h"
-#import "XZXDateBlockCVCell.h"
+#import "XZXDayBlockCV.h"
+#import "XZXDayBlockCVCell.h"
 #import "XZXDayEventVC.h"
 #import "XZXDateHelper.h"
 #import "XZXTransitionAnimator.h"
 
-#import "XZXDateBlockCVCellViewModel.h"
+#import "XZXDayBlockCVCellViewModel.h"
 #import "XZXDateHelper.h"
+
+#import "XZXCalendarVMServicesImpl.h"
 
 #import <ReactiveCocoa.h>
 
 NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
-NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
+//NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 
 
 @interface XZXCalendarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate>
 
+@property (nonatomic, strong) XZXCalendarVMServicesImpl *viewModelServices;
+
 @property (nonatomic, strong) XZXCalendarViewModel *viewModel;
 
-@property (weak, nonatomic) IBOutlet XZXDateBlockCV *dateBlockCV;
+@property (weak, nonatomic) IBOutlet XZXDayBlockCV *dateBlockCV;
+
 @property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
 
@@ -42,9 +47,8 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     // self.dateHelper = [XZXDateHelper sharedDateHelper];
     // self.viewModel = [[XZXCalendarViewModel alloc] initWithDateHelper:_dateHelper];
     
-    XZXCalendarViewModel *viewModel = [[XZXCalendarViewModel alloc] init];
-    //viewModel.title = @"2016/6/15";
-    self.viewModel = viewModel;
+    self.viewModelServices = [XZXCalendarVMServicesImpl new];
+    self.viewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
 }
 
 
@@ -52,12 +56,14 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-    [self initViewModel];
+    
     // 透明navigationBar
-//    self.navigationController.navigationBar.translucent = YES;
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    //    self.navigationController.navigationBar.translucent = YES;
+    //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    //    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+   
+    
+    
     
     //
     self.navigationController.delegate = self;
@@ -65,6 +71,12 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
     //
     CGFloat width = [[UIScreen mainScreen] bounds].size.width;
     self.sideLength = (width - 80) / 7;
+    
+    
+    
+    
+    
+    [self initViewModel];
     
     [self bindViewModel];
     
@@ -96,7 +108,7 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 - (void)bindViewModel {
     self.title = self.viewModel.title;
     
-    [self.dateBlockCV registerClass:[XZXDateBlockCVCell class] forCellWithReuseIdentifier:kDateBlockCellIdentifier];
+    [self.dateBlockCV registerClass:[XZXDayBlockCVCell class] forCellWithReuseIdentifier:kDateBlockCellIdentifier];
     
     // React collectionView:didSelectItemAtIndexPath:
     @weakify(self)
@@ -130,14 +142,15 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    XZXDateBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateBlockCellIdentifier forIndexPath:indexPath];
+    XZXDayBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateBlockCellIdentifier forIndexPath:indexPath];
     
+    
+    // temp
     cell.backgroundColor = [UIColor blueColor];
-    
     
     NSDate *dateOfCell = [_dateHelper dateForIndexPath:indexPath];
     
-    XZXDateBlockCVCellViewModel *cellViewModel = [[XZXDateBlockCVCellViewModel alloc] initWithDate:dateOfCell];
+    XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDate:dateOfCell];
     
     [cell configureCellWithViewModel:cellViewModel atIndexPath:indexPath];
     
@@ -147,7 +160,7 @@ NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 
 #pragma mark - 
 
-- (void)reloadDateForCell:(XZXDateBlockCVCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)reloadDateForCell:(XZXDayBlockCVCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
 }
 

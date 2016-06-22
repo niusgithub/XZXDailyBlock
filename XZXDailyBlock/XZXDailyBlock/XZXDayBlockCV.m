@@ -1,14 +1,14 @@
 //
-//  XZXDateBlockCV.m
+//  XZXDayBlockCV.m
 //  XZXDailyBlock
 //
-//  Created by 陈知行 on 16/6/11.
+//  Created by 陈知行 on 16/6/22.
 //  Copyright © 2016年 陈知行. All rights reserved.
 //
 
-#import "XZXDateBlockCV.h"
+#import "XZXDayBlockCV.h"
 
-@implementation XZXDateBlockCV
+@implementation XZXDayBlockCV
 
 /*
 // Only override drawRect: if you perform custom drawing.

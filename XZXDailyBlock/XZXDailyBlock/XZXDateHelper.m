@@ -164,4 +164,16 @@ static id sharedDateHelper;
     return [formatter stringFromDate:date];
 }
 
+//---------------------------
+//temp
+//---------------------------
+#warning temp
+- (NSDate *)tempDateForIndex:(NSInteger)index {
+    NSUInteger rows = index / 7;
+    NSUInteger colums = index % 7;
+    NSUInteger daysOffset = 7*rows + colums;
+    
+    return [self dateByAddingDays:daysOffset toDate:_firstDateOfCurrentPage];
+}
+
 @end

@@ -7,7 +7,14 @@
 //
 
 #import "XZXDayEvent.h"
+#import "XZXDay.h"
 
 @implementation XZXDayEvent
+
++ (NSDictionary *)linkingObjectsProperties {
+    return @{
+             @"owners": [RLMPropertyDescriptor descriptorWithClass:XZXDay.class propertyName:@"events"]
+             };
+}
 
 @end

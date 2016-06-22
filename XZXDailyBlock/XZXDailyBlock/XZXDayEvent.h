@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Realm/Realm.h>
 
-@interface XZXDayEvent : NSObject
+@interface XZXDayEvent : RLMObject
 
 typedef NS_ENUM(NSInteger, XZXDayEventLevel) {
     XZXDayEventLevel1,
@@ -23,4 +24,8 @@ typedef NS_ENUM(NSInteger, XZXDayEventLevel) {
 @property (nonatomic, assign) XZXDayEventLevel eventLevel;
 @property (nonatomic, copy) NSString *eventAbstruct;
 
+@property (readonly) RLMLinkingObjects *owners;
+
 @end
+
+RLM_ARRAY_TYPE(XZXDayEvent)

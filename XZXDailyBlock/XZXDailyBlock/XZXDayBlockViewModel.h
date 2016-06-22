@@ -1,5 +1,5 @@
 //
-//  XZXDateBlockViewModel.h
+//  XZXDayBlockViewModel.h
 //  XZXDailyBlock
 //
 //  Created by 陈知行 on 16/6/15.
@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XZXDay.h"
 
-@interface XZXDateBlockViewModel : NSObject
+@interface XZXDayBlockViewModel : NSObject
+
+- (void)initWithDays:(XZXDay *)days;
 
 @end

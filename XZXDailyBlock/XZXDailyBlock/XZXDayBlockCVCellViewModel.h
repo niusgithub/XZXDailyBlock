@@ -1,5 +1,5 @@
 //
-//  XZXDateBlockCVCellViewModel.h
+//  XZXDayBlockCVCellViewModel.h
 //  XZXDailyBlock
 //
 //  Created by 陈知行 on 16/6/16.
@@ -11,12 +11,12 @@
 
 @import UIKit;
 
-@interface XZXDateBlockCVCellViewModel : NSObject
+@interface XZXDayBlockCVCellViewModel : NSObject
 
 @property (nonatomic, strong) NSString *dataTitle;
 @property (nonatomic, strong) UIColor *bgColor;
 
-- (instancetype)initWithDay:(XZXDay *)day;
+- (instancetype)initWithDay:(XZXDay *)day Date:(NSDate *)date;
 
 - (instancetype)initWithDate:(NSDate *)date;
 

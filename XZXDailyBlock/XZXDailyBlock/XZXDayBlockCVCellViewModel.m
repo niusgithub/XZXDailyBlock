@@ -6,14 +6,15 @@
 //  Copyright © 2016年 陈知行. All rights reserved.
 //
 
-#import "XZXDateBlockCVCellViewModel.h"
+#import "XZXDayBlockCVCellViewModel.h"
 #import "XZXDay.h"
 
-@implementation XZXDateBlockCVCellViewModel
+@implementation XZXDayBlockCVCellViewModel
 
-- (instancetype)initWithDay:(XZXDay *)day {
+- (instancetype)initWithDay:(XZXDay *)day Date:(NSDate *)date {
     if (self = [super init]) {
         //
+        _dataTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:date]];
     }
     return self;
 }

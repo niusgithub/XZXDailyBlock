@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <Realm/Realm.h>
 #import "XZXDayEvent.h"
 
 typedef NS_ENUM(NSInteger, XZXDayLevel) {
@@ -17,10 +17,12 @@ typedef NS_ENUM(NSInteger, XZXDayLevel) {
     XZXDayLevel4
 };
 
-@interface XZXDay : NSObject
+@interface XZXDay : RLMObject
 
 @property (nonatomic, strong) NSDate *date;
-@property (nonatomic, strong) NSMutableArray<XZXDayEvent *> *events;
-@property (nonatomic, assign) XZXDayLevel *dayLevel;
+@property (nonatomic, strong) RLMArray<XZXDayEvent *><XZXDayEvent> *events;
+@property (nonatomic, assign) XZXDayLevel dayLevel;
 
 @end
+
+RLM_ARRAY_TYPE(XZXDay)

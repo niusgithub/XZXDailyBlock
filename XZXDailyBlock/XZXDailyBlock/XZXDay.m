@@ -14,4 +14,8 @@
     
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"date:%@--event.count:%ld--level:%ld", self.date, self.events.count, self.dayLevel];
+}
+
 @end

@@ -1,20 +1,20 @@
 //
-//  XZXDateBlockCVCell.m
+//  XZXDayBlockCVCell.m
 //  XZXDailyBlock
 //
 //  Created by 陈知行 on 16/6/11.
 //  Copyright © 2016年 陈知行. All rights reserved.
 //
 
-#import "XZXDateBlockCVCell.h"
+#import "XZXDayBlockCVCell.h"
 
 
-@interface XZXDateBlockCVCell ()
+@interface XZXDayBlockCVCell ()
 @property (nonatomic, strong) UILabel *titleLabel;
 @end
 
 
-@implementation XZXDateBlockCVCell
+@implementation XZXDayBlockCVCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -27,7 +27,7 @@
     return self;
 }
 
-- (void)configureCellWithViewModel:(XZXDateBlockCVCellViewModel *)viewModel atIndexPath:(NSIndexPath*)indexPath {
+- (void)configureCellWithViewModel:(XZXDayBlockCVCellViewModel *)viewModel atIndexPath:(NSIndexPath*)indexPath {
     self.titleLabel.text = viewModel.dataTitle;
     //self.titleLabel.text = [NSString stringWithFormat:@"%ld" ,indexPath.item];
 }

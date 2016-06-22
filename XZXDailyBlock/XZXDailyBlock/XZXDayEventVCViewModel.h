@@ -13,7 +13,9 @@
 @interface XZXDayEventVCViewModel : NSObject
 
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, strong) NSMutableArray<XZXWeekCalendarCVViewModel *> *collectionViewVM;
-@property (nonatomic, strong) NSMutableArray<XZXDayEventTVCellViewModel *> *tableViewVM;
+//@property (nonatomic, strong) NSMutableArray<XZXWeekCalendarCVViewModel *> *collectionViewVM;
+//@property (nonatomic, strong) NSMutableArray<XZXDayEventTVCellViewModel *> *tableViewVM;
+
+- (void)initWithCollectionViewModel:(XZXWeekCalendarCVViewModel *)cvViewModel andTableViewModel:(XZXDayEventVCViewModel *)tViewModel;
 
 @end
