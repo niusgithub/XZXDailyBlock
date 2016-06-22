@@ -18,7 +18,10 @@
 
 #import "XZXCalendarVMServicesImpl.h"
 
-#import <ReactiveCocoa.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
+
+#import <DKNightVersion/DKNightVersion.h>
+
 
 NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 //NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
@@ -146,13 +149,15 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     
     
     // temp
-    cell.backgroundColor = [UIColor blueColor];
+//    cell.backgroundColor = [UIColor blueColor];
+//    
+//    NSDate *dateOfCell = [_dateHelper dateForIndexPath:indexPath];
+//    
+//    XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDate:dateOfCell];
     
-    NSDate *dateOfCell = [_dateHelper dateForIndexPath:indexPath];
+    XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item];
     
-    XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDate:dateOfCell];
-    
-    [cell configureCellWithViewModel:cellViewModel atIndexPath:indexPath];
+    [cell configureCellWithViewModel:cellViewModel];
     
     return cell;
 }
@@ -195,5 +200,16 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     }
     return nil;
 }
+
+#warning temp
+- (IBAction)leftBarButtonItemClick:(UIBarButtonItem *)sender {
+    if ([self.dk_manager.themeVersion isEqualToString:DKThemeVersionNight]) {
+        [self.dk_manager dawnComing];
+    } else {
+        [self.dk_manager nightFalling];
+    }
+}
+
+
 
 @end

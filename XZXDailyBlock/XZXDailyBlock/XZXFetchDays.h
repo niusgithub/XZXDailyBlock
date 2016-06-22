@@ -11,8 +11,13 @@
 
 @import UIKit;
 
+@class XZXCalendarPage;
+
 @protocol XZXFetchDays <NSObject>
 
 - (RACSignal *)realmSearchSingal:(NSDate *)date;
+
+#warning temp
+- (XZXCalendarPage *)temporayData;
 
 @end

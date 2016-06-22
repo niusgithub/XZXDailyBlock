@@ -16,9 +16,11 @@
 @property (nonatomic, strong) NSString *dataTitle;
 @property (nonatomic, strong) UIColor *bgColor;
 
-- (instancetype)initWithDay:(XZXDay *)day Date:(NSDate *)date;
+@property (nonatomic, assign) NSInteger level;
 
-- (instancetype)initWithDate:(NSDate *)date;
+- (instancetype)initWithDay:(XZXDay *)day;
+
+//- (instancetype)initWithDate:(NSDate *)date;
 
 
 @end

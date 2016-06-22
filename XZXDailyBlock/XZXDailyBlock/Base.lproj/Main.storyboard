@@ -41,7 +41,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="N5I-aX-59M">
-                        <barButtonItem key="leftBarButtonItem" image="ic_menu" id="4bi-cH-gRz"/>
+                        <barButtonItem key="leftBarButtonItem" image="ic_menu" id="4bi-cH-gRz">
+                            <connections>
+                                <action selector="leftBarButtonItemClick:" destination="MYR-WT-QH5" id="jUi-m5-w1C"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Clock" id="8Br-hi-jEi"/>
                     </navigationItem>
                     <connections>

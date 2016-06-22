@@ -10,4 +10,13 @@
 
 @implementation XZXCalendarPage
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.days = [[NSMutableArray alloc] initWithCapacity:42];
+    }
+    return self;
+}
+
 @end

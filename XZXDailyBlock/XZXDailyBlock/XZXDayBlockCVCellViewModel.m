@@ -11,20 +11,21 @@
 
 @implementation XZXDayBlockCVCellViewModel
 
-- (instancetype)initWithDay:(XZXDay *)day Date:(NSDate *)date {
+- (instancetype)initWithDay:(XZXDay *)day {
     if (self = [super init]) {
         //
-        _dataTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:date]];
+        _dataTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:day.date]];
+        self.level = day.dayLevel;
     }
     return self;
 }
 
-- (instancetype)initWithDate:(NSDate *)date {
-    if (self = [super init]) {
-        self.dataTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:date]];
-    }
-    return self;
-}
+//- (instancetype)initWithDate:(NSDate *)date {
+//    if (self = [super init]) {
+//        self.dataTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:date]];
+//    }
+//    return self;
+//}
 
 - (NSInteger)dayOfDate:(NSDate *)date {
 #warning temp

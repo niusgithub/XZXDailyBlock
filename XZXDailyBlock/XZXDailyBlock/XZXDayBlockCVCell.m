@@ -9,6 +9,8 @@
 #import "XZXDayBlockCVCell.h"
 
 
+#import <DKNightVersion/DKNightVersion.h>
+
 @interface XZXDayBlockCVCell ()
 @property (nonatomic, strong) UILabel *titleLabel;
 @end
@@ -27,9 +29,26 @@
     return self;
 }
 
-- (void)configureCellWithViewModel:(XZXDayBlockCVCellViewModel *)viewModel atIndexPath:(NSIndexPath*)indexPath {
+- (void)configureCellWithViewModel:(XZXDayBlockCVCellViewModel *)viewModel {
     self.titleLabel.text = viewModel.dataTitle;
-    //self.titleLabel.text = [NSString stringWithFormat:@"%ld" ,indexPath.item];
+    
+    switch (viewModel.level) {
+        case 0:
+            //self.bgColor = [UIColor redColor];
+            self.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
+            break;
+        case 1:
+            self.dk_backgroundColorPicker = DKColorPickerWithKey(SEP);
+            break;
+        case 2:
+            self.dk_backgroundColorPicker = DKColorPickerWithKey(TINT);
+            break;
+        case 3:
+            self.dk_backgroundColorPicker = DKColorPickerWithKey(HIGHLIGHTED);
+            break;
+    }
+    
+    //self.backgroundColor = viewModel.bgColor;
 }
 
 - (void)layoutSubviews {

@@ -9,6 +9,9 @@
 #import "XZXCalendarViewModel.h"
 #import "XZXDayBlockCVCellViewModel.h"
 
+
+#import "XZXCalendarPage.h"
+
 @interface XZXCalendarViewModel ()
 @property (nonatomic, weak) id<XZXCalendarVMServices> services;
 @end
@@ -17,6 +20,7 @@
 
 - (instancetype)initWithServices:(id<XZXCalendarVMServices>)services {
     if (self = [super init]) {
+        self.cellViewModels = [[NSMutableArray alloc] initWithCapacity:42];
         _services = services;
         [self initialize];
     }
@@ -24,17 +28,31 @@
     return self;
 }
 
-- (instancetype)initWithDays:(XZXDay *)days {
-    if (self = [super init]) {
-        [self initialize];
-        
-//        _dates = [XZXCalendar ]
-    }
-    return self;
-}
+//- (instancetype)initWithDays:(XZXDay *)days {
+//    if (self = [super init]) {
+//        [self initialize];
+//        
+////        _dates = [XZXCalendar ]
+//    }
+//    return self;
+//}
 
 - (void)initialize {
     self.title = @"AIMeow";
+    
+    [self fetchTemporaryData];
+}
+
+#warning temp
+- (void)fetchTemporaryData {
+    id<XZXFetchDays> temp = [self.services getServices];
+    
+    XZXCalendarPage *page = [temp temporayData];
+    
+    for (int i = 0; i < page.days.count; ++i) {
+        XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:page.days[i]];
+        [self.cellViewModels addObject:cellViewModel];
+    }
 }
 
 @end

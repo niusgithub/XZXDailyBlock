@@ -11,6 +11,6 @@
 
 @interface XZXDayBlockCVCell : UICollectionViewCell
 
-- (void)configureCellWithViewModel:(XZXDayBlockCVCellViewModel *)viewModel atIndexPath:(NSIndexPath *)indexPath;
+- (void)configureCellWithViewModel:(XZXDayBlockCVCellViewModel *)viewModel;
 
 @end
