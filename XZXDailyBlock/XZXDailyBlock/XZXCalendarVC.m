@@ -213,12 +213,15 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 #warning temp
 - (IBAction)leftBarButtonItemClick:(UIBarButtonItem *)sender {
     self.clickTimes++;
-    switch (_clickTimes % 3) {
+    switch (_clickTimes % 4) {
         case 1:
             self.dk_manager.themeVersion = @"SUCCULENT";
             break;
         case 2:
             self.dk_manager.themeVersion = @"VIOLET";
+            break;
+        case 3:
+            self.dk_manager.themeVersion = @"GITHUB";
             break;
         case 0:
             self.dk_manager.themeVersion = @"SEA";
