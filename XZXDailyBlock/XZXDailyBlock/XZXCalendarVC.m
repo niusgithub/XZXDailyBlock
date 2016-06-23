@@ -39,6 +39,9 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
 
 @property (nonatomic, strong) XZXDateHelper *dateHelper;
+
+#warning temp
+@property (nonatomic, assign) NSInteger clickTimes;
 @end
 
 @implementation XZXCalendarVC
@@ -64,8 +67,6 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     //    self.navigationController.navigationBar.translucent = YES;
     //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     //    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-   
-    
     
     
     //
@@ -87,6 +88,14 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     
     
     self.dateHelper = [[XZXDateHelper alloc] init];
+    
+    
+    
+    [DKColorTable sharedColorTable].file = @"XZXColor.txt";
+    self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
+    
+    self.dk_manager.themeVersion = @"SEA";
+    
     
     
     //2016.6.15
@@ -203,10 +212,17 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 
 #warning temp
 - (IBAction)leftBarButtonItemClick:(UIBarButtonItem *)sender {
-    if ([self.dk_manager.themeVersion isEqualToString:DKThemeVersionNight]) {
-        [self.dk_manager dawnComing];
-    } else {
-        [self.dk_manager nightFalling];
+    self.clickTimes++;
+    switch (_clickTimes % 3) {
+        case 1:
+            self.dk_manager.themeVersion = @"SUCCULENT";
+            break;
+        case 2:
+            self.dk_manager.themeVersion = @"VIOLET";
+            break;
+        case 0:
+            self.dk_manager.themeVersion = @"SEA";
+            break;
     }
 }
 

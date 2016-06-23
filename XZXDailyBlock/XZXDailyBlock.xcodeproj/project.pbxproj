@@ -28,6 +28,7 @@
 		E00B22B61D1A74A800FF8241 /* XZXFetchDaysImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22B51D1A74A800FF8241 /* XZXFetchDaysImpl.m */; };
 		E00B22BA1D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22B91D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m */; };
 		E00B22BE1D1A844300FF8241 /* XZXCalendarPage.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22BD1D1A844300FF8241 /* XZXCalendarPage.m */; };
+		E00B22C01D1C30AA00FF8241 /* XZXColor.txt in Resources */ = {isa = PBXBuildFile; fileRef = E00B22BF1D1C30AA00FF8241 /* XZXColor.txt */; };
 		E085F0971D07EAF200E91362 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0961D07EAF200E91362 /* main.m */; };
 		E085F09A1D07EAF200E91362 /* XZXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* XZXAppDelegate.m */; };
 		E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F09E1D07EAF200E91362 /* Main.storyboard */; };
@@ -99,6 +100,7 @@
 		E00B22BB1D1A7E9D00FF8241 /* XZXCalendarVMServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXCalendarVMServices.h; sourceTree = "<group>"; };
 		E00B22BC1D1A844300FF8241 /* XZXCalendarPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXCalendarPage.h; sourceTree = "<group>"; };
 		E00B22BD1D1A844300FF8241 /* XZXCalendarPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXCalendarPage.m; sourceTree = "<group>"; };
+		E00B22BF1D1C30AA00FF8241 /* XZXColor.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XZXColor.txt; sourceTree = "<group>"; };
 		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E085F0981D07EAF200E91362 /* XZXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXAppDelegate.h; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 		E0B904871D084652002CFE5D /* Recource */ = {
 			isa = PBXGroup;
 			children = (
+				E00B22BF1D1C30AA00FF8241 /* XZXColor.txt */,
 				E085F0A11D07EAF200E91362 /* Assets.xcassets */,
 			);
 			name = Recource;
@@ -460,6 +463,7 @@
 			files = (
 				E085F0A51D07EAF200E91362 /* LaunchScreen.storyboard in Resources */,
 				E085F0A21D07EAF200E91362 /* Assets.xcassets in Resources */,
+				E00B22C01D1C30AA00FF8241 /* XZXColor.txt in Resources */,
 				E00B22A41D182A1E00FF8241 /* XZXDayEventTVCell.xib in Resources */,
 				E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */,
 			);
