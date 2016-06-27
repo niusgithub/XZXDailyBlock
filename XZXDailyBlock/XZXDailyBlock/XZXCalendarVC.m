@@ -22,6 +22,7 @@
 
 #import <DKNightVersion/DKNightVersion.h>
 
+#define MaxSections 100
 
 NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 //NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
@@ -138,6 +139,8 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
      }];
     self.dateBlockCV.delegate = nil;
     self.dateBlockCV.delegate = self;
+    
+    [self.dateBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:MaxSections / 2] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,8 +148,34 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     // Dispose of any resources that can be recreated.
 }
 
+//#pragma mark - 6.27
+//
+//- (void)nextPage {
+//    NSIndexPath *currentIndexPath = [[self.dateBlockCV indexPathsForVisibleItems] lastObject];
+//    NSIndexPath *currentIndexPathSet = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:MaxSections / 2];
+//    [self.dateBlockCV scrollToItemAtIndexPath:currentIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+//    
+//    NSInteger nextItem = currentIndexPathSet.item + 1;
+//    NSInteger nextSection = currentIndexPathSet.section;
+//    if (nextItem == 3) {
+//        // 当item等于轮播图的总个数的时候
+//        // item等于0, 分区加1
+//        // 未达到的时候永远在50分区中
+//        nextItem = 0;
+//        nextSection ++;
+//    }
+//    // NSLog(@"----%ld---%ld", nextItem, nextSection);
+//    NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextItem inSection:nextSection];
+//    [self.dateBlockCV scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+//    
+//}
+
 
 #pragma mark - cv
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return MaxSections;
+}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return 42;
