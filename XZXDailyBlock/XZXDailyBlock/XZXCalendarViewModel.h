@@ -19,8 +19,6 @@
 @property (nonatomic, strong) NSMutableArray<XZXDayBlockCVCellViewModel *> *cellViewModels;
 
 
-
-
 //- (instancetype)initWithDays:(XZXDay *)days;
 
 - (instancetype)initWithServices:(id<XZXCalendarVMServices>)services;

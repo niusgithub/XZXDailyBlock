@@ -11,6 +11,7 @@
 #import "XZXDayEvent.h"
 
 typedef NS_ENUM(NSInteger, XZXDayLevel) {
+    XZXDayLevel0,
     XZXDayLevel1,
     XZXDayLevel2,
     XZXDayLevel3,

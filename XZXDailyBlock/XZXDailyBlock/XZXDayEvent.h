@@ -12,6 +12,7 @@
 @interface XZXDayEvent : RLMObject
 
 typedef NS_ENUM(NSInteger, XZXDayEventLevel) {
+    XZXDayEventLevel0,
     XZXDayEventLevel1,
     XZXDayEventLevel2,
     XZXDayEventLevel3,

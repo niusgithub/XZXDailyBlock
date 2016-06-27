@@ -29,6 +29,9 @@
 // 时
 - (NSInteger)hourOfDate:(NSDate *)date;
 
+- (BOOL)isDateToday:(NSDate *)date;
+
+- (NSDate *)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
 
 //
 - (NSString *)dateStringOf24H:(NSDate *)date;

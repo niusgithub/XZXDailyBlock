@@ -29,7 +29,7 @@
     for (int i = 0; i < 42; ++i) {
         XZXDay *day = [[XZXDay alloc] init];
         day.date = [helper tempDateForIndex:i];
-        day.dayLevel = i % 4;
+        day.dayLevel = i % 5;
         
         [page.days addObject:day];
     }

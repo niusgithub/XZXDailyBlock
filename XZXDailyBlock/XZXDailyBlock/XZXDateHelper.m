@@ -17,8 +17,8 @@ static id sharedDateHelper;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) NSDateComponents *dateComponents;
-//@property (nonatomic, strong) NSDate *minDate;
-//@property (nonatomic, strong) NSDate *maxDate;
+@property (nonatomic, strong) NSDate *minDate;
+@property (nonatomic, strong) NSDate *maxDate;
 @property (nonatomic, strong) NSDate *today;
 
 // 当前月份的第一天
@@ -49,6 +49,8 @@ static id sharedDateHelper;
     return self;
 }
 
+#pragma mark - initialize
+
 - (void)initialize {
 //    _calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     _timeZone = [NSTimeZone localTimeZone];
@@ -72,7 +74,29 @@ static id sharedDateHelper;
 //    _maxDate = [self lastDayOfMonth:_today];
     
     [self datesAboutToday];
+    
+    [self initializeMinAndMaxDate];
 }
+
+- (void)datesAboutToday {
+    // 当前月份的第一天
+    self.firstDateOfCurrentMonth = [self firstDayOfMonth:_today];
+    // 当前月份第一天开始的偏移天数
+    self.numbersOfOffset = [self weekdayOfDate:_firstDateOfCurrentMonth];
+    //NSLog(@"numbersOfOffset:%ld", _numbersOfOffset);
+    // 当前页面的第一天
+    self.firstDateOfCurrentPage = [self dateByAddingDays:-_numbersOfOffset toDate:_firstDateOfCurrentMonth];
+    //NSLog(@"firstDateOfCurrentPage:%@", [self localDateOfDate:_firstDateOfCurrentPage]);
+}
+
+- (void)initializeMinAndMaxDate {
+    self.minDate = [self dateWithYear:2016 month:5 day:1];
+    self.maxDate = [self dateWithYear:2115 month:5 day:1];
+}
+
+
+
+#pragma mark -
 
 - (NSDate *)firstDayOfMonth:(NSDate *)date {
     NSDateComponents *components = [self.calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate:date];
@@ -94,16 +118,7 @@ static id sharedDateHelper;
     return [self.calendar dateFromComponents:components];
 }
 
-- (void)datesAboutToday {
-    // 当前月份的第一天
-    self.firstDateOfCurrentMonth = [self firstDayOfMonth:_today];
-    // 当前月份第一天开始的偏移天数
-    self.numbersOfOffset = [self weekdayOfDate:_firstDateOfCurrentMonth];
-    //NSLog(@"numbersOfOffset:%ld", _numbersOfOffset);
-    // 当前页面的第一天
-    self.firstDateOfCurrentPage = [self dateByAddingDays:-_numbersOfOffset toDate:_firstDateOfCurrentMonth];
-    //NSLog(@"firstDateOfCurrentPage:%@", [self localDateOfDate:_firstDateOfCurrentPage]);
-}
+
 
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
     NSUInteger rows = indexPath.item / 7;
@@ -145,6 +160,21 @@ static id sharedDateHelper;
 - (NSInteger)hourOfDate:(NSDate *)date {
     NSDateComponents *component = [self.calendar components:NSCalendarUnitDay fromDate:date];
     return component.hour;
+}
+
+- (BOOL)isDateToday:(NSDate *)date {
+    return [self.calendar isDateInToday:date];
+}
+
+- (NSDate *)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
+    NSDateComponents *components = _dateComponents;
+    components.year = year;
+    components.month = month;
+    components.day = day;
+    components.hour = 0;
+    NSDate *date = [self.calendar dateFromComponents:components];
+    
+    return date;
 }
 
 //---------------------------

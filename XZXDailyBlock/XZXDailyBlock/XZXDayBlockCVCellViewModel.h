@@ -15,8 +15,10 @@
 
 @property (nonatomic, strong) NSString *dataTitle;
 @property (nonatomic, strong) UIColor *bgColor;
-
 @property (nonatomic, assign) NSInteger level;
+@property (nonatomic, assign) BOOL isToday;
+
+@property (nonatomic, assign) BOOL hasSchedule;
 
 - (instancetype)initWithDay:(XZXDay *)day;
 

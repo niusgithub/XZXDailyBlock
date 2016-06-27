@@ -229,6 +229,9 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     }
 }
 
+- (IBAction)jumpToToday:(UIBarButtonItem *)sender {
+    
+}
 
 
 @end
