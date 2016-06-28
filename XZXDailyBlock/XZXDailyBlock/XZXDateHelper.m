@@ -81,6 +81,7 @@ static id sharedDateHelper;
 - (void)datesAboutToday {
     // 当前月份的第一天
     self.firstDateOfCurrentMonth = [self firstDayOfMonth:_today];
+    //NSLog(@"firstDateOfCurrentMonth%@",_firstDateOfCurrentMonth);
     // 当前月份第一天开始的偏移天数
     self.numbersOfOffset = [self weekdayOfDate:_firstDateOfCurrentMonth];
     //NSLog(@"numbersOfOffset:%ld", _numbersOfOffset);
@@ -96,7 +97,7 @@ static id sharedDateHelper;
 
 
 
-#pragma mark -
+#pragma mark - Calendar
 
 - (NSDate *)firstDayOfMonth:(NSDate *)date {
     NSDateComponents *components = [self.calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate:date];
@@ -118,8 +119,6 @@ static id sharedDateHelper;
     return [self.calendar dateFromComponents:components];
 }
 
-
-
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
     NSUInteger rows = indexPath.item / 7;
     NSUInteger colums = indexPath.item % 7;
@@ -129,12 +128,41 @@ static id sharedDateHelper;
 }
 
 - (NSDate *)dateByAddingDays:(NSUInteger)days toDate:(NSDate *)date {
-    NSDateComponents *components = self.dateComponents;
+    //NSLog(@"days:%ld, todate%@",days,date);
+    NSDateComponents *components = [[NSDateComponents alloc] init];
     components.day = days;
     NSDate *day = [self.calendar dateByAddingComponents:components toDate:date options:0];
-    components.day = NSUIntegerMax;
+    //components.day = NSUIntegerMax;
+    
+    //NSLog(@"date:%@",day);
     
     return day;
+}
+
+- (NSInteger)monthsFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate {
+    NSDateComponents *components = [self.calendar components:NSCalendarUnitMonth
+                                                    fromDate:fromDate
+                                                      toDate:toDate
+                                                     options:0];
+    return components.month;
+}
+
+- (NSInteger)totalMonths {
+    return [self monthsFromDate:_minDate toDate:_maxDate];
+}
+
+//---------------------------
+//temp
+//---------------------------
+#warning temp
+- (NSDate *)tempDateForIndex:(NSInteger)index {
+    NSUInteger rows = index / 7;
+    NSUInteger colums = index % 7;
+    NSUInteger daysOffset = 7*rows + colums;
+    
+    //NSLog(@"row%ld col%ld daysoffset%ld",rows,colums,daysOffset);
+    
+    return [self dateByAddingDays:daysOffset toDate:_firstDateOfCurrentPage];
 }
 
 
@@ -194,16 +222,6 @@ static id sharedDateHelper;
     return [formatter stringFromDate:date];
 }
 
-//---------------------------
-//temp
-//---------------------------
-#warning temp
-- (NSDate *)tempDateForIndex:(NSInteger)index {
-    NSUInteger rows = index / 7;
-    NSUInteger colums = index % 7;
-    NSUInteger daysOffset = 7*rows + colums;
-    
-    return [self dateByAddingDays:daysOffset toDate:_firstDateOfCurrentPage];
-}
+
 
 @end

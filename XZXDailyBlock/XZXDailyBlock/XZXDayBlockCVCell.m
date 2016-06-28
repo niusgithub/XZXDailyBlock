@@ -55,11 +55,17 @@
     if (viewModel.isToday) {
         self.layer.borderColor = [[UIColor blackColor] CGColor];
         self.layer.borderWidth = 1.0f;
+//        self.titleLabel.text = viewModel.dataTitle;
     }
 }
 
 - (void)layoutSubviews {
     self.titleLabel.frame = self.bounds;
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.layer.borderWidth = 0;
 }
 
 @end

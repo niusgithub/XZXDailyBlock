@@ -33,6 +33,12 @@
 
 - (NSDate *)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
 
+// 日期之间的所含的月数
+- (NSInteger)monthsFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate;
+
+- (NSInteger)totalMonths;
+
+
 //
 - (NSString *)dateStringOf24H:(NSDate *)date;
 
