@@ -7,21 +7,20 @@
 //
 
 #import "XZXDayEventTVCellViewModel.h"
-#import "XZXDateHelper.h"
+#import "XZXDateUtil.h"
 
 @interface XZXDayEventTVCellViewModel ()
-@property (nonatomic, strong) XZXDateHelper *helper;
+
 @end
 
 @implementation XZXDayEventTVCellViewModel
 
 - (instancetype)initWithDayEvent:(XZXDayEvent *)dayEvent {
     if (self = [super init]) {
-        self.helper = [[XZXDateHelper alloc] init];
         
         self.date = dayEvent.date;
-        self.startTime = [_helper dateStringOf24H:dayEvent.startTime];
-        self.endTime = [_helper dateStringOf24H:dayEvent.endTime];
+        self.startTime = [XZXDateUtil dateStringOf24H:dayEvent.startTime];
+        self.endTime = [XZXDateUtil dateStringOf24H:dayEvent.endTime];
         // self.levelViewBGColor =
         self.eventAbstruct = dayEvent.eventAbstruct;
     }

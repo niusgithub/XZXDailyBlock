@@ -32,7 +32,7 @@
 
 - (void)configureCellWithViewModel:(XZXDayBlockCVCellViewModel *)viewModel {
     //开发用日期显示
-    self.titleLabel.text = viewModel.dataTitle;
+    self.titleLabel.text = viewModel.dateTitle;
     
     switch (viewModel.level) {
         case 0:

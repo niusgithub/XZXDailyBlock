@@ -12,9 +12,20 @@
 
 
 
-#import "XZXDateHelper.h"
+#import "XZXCalendarUtil.h"
+
+@interface XZXFetchDaysImpl ()
+@property (nonatomic, strong) XZXCalendarUtil *calendarUtil;
+@end
 
 @implementation XZXFetchDaysImpl
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.calendarUtil = [[XZXCalendarUtil alloc] init];
+    }
+    return self;
+}
 
 - (RACSignal *)realmSearchSingal:(NSDate *)date {
     return [[[[RACSignal empty] logAll] delay:1.0] logAll];
@@ -22,13 +33,15 @@
 
 #warning temp
 - (XZXCalendarPage *)temporayData {
-    XZXDateHelper *helper = [[XZXDateHelper alloc] init];
+//    XZXDateHelper *helper = [[XZXDateHelper alloc] init];
     
     XZXCalendarPage *page = [[XZXCalendarPage alloc] init];
     
-    for (int i = 0; i < 42; ++i) {
+    for (int i = 0; i < 126; ++i) {
         XZXDay *day = [[XZXDay alloc] init];
-        day.date = [helper tempDateForIndex:i];
+        day.date = [_calendarUtil tempDateForIndex:i];
+        NSLog(@"day.date:%@", day.date);
+        
         day.dayLevel = i % 5;
         
         [page.days addObject:day];

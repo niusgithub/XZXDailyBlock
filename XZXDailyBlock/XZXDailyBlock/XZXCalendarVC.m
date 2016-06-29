@@ -11,11 +11,10 @@
 #import "XZXDayBlockCVCell.h"
 #import "XZXDayBlockCVLayout.h"
 #import "XZXDayEventVC.h"
-#import "XZXDateHelper.h"
 #import "XZXTransitionAnimator.h"
 
 #import "XZXDayBlockCVCellViewModel.h"
-#import "XZXDateHelper.h"
+#import "XZXCalendarUtil.h"
 
 #import "XZXCalendarVMServicesImpl.h"
 
@@ -37,7 +36,7 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 @property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
 
-@property (nonatomic, strong) XZXDateHelper *dateHelper;
+@property (nonatomic, strong) XZXCalendarUtil *calendarUtil;
 
 #warning temp
 @property (nonatomic, assign) NSInteger clickTimes;
@@ -101,7 +100,7 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     
     
     
-    self.dateHelper = [[XZXDateHelper alloc] init];
+    self.calendarUtil = [[XZXCalendarUtil alloc] init];
     
     
     
@@ -205,7 +204,7 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     
     
     
-    XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item%42];
+    XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item%126];
     
     [cell configureCellWithViewModel:cellViewModel];
     

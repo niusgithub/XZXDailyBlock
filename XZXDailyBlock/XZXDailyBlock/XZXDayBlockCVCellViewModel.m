@@ -7,25 +7,30 @@
 //
 
 #import "XZXDayBlockCVCellViewModel.h"
-#import "XZXDateHelper.h"
+#import "XZXCalendarUtil.h"
 #import "XZXDay.h"
 
 @interface XZXDayBlockCVCellViewModel ()
-@property (nonatomic, strong) XZXDateHelper *dateHelper;
+//@property (nonatomic, strong) XZXDateHelper *dateHelper;
 @end
 
 @implementation XZXDayBlockCVCellViewModel
 
+//- (instancetype)init {
+//    if ([super init]) {
+//        self.dateHelper = [[XZXDateHelper alloc] init];
+//    }
+//    return self;
+//}
+
 - (instancetype)initWithDay:(XZXDay *)day {
     if (self = [super init]) {
-        
-        self.dateHelper = [[XZXDateHelper alloc] init];
-        
+        //NSLog(@"date:%@", day.date);
         //
-        _dataTitle = [NSString stringWithFormat:@"%ld", [_dateHelper dayOfDate:day.date]];
+        _dateTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:day.date]];
         self.level = day.dayLevel;
         
-        self.isToday = [_dateHelper isDateToday:day.date];
+        self.isToday = [self isDateToday:day.date];
         
         // 先去确定时间在今天之后 然后根据events数确定
         //self.hasSchedule =
@@ -41,12 +46,18 @@
 //    return self;
 //}
 
-//- (NSInteger)dayOfDate:(NSDate *)date {
-//#warning temp
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    NSDateComponents *component = [calendar components:NSCalendarUnitDay
-//                                                   fromDate:date];
-//    return component.day;
-//}
+#warning temp
+
+- (NSInteger)dayOfDate:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *component = [calendar components:NSCalendarUnitDay
+                                                   fromDate:date];
+    return component.day;
+}
+
+- (BOOL)isDateToday:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    return [calendar isDateInToday:date];
+}
 
 @end
