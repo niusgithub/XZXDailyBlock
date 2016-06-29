@@ -55,7 +55,7 @@ static id sharedDateHelper;
 // 两月后月份第一天开始的偏移天数
 @property (nonatomic, assign) NSInteger numbersOfOffsetOf2MonthLater;
 // 两月后月页面的第一天
-@property (nonatomic, strong) NSDate *firstDateOf2MonthAgoLater;
+@property (nonatomic, strong) NSDate *firstDateOf2MonthLaterPage;
 
 @end
 
@@ -142,6 +142,17 @@ static id sharedDateHelper;
     self.firstDateOfNextPage = [self dateByAddingDays:-_numbersOfOffsetOfNextMonth toDate:_firstDateOfNextMonth];
     //NSLog(@"firstDateOfNextPage:%@",[XZXDateUtil localDateOfDate:_firstDateOfNextPage]);
     
+    monthComponents.month+=1;
+    NSDate *twoMonthLaterDate = [self.calendar dateFromComponents:monthComponents];
+    // 下月份的第一天
+    self.firstDateOf2MonthLater = [self firstDayOfMonth:twoMonthLaterDate];
+    //NSLog(@"firstDateOf2MonthLater:%@",[XZXDateUtil localDateOfDate:_firstDateOf2MonthLater]);
+    // 下月份第一天开始的偏移天数
+    self.numbersOfOffsetOf2MonthLater = [XZXDateUtil weekdayOfDate:_firstDateOf2MonthLater] - 1;
+    // 下月页面的第一天
+    self.firstDateOf2MonthLaterPage = [self dateByAddingDays:-_numbersOfOffsetOf2MonthLater toDate:_firstDateOf2MonthLater];
+    //NSLog(@"firstDateOf2MonthLaterPage:%@",[XZXDateUtil localDateOfDate:_firstDateOf2MonthLaterPage]);
+    
 }
 
 - (void)initializeMinAndMaxDate {
@@ -219,16 +230,20 @@ static id sharedDateHelper;
     NSUInteger rows = index / 7;
     NSUInteger colums = index % 7;
     NSUInteger daysOffset = 7*rows + colums;
-    NSLog(@"index:%ld", index);
     //NSLog(@"row%ld col%ld daysoffset%ld",rows,colums,daysOffset);
     
     if (index <= 41) {
         return [self dateByAddingDays:daysOffset toDate:_firstDateOf2MonthAgoPage];
     } else if (index <= 83) {
         return [self dateByAddingDays:daysOffset-42 toDate:_firstDateOfLastPage];
-    } else if (index <= 125){
+    } else if (index <= 125) {
         return [self dateByAddingDays:daysOffset-84 toDate:_firstDateOfCurrentPage];
+    } else if (index <= 167) {
+        return [self dateByAddingDays:daysOffset-126 toDate:_firstDateOfNextPage];
+    } else if (index <= 209) {
+        return [self dateByAddingDays:daysOffset-168 toDate:_firstDateOf2MonthLaterPage];
     }
+    
     return nil;
 }
 

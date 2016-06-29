@@ -204,7 +204,7 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     
     
     
-    XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item%126];
+    XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item];
     
     [cell configureCellWithViewModel:cellViewModel];
     

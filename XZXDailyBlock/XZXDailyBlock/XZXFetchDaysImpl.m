@@ -37,7 +37,7 @@
     
     XZXCalendarPage *page = [[XZXCalendarPage alloc] init];
     
-    for (int i = 0; i < 126; ++i) {
+    for (int i = 0; i < 210; ++i) {
         XZXDay *day = [[XZXDay alloc] init];
         day.date = [_calendarUtil tempDateForIndex:i];
         NSLog(@"day.date:%@", day.date);
