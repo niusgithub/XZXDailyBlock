@@ -10,7 +10,9 @@
 
 @interface XZXDayBlockCVLayout : UICollectionViewLayout
 
+// item行间距
 @property (nonatomic, assign) CGFloat minimunLineSpacing;
+// item 左右间距
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;
 @property (nonatomic, assign) CGSize itemSize;
 @property (nonatomic, assign) UIEdgeInsets sectionInset;

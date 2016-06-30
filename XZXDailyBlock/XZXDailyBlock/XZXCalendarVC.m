@@ -23,7 +23,6 @@
 #import <DKNightVersion/DKNightVersion.h>
 
 NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
-//NSString *const kDateBlockCellNibName = @"XZXDateBlockCVCell";
 
 @interface XZXCalendarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate>
 
@@ -47,10 +46,6 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 #pragma mark - initialize
 
 - (void)initViewModel {
-#warning temp
-    // self.dateHelper = [XZXDateHelper sharedDateHelper];
-    // self.viewModel = [[XZXCalendarViewModel alloc] initWithDateHelper:_dateHelper];
-    
     self.viewModelServices = [XZXCalendarVMServicesImpl new];
     self.viewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
 }
@@ -69,21 +64,24 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     
     //
     self.navigationController.delegate = self;
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"日历" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
     
     //
     CGFloat width = [[UIScreen mainScreen] bounds].size.width;
     self.sideLength = (width - 80) / 7;
     
-    CGFloat collectionViewHeight = 10 + (_sideLength + 10) * 6;
+    CGFloat collectionViewHeight = 8 + (_sideLength + 10) * 6;
     
+    // collectionView
     XZXDayBlockCVLayout *layout = [[XZXDayBlockCVLayout alloc] init];
     layout.itemSize = CGSizeMake(_sideLength, _sideLength);
-    layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
+    layout.sectionInset = UIEdgeInsetsMake(10, 8, 8, 10);
     layout.minimunLineSpacing = 10;
     layout.minimumInteritemSpacing = 10;
     
     XZXDayBlockCV *dayBlockCV = [[XZXDayBlockCV alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, collectionViewHeight) collectionViewLayout:layout];
-    dayBlockCV.backgroundColor = [UIColor redColor];
+    dayBlockCV.backgroundColor = [UIColor clearColor];
     dayBlockCV.showsVerticalScrollIndicator = NO;
     dayBlockCV.showsHorizontalScrollIndicator = NO;
     dayBlockCV.pagingEnabled = YES;
@@ -98,36 +96,15 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     [self bindViewModel];
     
     
-    
-    
     self.calendarUtil = [[XZXCalendarUtil alloc] init];
     
     
-    
+    // DKNightVersion
     [DKColorTable sharedColorTable].file = @"XZXColor.txt";
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
-    
     self.dk_manager.themeVersion = @"SEA";
     
-    
-    
-    //2016.6.15
-////    NSCalendar *calendar = [[XZXDateHelper sharedDateHelper] calendar];
-//    
-//    #if DEBUG
-//    NSAssert(calendar != nil, @"calendar must not be nil");
-//    #endif
-    
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    dateFormatter.timeZone = calendar.timeZone;
-//    dateFormatter.locale = calendar.locale;
-    
-//    NSMutableArray *days = nil;
-//    days = [[dateFormatter standaloneMonthSymbols] mutableCopy];
-    
-//    [days enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        NSLog(@"days:%ld--%@", idx, obj);
-//    }];
+    NSLog(@"constant:%f",15 + self.sideLength);
 }
 
 - (void)bindViewModel {
@@ -141,11 +118,13 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
      subscribeNext:^(RACTuple *value) {
          @strongify(self)
          
-         self.collectionViewSplitY = ([(NSIndexPath *)value.second row] / 7 + 1) * (self.sideLength + 10) + 5;
-         //NSLog(@"x : %f", self.collectionViewSplitY);
+         self.collectionViewSplitY = ([(NSIndexPath *)value.second item] % 42 / 7 + 1) * (self.sideLength + 10) + 5;
+//         NSLog(@"x : %f", self.collectionViewSplitY);
          
          UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
          XZXDayEventVC *vc = [sb instantiateViewControllerWithIdentifier:@"XZXDEViewController"];
+         vc.weekCV.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 15 + self.sideLength);
+         
          vc.modalPresentationStyle = UIModalPresentationFullScreen;
          [self.navigationController pushViewController:vc animated:YES];
      }];
@@ -161,48 +140,22 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     // Dispose of any resources that can be recreated.
 }
 
-//#pragma mark - 6.27
-//
-//- (void)nextPage {
-//    NSIndexPath *currentIndexPath = [[self.dateBlockCV indexPathsForVisibleItems] lastObject];
-//    NSIndexPath *currentIndexPathSet = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:MaxSections / 2];
-//    [self.dateBlockCV scrollToItemAtIndexPath:currentIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
-//    
-//    NSInteger nextItem = currentIndexPathSet.item + 1;
-//    NSInteger nextSection = currentIndexPathSet.section;
-//    if (nextItem == 3) {
-//        // 当item等于轮播图的总个数的时候
-//        // item等于0, 分区加1
-//        // 未达到的时候永远在50分区中
-//        nextItem = 0;
-//        nextSection ++;
-//    }
-//    // NSLog(@"----%ld---%ld", nextItem, nextSection);
-//    NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextItem inSection:nextSection];
-//    [self.dateBlockCV scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
-//    
-//}
 
-
-#pragma mark - cv
-
-
+#pragma mark - UICollectionViewDateSource
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    return 42 * [_dateHelper totalMonths];
-    //暂定显示前后2个月加上本月共5个月 42*5
+    // return 42 * [_dateHelper totalMonths];
+    // 暂定显示前后2个月加上本月共5个月 42*5
     return 210;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
     XZXDayBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateBlockCellIdentifier forIndexPath:indexPath];
-    
-    
     
     XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item];
     
@@ -212,14 +165,14 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 }
 
 
-#pragma mark - 
+//#pragma mark - 
+//
+//- (void)reloadDateForCell:(XZXDayBlockCVCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+//    
+//}
 
-- (void)reloadDateForCell:(XZXDayBlockCVCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    
-}
 
-
-#pragma mark - UICollectionView Delegate FlowLayout
+//#pragma mark - UICollectionView Delegate FlowLayout
 
 //- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
 //    return CGSizeMake(_sideLength, _sideLength);
@@ -285,7 +238,8 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 }
 
 - (IBAction)jumpToToday:(UIBarButtonItem *)sender {
-    
+    // 暂定方法实现
+    [self.dateBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
 
 

@@ -36,7 +36,7 @@
     
     switch (viewModel.level) {
         case 0:
-            self.backgroundColor = [UIColor whiteColor];
+            self.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
             break;
         case 1:
             self.dk_backgroundColorPicker = DKColorPickerWithKey(LV1);

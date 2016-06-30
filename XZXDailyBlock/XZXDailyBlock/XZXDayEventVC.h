@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XZXHorizontalWeekCV.h"
 
 @interface XZXDayEventVC : UIViewController
+
+@property (weak, nonatomic) IBOutlet XZXHorizontalWeekCV *weekCV;
 
 @end

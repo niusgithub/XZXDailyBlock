@@ -24,6 +24,8 @@
     // values to best match your content.
     [self.layer setShadowColor:[UIColor blackColor].CGColor];
     [self.layer setShadowOpacity:0.25f];
+    
+    NSLog(@"he%f", self.frame.size.height);
 }
 
 @end
