@@ -28,15 +28,6 @@
     return self;
 }
 
-//- (instancetype)initWithDays:(XZXDay *)days {
-//    if (self = [super init]) {
-//        [self initialize];
-//        
-////        _dates = [XZXCalendar ]
-//    }
-//    return self;
-//}
-
 - (void)initialize {
     self.title = @"AIMeow";
     

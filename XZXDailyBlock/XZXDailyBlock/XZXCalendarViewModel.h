@@ -7,19 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XZXCalendarVMServices.h"
+#import "XZXCalendarVMServicesImpl.h"
 
 #import "XZXDayBlockCVCellViewModel.h"
-
-@class XZXDay;
 
 @interface XZXCalendarViewModel : NSObject
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSMutableArray<XZXDayBlockCVCellViewModel *> *cellViewModels;
-
-
-//- (instancetype)initWithDays:(XZXDay *)days;
 
 - (instancetype)initWithServices:(id<XZXCalendarVMServices>)services;
 

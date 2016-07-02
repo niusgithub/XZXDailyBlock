@@ -11,6 +11,7 @@
 
 @interface XZXDayEventVC : UIViewController
 
-@property (weak, nonatomic) IBOutlet XZXHorizontalWeekCV *weekCV;
+#warning temp
+@property (nonatomic, assign) CGFloat height;
 
 @end

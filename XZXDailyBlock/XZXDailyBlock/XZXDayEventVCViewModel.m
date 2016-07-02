@@ -7,9 +7,39 @@
 //
 
 #import "XZXDayEventVCViewModel.h"
-#import "XZXWeekCalendarCVViewModel.h" 
 #import "XZXDayEventTVCellViewModel.h"
 
+#import "XZXCalendarPage.h"
+
+@interface XZXDayEventVCViewModel ()
+@property (nonatomic, weak) id<XZXCalendarVMServices> services;
+@end
+
 @implementation XZXDayEventVCViewModel
+
+- (instancetype)initWithServices:(id<XZXCalendarVMServices>)services {
+    if (self = [super init]) {
+        self.cellViewModels = [[NSMutableArray alloc] initWithCapacity:7];
+        self.services = services;
+        [self initialize];
+    }
+    return self;
+}
+
+- (void)initialize {
+    [self fetchTemporaryData];
+}
+
+#warning temp
+- (void)fetchTemporaryData {
+    id<XZXFetchDays> temp = [self.services getServices];
+    
+    XZXCalendarPage *page = [temp temporayData];
+    
+    for (int i = 0; i < page.days.count; ++i) {
+        XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:page.days[i]];
+        [self.cellViewModels addObject:cellViewModel];
+    }
+}
 
 @end

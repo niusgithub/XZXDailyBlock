@@ -23,7 +23,6 @@
 		E00B22A41D182A1E00FF8241 /* XZXDayEventTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E00B22A21D182A1E00FF8241 /* XZXDayEventTVCell.xib */; };
 		E00B22A91D182D8B00FF8241 /* XZXDayEventTVCellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22A81D182D8B00FF8241 /* XZXDayEventTVCellViewModel.m */; };
 		E00B22AC1D1844D000FF8241 /* XZXDayEventVCViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22AB1D1844D000FF8241 /* XZXDayEventVCViewModel.m */; };
-		E00B22AF1D1846AE00FF8241 /* XZXWeekCalendarCVViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22AE1D1846AE00FF8241 /* XZXWeekCalendarCVViewModel.m */; };
 		E00B22B21D1A66AD00FF8241 /* XZXDayBlockCV.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22B11D1A66AD00FF8241 /* XZXDayBlockCV.m */; };
 		E00B22B61D1A74A800FF8241 /* XZXFetchDaysImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22B51D1A74A800FF8241 /* XZXFetchDaysImpl.m */; };
 		E00B22BA1D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22B91D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m */; };
@@ -90,8 +89,6 @@
 		E00B22A81D182D8B00FF8241 /* XZXDayEventTVCellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDayEventTVCellViewModel.m; sourceTree = "<group>"; };
 		E00B22AA1D1844D000FF8241 /* XZXDayEventVCViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDayEventVCViewModel.h; sourceTree = "<group>"; };
 		E00B22AB1D1844D000FF8241 /* XZXDayEventVCViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDayEventVCViewModel.m; sourceTree = "<group>"; };
-		E00B22AD1D1846AE00FF8241 /* XZXWeekCalendarCVViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXWeekCalendarCVViewModel.h; sourceTree = "<group>"; };
-		E00B22AE1D1846AE00FF8241 /* XZXWeekCalendarCVViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXWeekCalendarCVViewModel.m; sourceTree = "<group>"; };
 		E00B22B01D1A66AD00FF8241 /* XZXDayBlockCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDayBlockCV.h; sourceTree = "<group>"; };
 		E00B22B11D1A66AD00FF8241 /* XZXDayBlockCV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXDayBlockCV.m; sourceTree = "<group>"; };
 		E00B22B31D1A72A300FF8241 /* XZXFetchDays.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXFetchDays.h; sourceTree = "<group>"; };
@@ -215,8 +212,6 @@
 				E00B22871D1099E300FF8241 /* XZXDayBlockViewModel.m */,
 				E00B22891D1099FB00FF8241 /* XZXCalendarViewModel.h */,
 				E00B228A1D1099FB00FF8241 /* XZXCalendarViewModel.m */,
-				E00B22901D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.h */,
-				E00B22911D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.m */,
 				E00B22BB1D1A7E9D00FF8241 /* XZXCalendarVMServices.h */,
 			);
 			name = Calendar;
@@ -225,8 +220,6 @@
 		E00B22A61D182D5900FF8241 /* DayEvent */ = {
 			isa = PBXGroup;
 			children = (
-				E00B22AD1D1846AE00FF8241 /* XZXWeekCalendarCVViewModel.h */,
-				E00B22AE1D1846AE00FF8241 /* XZXWeekCalendarCVViewModel.m */,
 				E00B22A71D182D8B00FF8241 /* XZXDayEventTVCellViewModel.h */,
 				E00B22A81D182D8B00FF8241 /* XZXDayEventTVCellViewModel.m */,
 				E00B22AA1D1844D000FF8241 /* XZXDayEventVCViewModel.h */,
@@ -327,6 +320,8 @@
 		E0B904841D084108002CFE5D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				E00B22901D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.h */,
+				E00B22911D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.m */,
 				E00B22A51D182D4200FF8241 /* Calendar */,
 				E00B22A61D182D5900FF8241 /* DayEvent */,
 			);
@@ -557,7 +552,6 @@
 				E003F1231D0C35D900C4D140 /* XZXDayBlockCVCell.m in Sources */,
 				E00B228B1D1099FB00FF8241 /* XZXCalendarViewModel.m in Sources */,
 				E00B22B21D1A66AD00FF8241 /* XZXDayBlockCV.m in Sources */,
-				E00B22AF1D1846AE00FF8241 /* XZXWeekCalendarCVViewModel.m in Sources */,
 				E00B22AC1D1844D000FF8241 /* XZXDayEventVCViewModel.m in Sources */,
 				E00B22921D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.m in Sources */,
 				E00B22A91D182D8B00FF8241 /* XZXDayEventTVCellViewModel.m in Sources */,

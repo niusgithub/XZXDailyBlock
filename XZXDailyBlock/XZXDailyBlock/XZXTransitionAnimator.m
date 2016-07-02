@@ -12,16 +12,18 @@
 
 @property (nonatomic, assign) NSTimeInterval duration;
 @property (nonatomic, assign) CGFloat splitLineY;
+@property (nonatomic, assign) CGFloat barHeight;
 
 @end
 
 
 @implementation XZXTransitionAnimator
 
-- (instancetype)initWithDuration:(NSTimeInterval)duration splitLineY:(CGFloat)splitLineY {
+- (instancetype)initWithDuration:(NSTimeInterval)duration splitLineY:(CGFloat)splitLineY barHeight:(CGFloat)barHeight {
     if (self = [super init]) {
         self.duration = duration;
         self.splitLineY = splitLineY;
+        self.barHeight = barHeight;
     }
     return self;
 }
@@ -110,7 +112,7 @@
                      animations:^{
                          // Open the portal doors of the from-view
 #warning 50是暂定高度
-                         upperHandView.frame = CGRectOffset(upperHandView.frame, 0, - upperHandView.frame.size.height + 50);
+                         upperHandView.frame = CGRectOffset(upperHandView.frame, 0, - upperHandView.frame.size.height + self.barHeight);
                          bottomHandView.frame = CGRectOffset(bottomHandView.frame, 0, bottomHandView.frame.size.height);
                          
                          // zoom in the to-view

@@ -11,7 +11,7 @@
 #import "XZXDay.h"
 
 @interface XZXDayBlockCVCellViewModel ()
-//@property (nonatomic, strong) XZXDateHelper *dateHelper;
+
 @end
 
 @implementation XZXDayBlockCVCellViewModel
@@ -26,7 +26,7 @@
 - (instancetype)initWithDay:(XZXDay *)day {
     if (self = [super init]) {
         //NSLog(@"date:%@", day.date);
-        //
+        
         _dateTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:day.date]];
         self.level = day.dayLevel;
         

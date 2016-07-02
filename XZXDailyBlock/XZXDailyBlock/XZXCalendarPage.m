@@ -14,7 +14,7 @@
 {
     self = [super init];
     if (self) {
-        self.days = [[NSMutableArray alloc] initWithCapacity:42];
+        self.days = [[NSArray alloc] init];
     }
     return self;
 }

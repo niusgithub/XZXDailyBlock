@@ -13,6 +13,6 @@
 @interface XZXCalendarPage : NSObject
 
 @property (nonatomic, strong) NSDate *date; //当前页的月份
-@property (nonatomic, strong) NSMutableArray *days;
+@property (nonatomic, strong) NSArray *days;
 
 @end

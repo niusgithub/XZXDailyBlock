@@ -22,7 +22,7 @@
 
 #import <DKNightVersion/DKNightVersion.h>
 
-NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
+NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 @interface XZXCalendarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate>
 
@@ -104,13 +104,13 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     self.dk_manager.themeVersion = @"SEA";
     
-    NSLog(@"constant:%f",15 + self.sideLength);
+    
 }
 
 - (void)bindViewModel {
     self.title = self.viewModel.title;
     
-    [self.dateBlockCV registerClass:[XZXDayBlockCVCell class] forCellWithReuseIdentifier:kDateBlockCellIdentifier];
+    [self.dateBlockCV registerClass:[XZXDayBlockCVCell class] forCellWithReuseIdentifier:kCalendarDateBlockCellIdentifier];
     
     // React collectionView:didSelectItemAtIndexPath:
     @weakify(self)
@@ -119,11 +119,14 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
          @strongify(self)
          
          self.collectionViewSplitY = ([(NSIndexPath *)value.second item] % 42 / 7 + 1) * (self.sideLength + 10) + 5;
-//         NSLog(@"x : %f", self.collectionViewSplitY);
+         NSLog(@"Y : %f", self.collectionViewSplitY);
          
-         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-         XZXDayEventVC *vc = [sb instantiateViewControllerWithIdentifier:@"XZXDEViewController"];
-         vc.weekCV.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 15 + self.sideLength);
+         //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+         //XZXDayEventVC *vc = [sb instantiateViewControllerWithIdentifier:@"XZXDEViewController"];
+         XZXDayEventVC *vc = [[XZXDayEventVC alloc] init];
+         vc.height =  15 + self.sideLength;
+         
+         NSLog(@"vc.height:%f",15 + self.sideLength);
          
          vc.modalPresentationStyle = UIModalPresentationFullScreen;
          [self.navigationController pushViewController:vc animated:YES];
@@ -155,7 +158,7 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    XZXDayBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateBlockCellIdentifier forIndexPath:indexPath];
+    XZXDayBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCalendarDateBlockCellIdentifier forIndexPath:indexPath];
     
     XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item];
     
@@ -209,7 +212,7 @@ NSString *const kDateBlockCellIdentifier = @"dateblockCVCell";
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
     if (UINavigationControllerOperationPush == operation) {
-        return [[XZXTransitionAnimator alloc] initWithDuration:0.5 splitLineY:_collectionViewSplitY];
+        return [[XZXTransitionAnimator alloc] initWithDuration:0.5 splitLineY:_collectionViewSplitY barHeight:15 + self.sideLength];
     }
     
     if (UINavigationControllerOperationPop == operation) {
