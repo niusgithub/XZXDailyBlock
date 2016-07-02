@@ -11,6 +11,8 @@
 
 @interface XZXDayEventVC : UIViewController
 
+@property (nonatomic, assign) NSInteger selectedItemIndex;
+
 #warning temp
 @property (nonatomic, assign) CGFloat height;
 

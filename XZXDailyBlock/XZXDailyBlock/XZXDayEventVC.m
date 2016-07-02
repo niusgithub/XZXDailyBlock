@@ -11,6 +11,7 @@
 #import "XZXDayEventVCViewModel.h"
 #import "XZXDayBlockCVCell.h"
 
+
 NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
 
 @interface XZXDayEventVC () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
@@ -26,8 +27,6 @@ NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSLog(@"self.height:%f", self.height);
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -48,16 +47,56 @@ NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];
     
     
+    [self initViewModel];
+    
+    
     CGFloat width = [[UIScreen mainScreen] bounds].size.width;
     self.sideLength = (width - 80) / 7;
     
+    /*
+     // collectionView
+     XZXDayBlockCVLayout *layout = [[XZXDayBlockCVLayout alloc] init];
+     layout.itemSize = CGSizeMake(_sideLength, _sideLength);
+     layout.sectionInset = UIEdgeInsetsMake(10, 8, 8, 10);
+     layout.minimunLineSpacing = 10;
+     layout.minimumInteritemSpacing = 10;
+    
+     XZXDayBlockCV *dayBlockCV = [[XZXDayBlockCV alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, collectionViewHeight) collectionViewLayout:layout];
+     dayBlockCV.backgroundColor = [UIColor clearColor];
+     dayBlockCV.showsVerticalScrollIndicator = NO;
+     dayBlockCV.showsHorizontalScrollIndicator = NO;
+     dayBlockCV.pagingEnabled = YES;
+     dayBlockCV.delegate = self;
+     dayBlockCV.dataSource = self;
+     [self.view addSubview:dayBlockCV];
+     self.dateBlockCV = dayBlockCV;
+     */
+    
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.itemSize = CGSizeMake(_sideLength, _sideLength);
+    layout.sectionInset = UIEdgeInsetsMake(10, 8, 8, 10);
+    layout.minimumLineSpacing = 10;
+    layout.minimumInteritemSpacing = 10;
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    
     // XZXHorizontalWeekCV
-    XZXHorizontalWeekCV *weekCV = [[XZXHorizontalWeekCV alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, self.height) collectionViewLayout: [[UICollectionViewLayout alloc] init]];
+    XZXHorizontalWeekCV *weekCV = [[XZXHorizontalWeekCV alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, self.height) collectionViewLayout: layout];
     weekCV.backgroundColor = [UIColor clearColor];
+    weekCV.showsVerticalScrollIndicator = NO;
+    weekCV.showsHorizontalScrollIndicator = NO;
+    weekCV.pagingEnabled = YES;
     weekCV.delegate = self;
     weekCV.dataSource = self;
     [self.view addSubview:weekCV];
     self.weekCV = weekCV;
+    
+    [self.weekCV registerClass:[XZXDayBlockCVCell class] forCellWithReuseIdentifier:kWeekDateBlockCellIdentifier];
+    
+    NSInteger itemIndexPath = self.selectedItemIndex - self.selectedItemIndex%7 + 3;
+    
+    [self.weekCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndexPath inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    
+    
     
     UITableView *dayEventTV = [[UITableView alloc] initWithFrame:CGRectMake(0, self.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - self.height) style:UITableViewStylePlain];
     dayEventTV.backgroundColor = [UIColor orangeColor];
@@ -65,7 +104,11 @@ NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
     dayEventTV.dataSource = self;
     [self.view addSubview:dayEventTV];
     self.dayEventTV = dayEventTV;
-    
+}
+
+- (void)initViewModel {
+    self.viewModelServices = [XZXCalendarVMServicesImpl new];
+    self.viewModel = [[XZXDayEventVCViewModel alloc] initWithServices:_viewModelServices];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -105,20 +148,22 @@ NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
     
     XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item];
     
+    
+    
     [cell configureCellWithViewModel:cellViewModel];
     
     return cell;
 }
 
-#pragma mark - UICollectionView Delegate FlowLayout
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return CGSizeMake(_sideLength, _sideLength);
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(10, 10, 10, 10);
-}
+//#pragma mark - UICollectionView Delegate FlowLayout
+//
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+//    return CGSizeMake(_sideLength, _sideLength);
+//}
+//
+//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+//    return UIEdgeInsetsMake(10, 10, 10, 10);
+//}
 
 
 @end

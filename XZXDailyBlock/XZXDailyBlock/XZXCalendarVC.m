@@ -103,8 +103,6 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [DKColorTable sharedColorTable].file = @"XZXColor.txt";
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     self.dk_manager.themeVersion = @"SEA";
-    
-    
 }
 
 - (void)bindViewModel {
@@ -119,17 +117,16 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
          @strongify(self)
          
          self.collectionViewSplitY = ([(NSIndexPath *)value.second item] % 42 / 7 + 1) * (self.sideLength + 10) + 5;
-         NSLog(@"Y : %f", self.collectionViewSplitY);
+         //NSLog(@"Y : %f", self.collectionViewSplitY);
          
          //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
          //XZXDayEventVC *vc = [sb instantiateViewControllerWithIdentifier:@"XZXDEViewController"];
-         XZXDayEventVC *vc = [[XZXDayEventVC alloc] init];
-         vc.height =  15 + self.sideLength;
+         XZXDayEventVC *dayEventVC = [[XZXDayEventVC alloc] init];
+         dayEventVC.selectedItemIndex = [(NSIndexPath *)value.second item];
+         dayEventVC.height =  15 + self.sideLength;
          
-         NSLog(@"vc.height:%f",15 + self.sideLength);
-         
-         vc.modalPresentationStyle = UIModalPresentationFullScreen;
-         [self.navigationController pushViewController:vc animated:YES];
+         dayEventVC.modalPresentationStyle = UIModalPresentationFullScreen;
+         [self.navigationController pushViewController:dayEventVC animated:YES];
      }];
     self.dateBlockCV.delegate = nil;
     self.dateBlockCV.delegate = self;
