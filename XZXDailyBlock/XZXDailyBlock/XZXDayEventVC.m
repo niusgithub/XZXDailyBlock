@@ -90,7 +90,7 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     [self.view addSubview:dayEventTV];
     self.dayEventTV = dayEventTV;
     
-    [self.dayEventTV registerClass:[XZXDayEventTVCell class] forCellReuseIdentifier:kWeekDateEventCellIdentifier];
+    [self.dayEventTV registerNib:[UINib nibWithNibName:@"XZXDayEventTVCell" bundle:nil] forCellReuseIdentifier:kWeekDateEventCellIdentifier];
 }
 
 - (void)initViewModel {

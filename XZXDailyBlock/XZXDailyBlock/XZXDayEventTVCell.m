@@ -12,41 +12,9 @@
 
 @implementation XZXDayEventTVCell
 
-/*
- //开发用日期显示
- self.titleLabel.text = viewModel.dateTitle;
- self.titleLabel.textColor = [UIColor lightGrayColor];
- 
- switch (viewModel.level) {
- case 0:
- self.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
- break;
- case 1:
- self.dk_backgroundColorPicker = DKColorPickerWithKey(LV1);
- break;
- case 2:
- self.dk_backgroundColorPicker = DKColorPickerWithKey(LV2);
- break;
- case 3:
- self.dk_backgroundColorPicker = DKColorPickerWithKey(LV3);
- break;
- case 4:
- self.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
- break;
- }
- 
- if (viewModel.isToday) {
- self.layer.borderColor = [[UIColor blackColor] CGColor];
- self.layer.borderWidth = 1.0f;
- self.titleLabel.textColor = [UIColor blackColor];
- }
- */
+
 
 - (void)configureCellWithViewModel:(XZXDayEventTVCellViewModel *)viewModel {
-//    @property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;
-//    @property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
-//    @property (weak, nonatomic) IBOutlet UIView *levelView;
-//    @property (weak, nonatomic) IBOutlet UILabel *eventLabel;
     self.startTimeLabel.text = viewModel.startTime;
     self.endTimeLabel.text = viewModel.endTime;
     

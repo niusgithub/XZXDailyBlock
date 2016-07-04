@@ -25,7 +25,7 @@
 
 - (instancetype)initWithDay:(XZXDay *)day {
     if (self = [super init]) {
-        NSLog(@"date:%@", day);
+//        NSLog(@"date:%@", day);
         self.dayEventVMs = [NSMutableArray new];
 
         _dateTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:day.date]];
