@@ -16,7 +16,8 @@
 @property (nonatomic, copy) NSDate *date;
 @property (nonatomic, copy) NSString *startTime;
 @property (nonatomic, copy) NSString *endTime;
-@property (nonatomic, strong) UIColor *levelViewBGColor;
+//@property (nonatomic, strong) UIColor *levelViewBGColor;
+@property (nonatomic, assign) NSInteger level;
 @property (nonatomic, copy) NSString *eventAbstruct;
 
 - (instancetype)initWithDayEvent:(XZXDayEvent *)dayEvent;

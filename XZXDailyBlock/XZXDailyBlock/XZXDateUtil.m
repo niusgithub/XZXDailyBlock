@@ -66,6 +66,25 @@ static id sharedDateUtil;
     return date;
 }
 
++ (NSDate *)dateWithYear:(NSInteger)year
+                   month:(NSInteger)month
+                     day:(NSInteger)day
+                    hour:(NSInteger)hour
+                  minute:(NSInteger)minute
+                  second:(NSInteger)second {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    components.year = year;
+    components.month = month;
+    components.day = day;
+    components.hour = hour;
+    components.minute = minute;
+    components.second = second;
+    NSDate *date = [calendar dateFromComponents:components];
+    
+    return date;
+}
+
 //---------------------------
 //Formatter
 //---------------------------

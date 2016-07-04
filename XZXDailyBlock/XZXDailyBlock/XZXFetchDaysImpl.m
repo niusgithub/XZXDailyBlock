@@ -9,9 +9,9 @@
 #import "XZXFetchDaysImpl.h"
 #import "XZXCalendarPage.h"
 #import "XZXDay.h"
+#import "XZXDayEvent.h"
 
-
-
+#import "XZXDateUtil.h"
 #import "XZXCalendarUtil.h"
 
 @interface XZXFetchDaysImpl ()
@@ -31,6 +31,25 @@
         for (int i = 0; i < 210; ++i) {
             XZXDay *day = [[XZXDay alloc] init];
             day.date = [_calendarUtil tempDateForIndex:i];
+            
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSDateComponents *component = [calendar components:NSCalendarUnitDay fromDate:day.date];
+            XZXDayEvent *event = [[XZXDayEvent alloc] init];
+            event.date = day.date;
+            event.startTime = [XZXDateUtil dateWithYear:component.year month:component.month day:component.day hour:i%12 minute:15 second:15];
+            event.endTime = [XZXDateUtil dateWithYear:component.year month:component.month day:component.day hour:i%12 minute:15 second:15];
+            event.eventLevel = (NSInteger)day.dayLevel;
+            event.eventAbstruct = @"一项工作";
+            
+            XZXDayEvent *event1 = [[XZXDayEvent alloc] init];
+            event1.date = day.date;
+            event1.startTime = [XZXDateUtil dateWithYear:component.year month:component.month day:component.day hour:(i+2)%24 minute:30 second:0];
+            event1.endTime = [XZXDateUtil dateWithYear:component.year month:component.month day:component.day hour:(i+2)%24 minute:30 second:0];
+            event1.eventLevel = (NSInteger)day.dayLevel;
+            event1.eventAbstruct = @"另一项工作";
+            
+            
+            day.events = [@[event, event1] copy];
             
             day.dayLevel = i % 5;
             

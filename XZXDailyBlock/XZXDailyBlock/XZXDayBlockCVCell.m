@@ -33,6 +33,7 @@
 - (void)configureCellWithViewModel:(XZXDayBlockCVCellViewModel *)viewModel {
     //开发用日期显示
     self.titleLabel.text = viewModel.dateTitle;
+    self.titleLabel.textColor = [UIColor lightGrayColor];
     
     switch (viewModel.level) {
         case 0:
@@ -55,7 +56,7 @@
     if (viewModel.isToday) {
         self.layer.borderColor = [[UIColor blackColor] CGColor];
         self.layer.borderWidth = 1.0f;
-//        self.titleLabel.text = viewModel.dataTitle;
+        self.titleLabel.textColor = [UIColor blackColor];
     }
 }
 

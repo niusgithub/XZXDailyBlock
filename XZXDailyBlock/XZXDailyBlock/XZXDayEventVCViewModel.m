@@ -8,7 +8,8 @@
 
 #import "XZXDayEventVCViewModel.h"
 #import "XZXDayEventTVCellViewModel.h"
-
+#import "XZXDay.h"
+#import "XZXDayEvent.h"
 #import "XZXCalendarPage.h"
 
 @interface XZXDayEventVCViewModel ()
@@ -19,7 +20,7 @@
 
 - (instancetype)initWithServices:(id<XZXCalendarVMServices>)services {
     if (self = [super init]) {
-        self.cellViewModels = [[NSMutableArray alloc] initWithCapacity:7];
+        self.dayBlockVMs = [NSMutableArray new];
         self.services = services;
         [self initialize];
     }
@@ -37,8 +38,10 @@
     XZXCalendarPage *page = [temp temporayData];
     
     for (int i = 0; i < page.days.count; ++i) {
-        XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:page.days[i]];
-        [self.cellViewModels addObject:cellViewModel];
+        XZXDay *day = page.days[i];
+        
+        XZXDayBlockCVCellViewModel *dayBlockViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:day];
+        [self.dayBlockVMs addObject:dayBlockViewModel];
     }
 }
 

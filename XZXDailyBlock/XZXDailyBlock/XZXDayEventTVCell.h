@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XZXDayEventTVCellViewModel.h"
 
 @interface XZXDayEventTVCell : UITableViewCell
 
@@ -14,5 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *levelView;
 @property (weak, nonatomic) IBOutlet UILabel *eventLabel;
+
+- (void)configureCellWithViewModel:(XZXDayEventTVCellViewModel *)viewModel;
 
 @end

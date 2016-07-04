@@ -10,9 +10,14 @@
 #import "XZXCalendarVMServicesImpl.h"
 #import "XZXDayEventVCViewModel.h"
 #import "XZXDayBlockCVCell.h"
+#import "XZXDayBlockCVLayout.h"
+#import "XZXDayEventTVCell.h"
+
+#import <DKNightVersion/DKNightVersion.h>
 
 
-NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
+NSString *const kWeekDateBlockCellIdentifier = @"wdateBlockCVCell";
+NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 
 @interface XZXDayEventVC () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
 @property (strong, nonatomic) XZXHorizontalWeekCV *weekCV;
@@ -28,7 +33,7 @@ NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     
     // For the extended navigation bar effect to work, a few changes
     // must be made to the actual navigation bar.  Some of these changes could
@@ -53,31 +58,11 @@ NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
     CGFloat width = [[UIScreen mainScreen] bounds].size.width;
     self.sideLength = (width - 80) / 7;
     
-    /*
-     // collectionView
-     XZXDayBlockCVLayout *layout = [[XZXDayBlockCVLayout alloc] init];
-     layout.itemSize = CGSizeMake(_sideLength, _sideLength);
-     layout.sectionInset = UIEdgeInsetsMake(10, 8, 8, 10);
-     layout.minimunLineSpacing = 10;
-     layout.minimumInteritemSpacing = 10;
-    
-     XZXDayBlockCV *dayBlockCV = [[XZXDayBlockCV alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, collectionViewHeight) collectionViewLayout:layout];
-     dayBlockCV.backgroundColor = [UIColor clearColor];
-     dayBlockCV.showsVerticalScrollIndicator = NO;
-     dayBlockCV.showsHorizontalScrollIndicator = NO;
-     dayBlockCV.pagingEnabled = YES;
-     dayBlockCV.delegate = self;
-     dayBlockCV.dataSource = self;
-     [self.view addSubview:dayBlockCV];
-     self.dateBlockCV = dayBlockCV;
-     */
-    
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    XZXDayBlockCVLayout *layout = [[XZXDayBlockCVLayout alloc] init];
     layout.itemSize = CGSizeMake(_sideLength, _sideLength);
     layout.sectionInset = UIEdgeInsetsMake(10, 8, 8, 10);
-    layout.minimumLineSpacing = 10;
+    layout.minimunLineSpacing = 10;
     layout.minimumInteritemSpacing = 10;
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     // XZXHorizontalWeekCV
     XZXHorizontalWeekCV *weekCV = [[XZXHorizontalWeekCV alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, self.height) collectionViewLayout: layout];
@@ -99,11 +84,13 @@ NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
     
     
     UITableView *dayEventTV = [[UITableView alloc] initWithFrame:CGRectMake(0, self.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - self.height) style:UITableViewStylePlain];
-    dayEventTV.backgroundColor = [UIColor orangeColor];
+    dayEventTV.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     dayEventTV.delegate = self;
     dayEventTV.dataSource = self;
     [self.view addSubview:dayEventTV];
     self.dayEventTV = dayEventTV;
+    
+    [self.dayEventTV registerClass:[XZXDayEventTVCell class] forCellReuseIdentifier:kWeekDateEventCellIdentifier];
 }
 
 - (void)initViewModel {
@@ -127,8 +114,12 @@ NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    cell.backgroundColor = [UIColor blueColor];
+    XZXDayBlockCVCellViewModel *dayBlockVM = self.viewModel.dayBlockVMs[self.selectedItemIndex];
+    XZXDayEventTVCellViewModel *dayEventVM = dayBlockVM.dayEventVMs[indexPath.row];
+    
+    XZXDayEventTVCell *cell = [tableView dequeueReusableCellWithIdentifier:kWeekDateEventCellIdentifier];
+    [cell configureCellWithViewModel:dayEventVM];
+    
     return cell;
 }
 
@@ -146,10 +137,7 @@ NSString *const kWeekDateBlockCellIdentifier = @"wdateblockCVCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     XZXDayBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kWeekDateBlockCellIdentifier forIndexPath:indexPath];
     
-    XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item];
-    
-    
-    
+    XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.dayBlockVMs[indexPath.item];
     [cell configureCellWithViewModel:cellViewModel];
     
     return cell;

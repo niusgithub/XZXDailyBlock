@@ -20,12 +20,12 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
 @property (nonatomic, strong) NSMutableDictionary *heightDict;
 @property (nonatomic, strong) NSMutableArray *attributes;
 @property (nonatomic, strong) NSMutableArray *indexPathsToAnimate;
-@property (nonatomic, copy)  pageCalculateBlock calculatePage;
+@property (nonatomic, copy) pageCalculateBlock calculatePage;
 @end
 
 @implementation XZXDayBlockCVLayout {
     int _row;
-    int _line;
+    int _column;
 }
 
 - (instancetype)init {
@@ -48,9 +48,10 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
     CGFloat height = self.collectionView.frame.size.height;
     
     CGFloat contentWidth = width - self.sectionInset.left - self.sectionInset.right;
+    
     if (contentWidth >= (2*itemWidth + self.minimumInteritemSpacing)) { //如果列数大于2行
         int m = (contentWidth-itemWidth)/(itemWidth+self.minimumInteritemSpacing);
-        _line = m+1;
+        _column = m+1;
         int n = (int)(contentWidth - itemWidth)%(int)(itemWidth + self.minimumInteritemSpacing);
         if (n > 0) {
             double offset = ((contentWidth - itemWidth) - m*(itemWidth + self.minimumInteritemSpacing)) / m;
@@ -59,7 +60,7 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
             itemSpacing = self.minimumInteritemSpacing;
         }
     } else { //如果列数为一行
-        itemSpacing = 0;
+        _column = 1;
     }
     
     CGFloat contentHeight = (height - self.sectionInset.top - self.sectionInset.bottom);
@@ -74,15 +75,12 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
             lineSpacing = self.minimumInteritemSpacing;
         }
     } else { //如果行数数为一行
-        lineSpacing = 0;
+        _row = 1;
     }
     
+    NSInteger itemNumber = [self.collectionView numberOfItemsInSection:0];
     
-    int itemNumber = 0;
-    
-    itemNumber = itemNumber + (int)[self.collectionView numberOfItemsInSection:0];
-    
-    pageNumber = (itemNumber - 1)/(_row*_line) + 1;
+    pageNumber = (itemNumber - 1)/(_row*_column) + 1;
 }
 
 - (CGSize)collectionViewContentSize {
@@ -97,7 +95,7 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
     CGRect frame;
     frame.size = self.itemSize;
     //下面计算每个cell的frame   可以自己定义
-    long number = _row * _line;
+    long number = _row * _column;
     //    printf("%ld\n",number);
     long m = 0;  //初始化 m p
     long p = 0;
@@ -109,12 +107,12 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
         //
         //        }
         //        NSLog(@"%ld",p);
-        m = (indexPath.item%number)/_line;
+        m = (indexPath.item%number)/_column;
     }else{
-        m = indexPath.item/_line;
+        m = indexPath.item/_column;
     }
     
-    long n = indexPath.item%_line;
+    long n = indexPath.item%_column;
     frame.origin = CGPointMake(n*self.itemSize.width+(n)*itemSpacing+self.sectionInset.left+(indexPath.section+p)*self.collectionView.frame.size.width,m*self.itemSize.height + (m)*lineSpacing+self.sectionInset.top);
     attribute.frame = frame;
     return attribute;

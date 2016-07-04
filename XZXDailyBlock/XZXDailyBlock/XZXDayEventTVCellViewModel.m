@@ -17,16 +17,13 @@
 
 - (instancetype)initWithDayEvent:(XZXDayEvent *)dayEvent {
     if (self = [super init]) {
-        
         self.date = dayEvent.date;
         self.startTime = [XZXDateUtil dateStringOf24H:dayEvent.startTime];
         self.endTime = [XZXDateUtil dateStringOf24H:dayEvent.endTime];
-        // self.levelViewBGColor =
+        self.level = dayEvent.eventLevel;
         self.eventAbstruct = dayEvent.eventAbstruct;
     }
     return self;
 }
-
-
 
 @end

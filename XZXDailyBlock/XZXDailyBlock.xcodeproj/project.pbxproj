@@ -185,8 +185,6 @@
 				E003F1211D0C35D900C4D140 /* XZXDayBlockCVCell.m */,
 				E00B22B01D1A66AD00FF8241 /* XZXDayBlockCV.h */,
 				E00B22B11D1A66AD00FF8241 /* XZXDayBlockCV.m */,
-				E00B22C71D219AFF00FF8241 /* XZXDayBlockCVLayout.h */,
-				E00B22C81D219AFF00FF8241 /* XZXDayBlockCVLayout.m */,
 			);
 			name = Calendar;
 			sourceTree = "<group>";
@@ -311,6 +309,8 @@
 			isa = PBXGroup;
 			children = (
 				E085F09E1D07EAF200E91362 /* Main.storyboard */,
+				E00B22C71D219AFF00FF8241 /* XZXDayBlockCVLayout.h */,
+				E00B22C81D219AFF00FF8241 /* XZXDayBlockCVLayout.m */,
 				E00B22961D1822EF00FF8241 /* Calendar */,
 				E00B22971D18234300FF8241 /* DayEvent */,
 			);

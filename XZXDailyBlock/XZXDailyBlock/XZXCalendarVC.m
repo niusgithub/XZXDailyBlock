@@ -57,9 +57,13 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [super viewDidLoad];
     
     // 透明navigationBar
-    //    self.navigationController.navigationBar.translucent = YES;
-    //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    //    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//        self.navigationController.navigationBar.translucent = YES;
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"TransparentPixel"] forBarMetrics:UIBarMetricsDefault];
+//        [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+
+    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];;
     
     
     //

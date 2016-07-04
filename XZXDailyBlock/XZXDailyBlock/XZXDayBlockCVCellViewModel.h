@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XZXDayEventTVCellViewModel.h"
+
 @class XZXDay;
 
 @import UIKit;
@@ -19,6 +21,8 @@
 @property (nonatomic, assign) BOOL isToday;
 
 @property (nonatomic, assign) BOOL hasSchedule;
+
+@property (nonatomic, strong) NSMutableArray<XZXDayEventTVCellViewModel *> *dayEventVMs;
 
 - (instancetype)initWithDay:(XZXDay *)day;
 

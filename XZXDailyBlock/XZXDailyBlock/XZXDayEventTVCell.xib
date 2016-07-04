@@ -27,7 +27,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sO2-E2-0gf">
-                        <rect key="frame" x="68" y="2" width="40" height="38"/>
+                        <rect key="frame" x="68" y="2" width="40" height="40"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="FhL-DH-VsI"/>

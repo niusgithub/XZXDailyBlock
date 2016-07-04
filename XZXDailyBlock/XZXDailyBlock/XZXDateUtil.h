@@ -28,6 +28,13 @@
 
 + (NSDate *)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
 
++ (NSDate *)dateWithYear:(NSInteger)year
+                   month:(NSInteger)month
+                     day:(NSInteger)day
+                    hour:(NSInteger)hour
+                  minute:(NSInteger)minute
+                  second:(NSInteger)second;
+
 + (NSString *)dateStringOf24H:(NSDate *)date;
 
 + (NSString *)dateStringOfMonthAndDay:(NSDate *)date;
