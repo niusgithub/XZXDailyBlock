@@ -38,4 +38,6 @@
 + (NSString *)dateStringOf24H:(NSDate *)date;
 
 + (NSString *)dateStringOfMonthAndDay:(NSDate *)date;
+
++ (NSString *)dateStringOfYMD:(NSDate *)date;
 @end

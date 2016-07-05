@@ -32,7 +32,7 @@
 
 - (void)configureCellWithViewModel:(XZXDayBlockCVCellViewModel *)viewModel {
     //开发用日期显示
-    self.titleLabel.text = viewModel.dateTitle;
+    self.titleLabel.text = viewModel.dayNumber;
     self.titleLabel.textColor = [UIColor lightGrayColor];
     
     switch (viewModel.level) {

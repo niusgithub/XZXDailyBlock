@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -27,14 +28,14 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sO2-E2-0gf">
-                        <rect key="frame" x="68" y="2" width="20" height="39"/>
+                        <rect key="frame" x="63" y="2" width="10" height="39"/>
                         <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="20" id="6DZ-ad-SgZ"/>
+                            <constraint firstAttribute="width" constant="10" id="6DZ-ad-SgZ"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htC-kJ-qj0">
-                        <rect key="frame" x="106" y="0.0" width="214" height="43"/>
+                        <rect key="frame" x="91" y="0.0" width="229" height="43"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -46,7 +47,6 @@
                     <constraint firstItem="8Bi-fj-Fet" firstAttribute="width" secondItem="KAN-4I-PKm" secondAttribute="width" id="888-5h-9N5"/>
                     <constraint firstItem="KAN-4I-PKm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="97g-Mx-Q2N"/>
                     <constraint firstItem="htC-kJ-qj0" firstAttribute="leading" secondItem="sO2-E2-0gf" secondAttribute="trailing" constant="18" id="D79-in-BBB"/>
-                    <constraint firstItem="sO2-E2-0gf" firstAttribute="leading" secondItem="KAN-4I-PKm" secondAttribute="trailing" constant="18" id="Ett-rQ-NYg"/>
                     <constraint firstItem="KAN-4I-PKm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="PEj-WF-IMF"/>
                     <constraint firstItem="8Bi-fj-Fet" firstAttribute="top" secondItem="KAN-4I-PKm" secondAttribute="bottom" id="az9-W3-yBG"/>
                     <constraint firstAttribute="bottom" secondItem="sO2-E2-0gf" secondAttribute="bottom" constant="2" id="gya-eQ-dnD"/>
@@ -55,6 +55,7 @@
                     <constraint firstAttribute="bottom" secondItem="htC-kJ-qj0" secondAttribute="bottom" id="rcJ-Qm-6gX"/>
                     <constraint firstItem="8Bi-fj-Fet" firstAttribute="height" secondItem="KAN-4I-PKm" secondAttribute="height" id="tDA-sK-ils"/>
                     <constraint firstAttribute="trailing" secondItem="htC-kJ-qj0" secondAttribute="trailing" id="v1Y-jd-HCH"/>
+                    <constraint firstItem="sO2-E2-0gf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="55" id="w5K-Ue-l63"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

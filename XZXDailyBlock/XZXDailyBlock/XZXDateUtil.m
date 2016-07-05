@@ -102,4 +102,11 @@ static id sharedDateUtil;
     return [formatter stringFromDate:date];
 }
 
++ (NSString *)dateStringOfYMD:(NSDate *)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy/MM/dd"];
+    
+    return [formatter stringFromDate:date];
+}
+
 @end

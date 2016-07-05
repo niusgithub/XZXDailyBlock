@@ -53,9 +53,6 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];
     
     
-    [self initViewModel];
-    
-    
     CGFloat width = [[UIScreen mainScreen] bounds].size.width;
     self.sideLength = (width - 80) / 7;
     
@@ -93,11 +90,19 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     self.dayEventTV = dayEventTV;
     
     [self.dayEventTV registerNib:[UINib nibWithNibName:@"XZXDayEventTVCell" bundle:nil] forCellReuseIdentifier:kWeekDateEventCellIdentifier];
+    
+    [self initViewModel];
+    
+    [self bindViewModel];
 }
 
 - (void)initViewModel {
     self.viewModelServices = [XZXCalendarVMServicesImpl new];
     self.viewModel = [[XZXDayEventVCViewModel alloc] initWithServices:_viewModelServices];
+}
+
+- (void)bindViewModel {
+    self.title = self.viewModel.dayBlockVMs[self.selectedItemIndex].titleOfDate;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -106,7 +111,8 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 }
 
 
-#pragma mark - UITableView
+#pragma mark - UITableViewDataSource
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -126,7 +132,7 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 }
 
 
-
+#pragma mark - UICollectionViewDataSource
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -143,6 +149,15 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     [cell configureCellWithViewModel:cellViewModel];
     
     return cell;
+}
+
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    self.selectedItemIndex = indexPath.item;
+    self.title = self.viewModel.dayBlockVMs[self.selectedItemIndex].titleOfDate;
+    [self.dayEventTV reloadData];
 }
 
 //#pragma mark - UICollectionView Delegate FlowLayout

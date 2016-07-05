@@ -9,7 +9,6 @@
 #import "XZXCalendarViewModel.h"
 #import "XZXDayBlockCVCellViewModel.h"
 
-
 #import "XZXCalendarPage.h"
 
 @interface XZXCalendarViewModel ()
@@ -42,6 +41,7 @@
     
     for (int i = 0; i < page.days.count; ++i) {
         XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:page.days[i]];
+        
         [self.cellViewModels addObject:cellViewModel];
     }
 }

@@ -11,18 +11,18 @@
 
 @interface XZXDayEvent : RLMObject
 
-typedef NS_ENUM(NSInteger, XZXDayEventLevel) {
-    XZXDayEventLevel0,
-    XZXDayEventLevel1,
-    XZXDayEventLevel2,
-    XZXDayEventLevel3,
-    XZXDayEventLevel4
-};
+//typedef NS_ENUM(NSInteger, XZXDayEventLevel) {
+//    XZXDayEventLevel0,
+//    XZXDayEventLevel1,
+//    XZXDayEventLevel2,
+//    XZXDayEventLevel3,
+//    XZXDayEventLevel4
+//};
 
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSDate *startTime;
 @property (nonatomic, strong) NSDate *endTime;
-@property (nonatomic, assign) XZXDayEventLevel eventLevel;
+@property (nonatomic, assign) NSInteger eventLevel;
 @property (nonatomic, copy) NSString *eventAbstruct;
 
 @property (readonly) RLMLinkingObjects *owners;

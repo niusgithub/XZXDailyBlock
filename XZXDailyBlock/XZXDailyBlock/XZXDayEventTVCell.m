@@ -35,8 +35,11 @@
             self.levelView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
             break;
     }
+    self.levelView.layer.borderWidth = 1.f;
+    self.levelView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
     self.eventLabel.text = viewModel.eventAbstruct;
+    self.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
 }
 
 

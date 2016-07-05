@@ -22,7 +22,9 @@
 //        NSLog(@"date:%@", day);
         self.dayEventVMs = [NSMutableArray new];
 
-        _dateTitle = [NSString stringWithFormat:@"%ld", [XZXDateUtil dayOfDate:day.date]];
+        self.dayNumber = [NSString stringWithFormat:@"%ld", [XZXDateUtil dayOfDate:day.date]];
+        
+        self.titleOfDate = [XZXDateUtil dateStringOfYMD:day.date];
 
         self.level = day.dayLevel;
         

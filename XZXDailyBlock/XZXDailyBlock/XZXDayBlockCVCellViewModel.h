@@ -15,7 +15,8 @@
 
 @interface XZXDayBlockCVCellViewModel : NSObject
 
-@property (nonatomic, strong) NSString *dateTitle;
+@property (nonatomic, strong) NSString *titleOfDate;
+@property (nonatomic, strong) NSString *dayNumber;
 @property (nonatomic, strong) UIColor *bgColor;
 @property (nonatomic, assign) NSInteger level;
 @property (nonatomic, assign) BOOL isToday;
