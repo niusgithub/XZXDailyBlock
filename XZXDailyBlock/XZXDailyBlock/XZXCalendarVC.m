@@ -37,6 +37,8 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 @property (nonatomic, strong) XZXCalendarUtil *calendarUtil;
 
+@property (nonatomic, strong) XZXDayBlockCVLayout *monthLayout;
+
 #warning temp
 @property (nonatomic, assign) NSInteger clickTimes;
 @end
@@ -80,11 +82,12 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     // collectionView
     XZXDayBlockCVLayout *layout = [[XZXDayBlockCVLayout alloc] init];
     layout.itemSize = CGSizeMake(_sideLength, _sideLength);
-    layout.sectionInset = UIEdgeInsetsMake(10, 8, 8, 10);
+    layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
     layout.minimunLineSpacing = 10;
     layout.minimumInteritemSpacing = 10;
+    self.monthLayout = layout;
     
-    XZXDayBlockCV *dayBlockCV = [[XZXDayBlockCV alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, collectionViewHeight) collectionViewLayout:layout];
+    XZXDayBlockCV *dayBlockCV = [[XZXDayBlockCV alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, collectionViewHeight) collectionViewLayout:self.monthLayout];
     dayBlockCV.backgroundColor = [UIColor clearColor];
     dayBlockCV.showsVerticalScrollIndicator = NO;
     dayBlockCV.showsHorizontalScrollIndicator = NO;
@@ -213,7 +216,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
     if (UINavigationControllerOperationPush == operation) {
-        return [[XZXTransitionAnimator alloc] initWithDuration:0.5 splitLineY:_collectionViewSplitY barHeight:15 + self.sideLength];
+        return [[XZXTransitionAnimator alloc] initWithDuration:0.3 splitLineY:_collectionViewSplitY barHeight:15 + self.sideLength];
     }
     
     if (UINavigationControllerOperationPop == operation) {

@@ -8,6 +8,7 @@
 
 #import "XZXDayBlockCVCellViewModel.h"
 #import "XZXCalendarUtil.h"
+#import "XZXDateUtil.h"
 #import "XZXDay.h"
 
 @interface XZXDayBlockCVCellViewModel ()
@@ -16,23 +17,16 @@
 
 @implementation XZXDayBlockCVCellViewModel
 
-//- (instancetype)init {
-//    if ([super init]) {
-//        self.dateHelper = [[XZXDateHelper alloc] init];
-//    }
-//    return self;
-//}
-
 - (instancetype)initWithDay:(XZXDay *)day {
     if (self = [super init]) {
 //        NSLog(@"date:%@", day);
         self.dayEventVMs = [NSMutableArray new];
 
-        _dateTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:day.date]];
+        _dateTitle = [NSString stringWithFormat:@"%ld", [XZXDateUtil dayOfDate:day.date]];
 
         self.level = day.dayLevel;
         
-        self.isToday = [self isDateToday:day.date];
+        self.isToday = [XZXDateUtil isDateToday:day.date];
         
         if (_isToday) {
             
@@ -47,27 +41,6 @@
         }        
     }
     return self;
-}
-
-//- (instancetype)initWithDate:(NSDate *)date {
-//    if (self = [super init]) {
-//        self.dataTitle = [NSString stringWithFormat:@"%ld", [self dayOfDate:date]];
-//    }
-//    return self;
-//}
-
-#warning temp
-
-- (NSInteger)dayOfDate:(NSDate *)date {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *component = [calendar components:NSCalendarUnitDay
-                                                   fromDate:date];
-    return component.day;
-}
-
-- (BOOL)isDateToday:(NSDate *)date {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    return [calendar isDateInToday:date];
 }
 
 @end

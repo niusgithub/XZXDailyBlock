@@ -10,8 +10,8 @@
 #import "XZXCalendarVMServicesImpl.h"
 #import "XZXDayEventVCViewModel.h"
 #import "XZXDayBlockCVCell.h"
-#import "XZXDayBlockCVLayout.h"
 #import "XZXDayEventTVCell.h"
+#import "XZXWeekCVLayout.h"
 
 #import <DKNightVersion/DKNightVersion.h>
 
@@ -24,6 +24,7 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 @property (nonatomic, strong) UITableView *dayEventTV;
 @property (nonatomic, strong) XZXDayEventVCViewModel *viewModel;
 @property (nonatomic, strong) XZXCalendarVMServicesImpl *viewModelServices;
+@property (nonatomic, strong) XZXWeekCVLayout *weekLayout;
 
 @property (nonatomic, assign) CGFloat sideLength;
 @end
@@ -58,14 +59,15 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     CGFloat width = [[UIScreen mainScreen] bounds].size.width;
     self.sideLength = (width - 80) / 7;
     
-    XZXDayBlockCVLayout *layout = [[XZXDayBlockCVLayout alloc] init];
+    XZXWeekCVLayout *layout = [[XZXWeekCVLayout alloc] init];
     layout.itemSize = CGSizeMake(_sideLength, _sideLength);
-    layout.sectionInset = UIEdgeInsetsMake(10, 8, 8, 10);
+    layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8); // top left bottom right 其实只用了top和left
     layout.minimunLineSpacing = 10;
     layout.minimumInteritemSpacing = 10;
+    self.weekLayout = layout;
     
     // XZXHorizontalWeekCV
-    XZXHorizontalWeekCV *weekCV = [[XZXHorizontalWeekCV alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, self.height) collectionViewLayout: layout];
+    XZXHorizontalWeekCV *weekCV = [[XZXHorizontalWeekCV alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, self.height) collectionViewLayout:self.weekLayout];
     weekCV.backgroundColor = [UIColor clearColor];
     weekCV.showsVerticalScrollIndicator = NO;
     weekCV.showsHorizontalScrollIndicator = NO;

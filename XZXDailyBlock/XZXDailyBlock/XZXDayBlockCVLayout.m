@@ -21,12 +21,11 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
 @property (nonatomic, strong) NSMutableArray *attributes;
 @property (nonatomic, strong) NSMutableArray *indexPathsToAnimate;
 @property (nonatomic, copy) pageCalculateBlock calculatePage;
+@property (nonatomic, assign) NSInteger row;
+@property (nonatomic, assign) NSInteger column;
 @end
 
-@implementation XZXDayBlockCVLayout {
-    int _row;
-    int _column;
-}
+@implementation XZXDayBlockCVLayout
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -59,8 +58,8 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
         } else if (n == 0){
             itemSpacing = self.minimumInteritemSpacing;
         }
-    } else { //如果列数为一行
-        _column = 1;
+    } else { //如果列数为一列
+        //_column = 1;
     }
     
     CGFloat contentHeight = (height - self.sectionInset.top - self.sectionInset.bottom);
@@ -97,24 +96,30 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
     //下面计算每个cell的frame   可以自己定义
     long number = _row * _column;
     //    printf("%ld\n",number);
-    long m = 0;  //初始化 m p
-    long p = 0;
+    long page = 0;  //初始化 m p
+    long leftOffset = 0;
     if (indexPath.item >= number) {
         //        NSLog(@"indexpath.item:%ld",indexPath.item);
-        p = indexPath.item/number;  //计算页数不同时的左间距
+        leftOffset = indexPath.item/number;  //计算页数不同时的左间距
         //        if ((p+1) > pageNumber) { //计算显示的页数
         //            pageNumber = p+1;
         //
         //        }
         //        NSLog(@"%ld",p);
-        m = (indexPath.item%number)/_column;
+        page = (indexPath.item%number)/_column;
     }else{
-        m = indexPath.item/_column;
+        page = indexPath.item/_column;
     }
     
-    long n = indexPath.item%_column;
-    frame.origin = CGPointMake(n*self.itemSize.width+(n)*itemSpacing+self.sectionInset.left+(indexPath.section+p)*self.collectionView.frame.size.width,m*self.itemSize.height + (m)*lineSpacing+self.sectionInset.top);
+    long indexOfPage = indexPath.item%_column;
+    
+    NSInteger x = indexOfPage*(self.itemSize.width+ itemSpacing) + self.sectionInset.left + (indexPath.section+leftOffset)*self.collectionView.frame.size.width;
+    NSInteger y = page*self.itemSize.height + (page)*lineSpacing+self.sectionInset.top;
+    
+    frame.origin = CGPointMake(x, y);
+    
     attribute.frame = frame;
+    
     return attribute;
 }
 
