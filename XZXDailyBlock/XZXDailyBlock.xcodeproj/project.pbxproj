@@ -40,6 +40,8 @@
 		E085F0A51D07EAF200E91362 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F0A31D07EAF200E91362 /* LaunchScreen.storyboard */; };
 		E085F0B01D07EAF200E91362 /* XZXDailyBlockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0AF1D07EAF200E91362 /* XZXDailyBlockTests.m */; };
 		E085F0BB1D07EAF200E91362 /* XZXDailyBlockUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0BA1D07EAF200E91362 /* XZXDailyBlockUITests.m */; };
+		E0C8DF0F1D2EB66600896159 /* XZXClock.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C8DF0E1D2EB66600896159 /* XZXClock.m */; };
+		E0C8DF131D2EB6A500896159 /* XZXClockViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C8DF121D2EB6A500896159 /* XZXClockViewModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +131,10 @@
 		E085F0BC1D07EAF200E91362 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E085F0C81D07EC5400E91362 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		E085F0C91D07EC5500E91362 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		E0C8DF0D1D2EB66600896159 /* XZXClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXClock.h; sourceTree = "<group>"; };
+		E0C8DF0E1D2EB66600896159 /* XZXClock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXClock.m; sourceTree = "<group>"; };
+		E0C8DF111D2EB6A500896159 /* XZXClockViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXClockViewModel.h; sourceTree = "<group>"; };
+		E0C8DF121D2EB6A500896159 /* XZXClockViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXClockViewModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +349,7 @@
 				E00B22961D1822EF00FF8241 /* Calendar */,
 				E00B22971D18234300FF8241 /* DayEvent */,
 				E00B22D31D2C0D4C00FF8241 /* EventDetail */,
+				E0C8DF0C1D2EB64400896159 /* Clock */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -355,6 +362,7 @@
 				E00B22A51D182D4200FF8241 /* Calendar */,
 				E00B22A61D182D5900FF8241 /* DayEvent */,
 				E00B22D71D2C0D8600FF8241 /* EventDetail */,
+				E0C8DF101D2EB67900896159 /* Clock */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -379,6 +387,24 @@
 				E085F0A11D07EAF200E91362 /* Assets.xcassets */,
 			);
 			name = Recource;
+			sourceTree = "<group>";
+		};
+		E0C8DF0C1D2EB64400896159 /* Clock */ = {
+			isa = PBXGroup;
+			children = (
+				E0C8DF0D1D2EB66600896159 /* XZXClock.h */,
+				E0C8DF0E1D2EB66600896159 /* XZXClock.m */,
+			);
+			name = Clock;
+			sourceTree = "<group>";
+		};
+		E0C8DF101D2EB67900896159 /* Clock */ = {
+			isa = PBXGroup;
+			children = (
+				E0C8DF111D2EB6A500896159 /* XZXClockViewModel.h */,
+				E0C8DF121D2EB6A500896159 /* XZXClockViewModel.m */,
+			);
+			name = Clock;
 			sourceTree = "<group>";
 		};
 		F94EC78D6ABC4090F24164C7 /* Pods */ = {
@@ -583,6 +609,7 @@
 				E003F1231D0C35D900C4D140 /* XZXDayBlockCVCell.m in Sources */,
 				E00B228B1D1099FB00FF8241 /* XZXCalendarViewModel.m in Sources */,
 				E00B22B21D1A66AD00FF8241 /* XZXDayBlockCV.m in Sources */,
+				E0C8DF0F1D2EB66600896159 /* XZXClock.m in Sources */,
 				E00B22AC1D1844D000FF8241 /* XZXDayEventVCViewModel.m in Sources */,
 				E00B22DA1D2C0E2000FF8241 /* XZXEventDatilViewModel.m in Sources */,
 				E00B22921D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.m in Sources */,
@@ -597,6 +624,7 @@
 				E003F11C1D0C110400C4D140 /* XZXDay.m in Sources */,
 				E00B22A31D182A1E00FF8241 /* XZXDayEventTVCell.m in Sources */,
 				E00B22C91D219AFF00FF8241 /* XZXDayBlockCVLayout.m in Sources */,
+				E0C8DF131D2EB6A500896159 /* XZXClockViewModel.m in Sources */,
 				E00B22BA1D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m in Sources */,
 				E00B22D21D2BE18A00FF8241 /* XZXWeekCVLayout.m in Sources */,
 			);

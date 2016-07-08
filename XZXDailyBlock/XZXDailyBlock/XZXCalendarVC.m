@@ -7,19 +7,20 @@
 //
 
 #import "XZXCalendarVC.h"
+
 #import "XZXDayBlockCV.h"
 #import "XZXDayBlockCVCell.h"
 #import "XZXDayBlockCVLayout.h"
-#import "XZXDayEventVC.h"
-#import "XZXTransitionAnimator.h"
-
 #import "XZXDayBlockCVCellViewModel.h"
+
+#import "XZXDayEventVC.h"
+#import "XZXClock.h"
+
+#import "XZXTransitionAnimator.h"
+#import "XZXCalendarVMServicesImpl.h"
 #import "XZXCalendarUtil.h"
 
-#import "XZXCalendarVMServicesImpl.h"
-
 #import <ReactiveCocoa/ReactiveCocoa.h>
-
 #import <DKNightVersion/DKNightVersion.h>
 
 NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
@@ -249,5 +250,9 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [self.dateBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
 
+- (IBAction)startTickTock:(UIBarButtonItem *)sender {
+    XZXClock *clock = [[XZXClock alloc] init];
+    [self presentViewController:clock animated:YES completion:nil];
+}
 
 @end

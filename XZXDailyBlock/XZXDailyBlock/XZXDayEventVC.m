@@ -12,7 +12,9 @@
 #import "XZXDayBlockCVCell.h"
 #import "XZXDayEventTVCell.h"
 #import "XZXWeekCVLayout.h"
+#import "XZXDayBlockCVCellViewModel.h"
 
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import <DKNightVersion/DKNightVersion.h>
 
 
@@ -102,7 +104,14 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 }
 
 - (void)bindViewModel {
-    self.title = self.viewModel.dayBlockVMs[self.selectedItemIndex].titleOfDate;
+//    self.title = self.viewModel.dayBlockVMs[self.selectedItemIndex].titleOfDate;
+    @weakify(self);
+    
+    RAC(self, title) = [[RACObserve(self, selectedItemIndex) distinctUntilChanged]
+                        map:^id(id value) {
+                            @strongify(self)
+                            return self.viewModel.dayBlockVMs[[value intValue]].titleOfDate;
+                        }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -156,19 +165,8 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedItemIndex = indexPath.item;
-    self.title = self.viewModel.dayBlockVMs[self.selectedItemIndex].titleOfDate;
+//    self.title = self.viewModel.dayBlockVMs[self.selectedItemIndex].titleOfDate;
     [self.dayEventTV reloadData];
 }
-
-//#pragma mark - UICollectionView Delegate FlowLayout
-//
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-//    return CGSizeMake(_sideLength, _sideLength);
-//}
-//
-//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-//    return UIEdgeInsetsMake(10, 10, 10, 10);
-//}
-
 
 @end

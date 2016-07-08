@@ -25,7 +25,11 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem title="Clock" id="8Br-hi-jEi"/>
+                            <barButtonItem title="Clock" id="8Br-hi-jEi">
+                                <connections>
+                                    <action selector="startTickTock:" destination="MYR-WT-QH5" id="KwZ-qL-Jtl"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Today" id="j7T-hp-2Ow">
                                 <connections>
                                     <action selector="jumpToToday:" destination="MYR-WT-QH5" id="aA8-n1-dAG"/>
