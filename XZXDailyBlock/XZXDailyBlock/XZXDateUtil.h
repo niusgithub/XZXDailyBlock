@@ -35,6 +35,9 @@
                   minute:(NSInteger)minute
                   second:(NSInteger)second;
 
++ (NSDate *)dateByAddingSeconds:(NSUInteger)seconds toDate:(NSDate *)formerDate;
+
+
 + (NSString *)dateStringOf24H:(NSDate *)date;
 
 + (NSString *)dateStringOfMonthAndDay:(NSDate *)date;

@@ -23,6 +23,7 @@
         UILabel *dateTitle = [[UILabel alloc] initWithFrame:frame];
         dateTitle.textAlignment = NSTextAlignmentCenter;
         dateTitle.backgroundColor = [UIColor clearColor];
+        //dateTitle.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
         [self.contentView addSubview:dateTitle];
         self.titleLabel = dateTitle;
     }

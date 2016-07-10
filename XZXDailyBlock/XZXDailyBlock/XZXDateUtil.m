@@ -85,6 +85,15 @@ static id sharedDateUtil;
     return date;
 }
 
++ (NSDate *)dateByAddingSeconds:(NSUInteger)seconds toDate:(NSDate *)formerDate {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    components.second = seconds;
+    NSDate *date = [calendar dateByAddingComponents:components toDate:formerDate options:0];
+    
+    return date;
+}
+
 //---------------------------
 //Formatter
 //---------------------------
