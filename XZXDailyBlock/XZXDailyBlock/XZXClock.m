@@ -38,10 +38,11 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
 @property (nonatomic, assign) CGFloat pointerViewR;
 @property (nonatomic, strong) NSDate *startTime;
 @property (nonatomic, strong) NSDate *endTime;
-@property (nonatomic, assign) NSInteger timeLength; // 以秒为单位
-@property (nonatomic, assign) NSInteger setTimeLength; // 以秒为单位
+@property (nonatomic, assign) NSTimeInterval timeLength; // float
+@property (nonatomic, assign) NSTimeInterval timeSincePause;
+@property (nonatomic, assign) NSTimeInterval setTimeLength; // float
 @property (nonatomic, strong) NSTimer *countDownTimer;
-@property (nonatomic, assign) NSInteger level;
+//@property (nonatomic, assign) NSInteger level;
 
 // clock control
 @property (nonatomic, strong) UIButton *stopBtn;
@@ -60,6 +61,8 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     [self initDefaultSetting];
     
     [self initialize];
+    
+    //[self bindViewModel];
 }
 
 - (void)initialize {
@@ -132,12 +135,52 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
 }
 
 - (void)initDefaultSetting {
-    self.level = 0;
+//    self.level = 0;
     self.clockStatus = XZXClockStatusStop;
     
-    self.setTimeLength = 2 * 60;
+    self.setTimeLength = 1 * 60;
     self.timeLength = _setTimeLength;
 }
+
+- (void)bindViewModel {
+//    [[RACObserve(self, level) distinctUntilChanged] subscribeNext:^(id x) {
+//        [self changePointerColorWithLevel:[x integerValue]];
+//    }];
+}
+
+//- (void)changePointerColorWithLevel:(NSInteger)level {
+//    __weak __typeof__(self) weakSelf = self;
+//    switch (level) {
+//        case 0:
+//            self.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
+//            break;
+//        case 1: {
+//            [UIView animateWithDuration:self.setTimeLength/4 delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV1);
+//            } completion:NULL];
+//        }
+//            break;
+//        case 2: {
+//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV2);
+//            } completion:NULL];
+//        }
+//            break;
+//        case 3: {
+//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV3);
+//            } completion:NULL];
+//        }
+//            break;
+//            // 只有全部完成才会LV4
+//        case 4:
+//            self.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
+//            break;
+//    }
+//}
 
 
 #pragma mark - Button Click
@@ -164,9 +207,14 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
         return;
     }
     
+//    if (self.clockStatus == XZXClockStatusStop) {
+//        
+//        return;
+//    }
+    
     NSLog(@"startTicking");
     self.clockStatus = XZXClockStatusTicking;
-    self.startTime = [XZXDateUtil localDateOfDate:[NSDate date]];
+    self.startTime = [NSDate date];
     NSLog(@"startTime:%@",self.startTime);
 
     // animation
@@ -176,12 +224,13 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     addOneSecond.duration = 60.f;
     addOneSecond.repeatCount = self.timeLength/60;
     addOneSecond.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    //addOneSecond.fillMode = kCAFillModeForwards;
     addOneSecond.delegate = self;
     //addOneSecond.autoreverses = YES;
     [self.pointerView.layer addAnimation:addOneSecond forKey:nil];
     
     // NSTimer
-    self.countDownTimer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
+    self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
 }
 
@@ -195,11 +244,11 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
 }
 
 - (void)resumeticking {
-    NSLog(@"resumeticking");
+    NSLog(@"resumeTicking");
     self.clockStatus = XZXClockStatusTicking;
     [self resumeLayer:self.pointerView.layer];
     
-    self.countDownTimer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
+    self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
 }
 
@@ -209,70 +258,83 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
 
 - (void)animationDidStart:(CAAnimation *)anim {
     NSLog(@"start");
-    // 四个时间段 四种不同的指针渐变色
+    
+    
     _pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
+    
     __weak __typeof__(self) weakSelf = self;
-    switch (self.level) {
-        case 1: {
-            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV1);
-            } completion:NULL];
-        }
-            break;
-        case 2: {
-            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV2);
-            } completion:NULL];
-        }
-            break;
-        case 3: {
-            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV3);
-            } completion:NULL];
-        }
-            break;
-        case 4: {
-            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
-            } completion:NULL];
-        }
-            break;
-    }
+    [UIView animateWithDuration:self.setTimeLength delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+        __strong __typeof__(weakSelf) strongSelf = weakSelf;
+        strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
+    } completion:NULL];
+    
+    // deprecated 实现复杂且不好看
+    // 四个时间段 四种不同的指针渐变色
+//    switch (self.level) {
+//        case 1: {
+//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV1);
+//            } completion:NULL];
+//        }
+//            break;
+//        case 2: {
+//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV2);
+//            } completion:NULL];
+//        }
+//            break;
+//        case 3: {
+//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV3);
+//            } completion:NULL];
+//        }
+//            break;
+//            // 只有全部完成才会LV4
+//        case 4:
+//            self.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
+//            break;
+//    }
     
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     NSLog(@"stop");
     self.endTime = [XZXDateUtil dateByAddingSeconds:_setTimeLength - _timeLength toDate:_startTime];
+    self.clockStatus = XZXClockStatusStop;
     NSLog(@"self.stop:%@", self.endTime);
 }
 
 - (void)pauseLayer:(CALayer *)layer {
-    //CFTimeInterval pauseTime = [layer convertTime:CACurrentMediaTime() toLayer:nil];
-    layer.speed = 0;
-    layer.timeOffset = (_setTimeLength - _timeLength)%60;
+    CFTimeInterval pausedTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
+    layer.speed = 0.0;
+    layer.timeOffset = pausedTime;
 }
 
 - (void)resumeLayer:(CALayer *)layer {
-    //CFTimeInterval pauseTime = [layer timeOffset];
+    CFTimeInterval pausedTime = [layer timeOffset];
     layer.speed = 1.0;
-    layer.beginTime = (_setTimeLength - _timeLength)%60;
-    layer.timeOffset = (_setTimeLength - _timeLength)%60;
-    //CFTimeInterval timeSincePause = [layer convertTime:CACurrentMediaTime() toLayer:nil] - pauseTime;
-    //layer.beginTime = timeSincePause;
-    //NSLog(@" layer.beginTime:%f", layer.beginTime);
+    layer.timeOffset = 0.0;
+    layer.beginTime = 0.0;
+    self.timeSincePause = [layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+    layer.beginTime = _timeSincePause;
 }
 
 #pragma mark - Time
 - (void)countingTime {
-    self.timeLength--;
-    self.clockLabel.text = [NSString stringWithFormat:@"%@:%@", [self textOfTime:self.timeLength/60], [self textOfTime:self.timeLength%60]];
-//    NSLog(@"time--%@",[NSString stringWithFormat:@"%@:%@", [self textOfTime:self.timeLength/60], [self textOfTime:self.timeLength%60]]);
-    if (self.timeLength == 0) {
+    // 更新时间
+    NSTimeInterval pastTime = [[NSDate date] timeIntervalSinceDate:self.startTime] - self.timeSincePause;
+    self.timeLength = self.setTimeLength - pastTime;
+    self.clockLabel.text = [NSString stringWithFormat:@"%@:%@", [self textOfTime:self.timeLength/60], [self textOfTime:(long)self.timeLength%60]];
+    //NSLog(@"time:%f text:%@", self.timeLength,self.clockLabel.text);
+    
+    // 更新等级
+    //self.level = (int)(pastTime/self.setTimeLength*4);
+    
+    // 停止计时
+    if (self.timeLength <= 0) {
         [self.countDownTimer invalidate];
         self.countDownTimer = nil;
     }
