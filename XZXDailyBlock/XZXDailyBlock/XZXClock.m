@@ -20,6 +20,10 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     XZXClockStatusStop
 };
 
+NSString* const kFlipStartAnim = @"flipTAnim";
+NSString* const kFlipEndAnim = @"flipFAnim";
+NSString* const kTickingAnim = @"tickingAnim";
+
 @interface XZXClock ()
 //@property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, strong) XZXClockViewModel *viewModel;
@@ -97,7 +101,7 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     //    clockView.frame = CGRectMake(centerX-clockViewR, centerY-clockViewR, clockViewD, clockViewD);
     UIView *clockView = [[UIView alloc] initWithFrame:CGRectMake(centerX-clockViewR, centerY-clockViewR, clockViewD, clockViewD)];
     clockView.backgroundColor = [UIColor clearColor];
-    [clockView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startTicking)]];
+    [clockView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clockViewOnClick)]];
     clockView.layer.cornerRadius = clockViewR;
     clockView.layer.borderWidth = 2.f;
     clockView.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -116,7 +120,8 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     self.pointerView = pointerView;
     
     UILabel *clockLabel = [[UILabel alloc] initWithFrame:CGRectMake(centerX-clockViewR, centerY-clockViewR, clockViewD, clockViewD)];
-    clockLabel.text = [NSString stringWithFormat:@"%@:00", [self textOfTime:self.timeLength/60]];
+    //clockLabel.text = [NSString stringWithFormat:@"%@:00", [self textOfTime:self.timeLength/60]];
+    clockLabel.text = [NSString stringWithFormat:@"开始"];
     clockLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
     clockLabel.textAlignment = NSTextAlignmentCenter;
     [self.view insertSubview:clockLabel aboveSubview:clockView];
@@ -138,7 +143,7 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
 //    self.level = 0;
     self.clockStatus = XZXClockStatusStop;
     
-    self.setTimeLength = 1 * 60;
+    self.setTimeLength = 2 * 60;
     self.timeLength = _setTimeLength;
 }
 
@@ -148,6 +153,8 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
 //    }];
 }
 
+// deprecated 实现复杂且不好看
+// 四个时间段 四种不同的指针渐变色
 //- (void)changePointerColorWithLevel:(NSInteger)level {
 //    __weak __typeof__(self) weakSelf = self;
 //    switch (level) {
@@ -183,7 +190,7 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
 //}
 
 
-#pragma mark - Button Click
+#pragma mark - Click Event
 
 - (void)backButtonOnClick {
     [self.countDownTimer invalidate];
@@ -191,9 +198,8 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Clock View
-
-- (void)startTicking {
+- (void)clockViewOnClick {
+    // 判断状态
 #warning 逻辑考虑不全 先测试暂停
     if (self.clockStatus == XZXClockStatusTicking) {
         // 暂停
@@ -207,27 +213,37 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
         return;
     }
     
-//    if (self.clockStatus == XZXClockStatusStop) {
-//        
-//        return;
-//    }
+    //    if (self.clockStatus == XZXClockStatusStop) {
+    //
+    //        return;
+    //    }
     
+    // 1.. 开始计时
+    // 1.1 翻转clockView
+    [self flipClockViewToClock];
+    // 1.2 反转结束开始计时
+//    [self startTicking];
+}
+
+#pragma mark - Ticking Animation
+
+- (void)startTicking {
     NSLog(@"startTicking");
     self.clockStatus = XZXClockStatusTicking;
     self.startTime = [NSDate date];
     NSLog(@"startTime:%@",self.startTime);
 
     // animation
-    CAKeyframeAnimation *addOneSecond = [CAKeyframeAnimation animationWithKeyPath:@"addOneSecond"];
-    addOneSecond.keyPath = @"position";
-    addOneSecond.path = [UIBezierPath bezierPathWithArcCenter:self.clockView.center radius:(self.clockView.frame.size.width-_pointerViewR)/2 startAngle:-M_PI_2 endAngle:M_PI_2*3 clockwise:YES].CGPath;
-    addOneSecond.duration = 60.f;
-    addOneSecond.repeatCount = self.timeLength/60;
-    addOneSecond.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    CAKeyframeAnimation *tickingAnim = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    //tickingAnim.keyPath = @"position";
+    tickingAnim.path = [UIBezierPath bezierPathWithArcCenter:self.clockView.center radius:(self.clockView.frame.size.width-_pointerViewR)/2 startAngle:-M_PI_2 endAngle:M_PI_2*3 clockwise:YES].CGPath;
+    tickingAnim.duration = 60.f;
+    tickingAnim.repeatCount = self.timeLength/60;
+    tickingAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     //addOneSecond.fillMode = kCAFillModeForwards;
-    addOneSecond.delegate = self;
+    tickingAnim.delegate = self;
     //addOneSecond.autoreverses = YES;
-    [self.pointerView.layer addAnimation:addOneSecond forKey:nil];
+    [self.pointerView.layer addAnimation:tickingAnim forKey:kTickingAnim];
     
     // NSTimer
     self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
@@ -256,55 +272,80 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     //self.clockStatus =
 }
 
+
+#pragma mark - Flip Animation
+
+- (void)flipClockViewToClock {
+    // 分两部分 第一部分先翻转90度
+    CABasicAnimation *flipStartAnim = [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
+    flipStartAnim.duration = 0.125;
+    flipStartAnim.fromValue = @(0);
+    flipStartAnim.toValue = @(M_PI_2);
+    flipStartAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    flipStartAnim.fillMode = kCAFillModeForwards;
+    flipStartAnim.removedOnCompletion = NO;
+    flipStartAnim.delegate = self;
+    [self.clockView.layer addAnimation:flipStartAnim forKey:kFlipStartAnim];
+}
+
+#pragma mark - Animation Control
+
 - (void)animationDidStart:(CAAnimation *)anim {
-    NSLog(@"start");
-    
-    
-    _pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
-    
-    __weak __typeof__(self) weakSelf = self;
-    [UIView animateWithDuration:self.setTimeLength delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-        __strong __typeof__(weakSelf) strongSelf = weakSelf;
-        strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
-    } completion:NULL];
-    
-    // deprecated 实现复杂且不好看
-    // 四个时间段 四种不同的指针渐变色
-//    switch (self.level) {
-//        case 1: {
-//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV1);
-//            } completion:NULL];
-//        }
-//            break;
-//        case 2: {
-//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV2);
-//            } completion:NULL];
-//        }
-//            break;
-//        case 3: {
-//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV3);
-//            } completion:NULL];
-//        }
-//            break;
-//            // 只有全部完成才会LV4
-//        case 4:
-//            self.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
-//            break;
-//    }
-    
+    if ([anim isEqual:[self.pointerView.layer animationForKey:kTickingAnim]]) {
+        NSLog(@"start");
+        
+        _pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
+        
+        __weak __typeof__(self) weakSelf = self;
+        [UIView animateWithDuration:self.setTimeLength delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+            __strong __typeof__(weakSelf) strongSelf = weakSelf;
+            strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
+        } completion:^(BOOL finished) {
+            __strong __typeof__(weakSelf) strongSelf = weakSelf;
+            NSLog(@"stop");
+            self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
+            
+            self.endTime = [XZXDateUtil dateByAddingSeconds:strongSelf.setTimeLength - strongSelf.timeLength toDate:strongSelf.startTime];
+            self.clockStatus = XZXClockStatusStop;
+            NSLog(@"self.stop:%@", self.endTime);
+        }];
+    }
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    NSLog(@"stop");
-    self.endTime = [XZXDateUtil dateByAddingSeconds:_setTimeLength - _timeLength toDate:_startTime];
-    self.clockStatus = XZXClockStatusStop;
-    NSLog(@"self.stop:%@", self.endTime);
+//    NSLog(@"animationDidStop%@~%ld~%ld",anim,flag, [anim isEqual:[self.pointerView.layer animationForKey:kTickingAnim]]);
+    if ([anim isEqual:[self.clockView.layer animationForKey:kFlipStartAnim]]) {
+        //
+        self.clockLabel.text = [NSString stringWithFormat:@"%@:00", [self textOfTime:self.timeLength/60]];
+        // 分两部分 第二部分再翻转90度
+        CABasicAnimation *flipEndAnim = [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
+        flipEndAnim.duration = 0.125;
+        flipEndAnim.fromValue = @(M_PI_2);
+        flipEndAnim.toValue = @(M_PI);
+        flipEndAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        flipEndAnim.fillMode = kCAFillModeForwards;
+        flipEndAnim.removedOnCompletion = NO;
+        flipEndAnim.delegate = self;
+        [self.clockView.layer addAnimation:flipEndAnim forKey:kFlipEndAnim];
+    } else if ([anim isEqual:[self.clockView.layer animationForKey:kFlipEndAnim]]) {
+        // 判断状态
+        // 新开始
+        // [self.clockView.layer removeAnimationForKey:@""];
+        [self startTicking];
+        // 暂停恢复
+    }
+    
+    // 未知BUG 能接收到animationDidStop<CAKeyframeAnimation: 0x7fb928e71bf0>~1但是判断失败
+//    if ([anim isEqual:[self.pointerView.layer animationForKey:kTickingAnim]]) {
+//        NSLog(@"stop");
+//        
+//        self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
+//        
+//        self.endTime = [XZXDateUtil dateByAddingSeconds:_setTimeLength - _timeLength toDate:_startTime];
+//        self.clockStatus = XZXClockStatusStop;
+//        NSLog(@"self.stop:%@", self.endTime);
+//    }
+
 }
 
 - (void)pauseLayer:(CALayer *)layer {
