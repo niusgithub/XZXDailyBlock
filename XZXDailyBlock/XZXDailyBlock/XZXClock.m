@@ -17,7 +17,9 @@
 typedef NS_ENUM(NSInteger, XZXClockStatus) {
     XZXClockStatusTicking,
     XZXClockStatusPause,
-    XZXClockStatusStop
+    XZXClockStatusOnResume,
+    XZXClockStatusStop,
+    XZXClockStatusFinish
 };
 
 NSString* const kFlipStartAnim = @"flipTAnim";
@@ -143,7 +145,7 @@ NSString* const kTickingAnim = @"tickingAnim";
 //    self.level = 0;
     self.clockStatus = XZXClockStatusStop;
     
-    self.setTimeLength = 2 * 60;
+    self.setTimeLength = 1 * 60;
     self.timeLength = _setTimeLength;
 }
 
@@ -193,6 +195,7 @@ NSString* const kTickingAnim = @"tickingAnim";
 #pragma mark - Click Event
 
 - (void)backButtonOnClick {
+    self.clockStatus = XZXClockStatusStop;
     [self.countDownTimer invalidate];
     self.countDownTimer = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -201,35 +204,35 @@ NSString* const kTickingAnim = @"tickingAnim";
 - (void)clockViewOnClick {
     // 判断状态
 #warning 逻辑考虑不全 先测试暂停
+    // 开始
+    if (self.clockStatus == XZXClockStatusStop) {
+        self.clockStatus = XZXClockStatusTicking;
+        [self flipClockView];
+        return;
+    }
+    
+    // 暂停
     if (self.clockStatus == XZXClockStatusTicking) {
-        // 暂停
+        self.clockStatus = XZXClockStatusPause;
         [self pauseTicking];
         return;
     }
     
+    // 恢复
     if (self.clockStatus == XZXClockStatusPause) {
-        // 恢复
-        [self resumeticking];
+        self.clockStatus = XZXClockStatusOnResume;
+        [self resumeTicking];
         return;
     }
-    
-    //    if (self.clockStatus == XZXClockStatusStop) {
-    //
-    //        return;
-    //    }
-    
-    // 1.. 开始计时
-    // 1.1 翻转clockView
-    [self flipClockViewToClock];
-    // 1.2 反转结束开始计时
-//    [self startTicking];
 }
 
 #pragma mark - Ticking Animation
 
 - (void)startTicking {
     NSLog(@"startTicking");
-    self.clockStatus = XZXClockStatusTicking;
+    //
+//    self.clockStatus = XZXClockStatusTicking;
+    
     self.startTime = [NSDate date];
     NSLog(@"startTime:%@",self.startTime);
 
@@ -240,9 +243,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     tickingAnim.duration = 60.f;
     tickingAnim.repeatCount = self.timeLength/60;
     tickingAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    //addOneSecond.fillMode = kCAFillModeForwards;
     tickingAnim.delegate = self;
-    //addOneSecond.autoreverses = YES;
     [self.pointerView.layer addAnimation:tickingAnim forKey:kTickingAnim];
     
     // NSTimer
@@ -250,20 +251,30 @@ NSString* const kTickingAnim = @"tickingAnim";
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
 }
 
+
 - (void)pauseTicking {
     NSLog(@"pauseTicking");
-    self.clockStatus = XZXClockStatusPause;
+    // 暂停指针动画
     [self pauseLayer:self.pointerView.layer];
+    // 改变clockLabel文字并翻转
+    [self flipClockView];
+    // 淡入取消按钮
     
+    // 删除NSTimer
     [self.countDownTimer invalidate];
     self.countDownTimer = nil;
 }
 
-- (void)resumeticking {
+- (void)resumeTicking {
     NSLog(@"resumeTicking");
-    self.clockStatus = XZXClockStatusTicking;
+    
     [self resumeLayer:self.pointerView.layer];
     
+    [self flipClockView];
+    
+    // 淡出取消按钮
+    
+    // 新建NSTimer并启动
     self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
 }
@@ -275,7 +286,7 @@ NSString* const kTickingAnim = @"tickingAnim";
 
 #pragma mark - Flip Animation
 
-- (void)flipClockViewToClock {
+- (void)flipClockView {
     // 分两部分 第一部分先翻转90度
     CABasicAnimation *flipStartAnim = [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
     flipStartAnim.duration = 0.125;
@@ -292,7 +303,6 @@ NSString* const kTickingAnim = @"tickingAnim";
 
 - (void)animationDidStart:(CAAnimation *)anim {
     if ([anim isEqual:[self.pointerView.layer animationForKey:kTickingAnim]]) {
-        NSLog(@"start");
         
         _pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
         
@@ -302,8 +312,7 @@ NSString* const kTickingAnim = @"tickingAnim";
             strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
         } completion:^(BOOL finished) {
             __strong __typeof__(weakSelf) strongSelf = weakSelf;
-            NSLog(@"stop");
-            self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
+            
             
             self.endTime = [XZXDateUtil dateByAddingSeconds:strongSelf.setTimeLength - strongSelf.timeLength toDate:strongSelf.startTime];
             self.clockStatus = XZXClockStatusStop;
@@ -313,10 +322,18 @@ NSString* const kTickingAnim = @"tickingAnim";
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-//    NSLog(@"animationDidStop%@~%ld~%ld",anim,flag, [anim isEqual:[self.pointerView.layer animationForKey:kTickingAnim]]);
+    
+//    for (NSString *str in [self.pointerView.layer animationKeys]) {
+//        NSLog(@"animationDidStop--animationKeys:%@",str);
+//    }
+
     if ([anim isEqual:[self.clockView.layer animationForKey:kFlipStartAnim]]) {
         //
-        self.clockLabel.text = [NSString stringWithFormat:@"%@:00", [self textOfTime:self.timeLength/60]];
+        if (self.clockStatus == XZXClockStatusPause) {
+            self.clockLabel.text = @"暂停";
+        } else if (self.clockStatus == XZXClockStatusOnResume || self.clockStatus == XZXClockStatusTicking) {
+            self.clockLabel.text = [NSString stringWithFormat:@"%@:%@", [self textOfTime:self.timeLength/60], [self textOfTime:(long)self.timeLength%60]];
+        }
         // 分两部分 第二部分再翻转90度
         CABasicAnimation *flipEndAnim = [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
         flipEndAnim.duration = 0.125;
@@ -329,14 +346,18 @@ NSString* const kTickingAnim = @"tickingAnim";
         [self.clockView.layer addAnimation:flipEndAnim forKey:kFlipEndAnim];
     } else if ([anim isEqual:[self.clockView.layer animationForKey:kFlipEndAnim]]) {
         // 判断状态
-        // 新开始
-        // [self.clockView.layer removeAnimationForKey:@""];
-        [self startTicking];
-        // 暂停恢复
+        if (self.clockStatus == XZXClockStatusTicking) {
+            // 反转结束后开始计时
+            [self startTicking];
+        } else if (self.clockStatus == XZXClockStatusOnResume) {
+            // 改变状态
+            self.clockStatus = XZXClockStatusTicking;
+        }
     }
     
     // 未知BUG 能接收到animationDidStop<CAKeyframeAnimation: 0x7fb928e71bf0>~1但是判断失败
-//    if ([anim isEqual:[self.pointerView.layer animationForKey:kTickingAnim]]) {
+//    if ([anim isEqual:[self.pointerView.layer animationForKey:@"backgroundColor"]]) {
+//        NSLog(@"animationDidStop%@",anim);
 //        NSLog(@"stop");
 //        
 //        self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
@@ -376,6 +397,10 @@ NSString* const kTickingAnim = @"tickingAnim";
     
     // 停止计时
     if (self.timeLength <= 0) {
+        // 完成计时
+        self.clockStatus = XZXClockStatusFinish;
+        self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
+        
         [self.countDownTimer invalidate];
         self.countDownTimer = nil;
     }
