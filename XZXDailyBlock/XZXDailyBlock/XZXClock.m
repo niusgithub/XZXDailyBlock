@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     XZXClockStatusPause,
     XZXClockStatusOnResume,
     XZXClockStatusStop,
+    XZXClockStatusCancel,
     XZXClockStatusFinish
 };
 
@@ -48,10 +49,9 @@ NSString* const kTickingAnim = @"tickingAnim";
 @property (nonatomic, assign) NSTimeInterval timeSincePause;
 @property (nonatomic, assign) NSTimeInterval setTimeLength; // float
 @property (nonatomic, strong) NSTimer *countDownTimer;
-//@property (nonatomic, assign) NSInteger level;
 
 // clock control
-@property (nonatomic, strong) UIButton *stopBtn;
+@property (nonatomic, strong) UIButton *cancelBtn;
 
 @property (nonatomic, strong) CAKeyframeAnimation *addOneSecond;
 //@property (nonatomic, assign) CGRect clockViewOriginFrame;
@@ -68,9 +68,12 @@ NSString* const kTickingAnim = @"tickingAnim";
     
     [self initialize];
     
-    //[self bindViewModel];
+    [self bindViewModel];
 }
 
+/**
+ *  初始化各个视图
+ */
 - (void)initialize {
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     
@@ -129,16 +132,17 @@ NSString* const kTickingAnim = @"tickingAnim";
     [self.view insertSubview:clockLabel aboveSubview:clockView];
     self.clockLabel = clockLabel;
     
-    UIButton *stopBtn = [[UIButton alloc] initWithFrame:CGRectMake(centerX-20 , centerY+clockViewR+20, 40, 40)];
-    [stopBtn setImage:[UIImage imageNamed:@"redStop"] forState:UIControlStateNormal];
-    [stopBtn setImage:[UIImage imageNamed:@"stop_highlighted"] forState:UIControlStateHighlighted];
-    stopBtn.backgroundColor = [UIColor clearColor];
-    stopBtn.layer.cornerRadius = 20.f;
-    stopBtn.layer.borderWidth = 1.f;
-    stopBtn.layer.borderColor = [UIColor redColor].CGColor;
-    stopBtn.alpha = 0; //  先通过透明隐藏
-    [self.view addSubview:stopBtn];
-    self.stopBtn = stopBtn;
+    UIButton *cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(centerX-20 , centerY+clockViewR+20, 40, 40)];
+    [cancelBtn setImage:[UIImage imageNamed:@"redStop"] forState:UIControlStateNormal];
+    [cancelBtn setImage:[UIImage imageNamed:@"stop_highlighted"] forState:UIControlStateHighlighted];
+    cancelBtn.backgroundColor = [UIColor clearColor];
+    cancelBtn.layer.cornerRadius = 20.f;
+    cancelBtn.layer.borderWidth = 1.f;
+    cancelBtn.layer.borderColor = [UIColor redColor].CGColor;
+    cancelBtn.alpha = 0; //  先通过透明隐藏
+    [cancelBtn addTarget:self action:@selector(cancelButtonOnclick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:cancelBtn];
+    self.cancelBtn = cancelBtn;
 }
 
 - (void)initDefaultSetting {
@@ -153,6 +157,10 @@ NSString* const kTickingAnim = @"tickingAnim";
 //    [[RACObserve(self, level) distinctUntilChanged] subscribeNext:^(id x) {
 //        [self changePointerColorWithLevel:[x integerValue]];
 //    }];
+    [RACObserve(self, clockStatus)
+     subscribeNext:^(id x) {
+        NSLog(@"status:%@",x);
+    }];
 }
 
 // deprecated 实现复杂且不好看
@@ -201,9 +209,12 @@ NSString* const kTickingAnim = @"tickingAnim";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+/**
+ *  大量快速点击后会有计时混乱的bug
+ */
 - (void)clockViewOnClick {
     // 判断状态
-#warning 逻辑考虑不全 先测试暂停
     // 开始
     if (self.clockStatus == XZXClockStatusStop) {
         self.clockStatus = XZXClockStatusTicking;
@@ -226,12 +237,45 @@ NSString* const kTickingAnim = @"tickingAnim";
     }
 }
 
+- (void)cancelButtonOnclick {
+    // 取消当前任务
+    self.clockStatus = XZXClockStatusCancel;
+    // 动画
+    UIView *maskView = [[UIView alloc] init];
+    maskView.frame = self.cancelBtn.frame;
+    maskView.layer.cornerRadius = 20.f;
+    maskView.backgroundColor = [UIColor redColor];
+    maskView.alpha = 0.75f;
+    [self.view insertSubview:maskView aboveSubview:self.cancelBtn];
+    
+    CGAffineTransform zoom = CGAffineTransformScale(maskView.transform, 2, 2);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [maskView setTransform:zoom];
+        maskView.alpha = 0;
+        self.cancelBtn.alpha = 0;
+    } completion:^(BOOL finished) {
+        [maskView removeFromSuperview];
+    }];
+    
+    // 移除番茄钟动画
+    [self cancelLayer:self.pointerView.layer];
+    [self.pointerView.layer removeAnimationForKey:kTickingAnim];
+    
+    // 翻转
+    [self flipClockView];
+    
+    // 恢复计时初值
+    self.timeLength = _setTimeLength;
+    self.clockLabel.text = @"开始";
+    self.timeSincePause = 0;
+    self.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
+}
+
+
 #pragma mark - Ticking Animation
 
 - (void)startTicking {
-    NSLog(@"startTicking");
-    //
-//    self.clockStatus = XZXClockStatusTicking;
     
     self.startTime = [NSDate date];
     NSLog(@"startTime:%@",self.startTime);
@@ -253,12 +297,14 @@ NSString* const kTickingAnim = @"tickingAnim";
 
 
 - (void)pauseTicking {
-    NSLog(@"pauseTicking");
     // 暂停指针动画
     [self pauseLayer:self.pointerView.layer];
     // 改变clockLabel文字并翻转
     [self flipClockView];
     // 淡入取消按钮
+    [UIView animateWithDuration:0.25 animations:^{
+        self.cancelBtn.alpha = 1.0;
+    }];
     
     // 删除NSTimer
     [self.countDownTimer invalidate];
@@ -266,21 +312,19 @@ NSString* const kTickingAnim = @"tickingAnim";
 }
 
 - (void)resumeTicking {
-    NSLog(@"resumeTicking");
     
     [self resumeLayer:self.pointerView.layer];
     
     [self flipClockView];
     
     // 淡出取消按钮
+    [UIView animateWithDuration:0.25 animations:^{
+        self.cancelBtn.alpha = 0;
+    }];
     
     // 新建NSTimer并启动
     self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
-}
-
-- (void)stopTicking {
-    //self.clockStatus =
 }
 
 
@@ -299,6 +343,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     [self.clockView.layer addAnimation:flipStartAnim forKey:kFlipStartAnim];
 }
 
+
 #pragma mark - Animation Control
 
 - (void)animationDidStart:(CAAnimation *)anim {
@@ -311,11 +356,10 @@ NSString* const kTickingAnim = @"tickingAnim";
             __strong __typeof__(weakSelf) strongSelf = weakSelf;
             strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
         } completion:^(BOOL finished) {
+            // 被中断也会进入该方法
             __strong __typeof__(weakSelf) strongSelf = weakSelf;
             
-            
             self.endTime = [XZXDateUtil dateByAddingSeconds:strongSelf.setTimeLength - strongSelf.timeLength toDate:strongSelf.startTime];
-            self.clockStatus = XZXClockStatusStop;
             NSLog(@"self.stop:%@", self.endTime);
         }];
     }
@@ -352,6 +396,9 @@ NSString* const kTickingAnim = @"tickingAnim";
         } else if (self.clockStatus == XZXClockStatusOnResume) {
             // 改变状态
             self.clockStatus = XZXClockStatusTicking;
+        } else if (self.clockStatus == XZXClockStatusCancel) {
+            // 改变状态
+            self.clockStatus = XZXClockStatusStop;
         }
     }
     
@@ -384,7 +431,15 @@ NSString* const kTickingAnim = @"tickingAnim";
     layer.beginTime = _timeSincePause;
 }
 
+- (void)cancelLayer:(CALayer *)layer {
+    layer.speed = 1.0;
+    layer.timeOffset = 0.0;
+    layer.beginTime = 0.0;
+}
+
+
 #pragma mark - Time
+
 - (void)countingTime {
     // 更新时间
     NSTimeInterval pastTime = [[NSDate date] timeIntervalSinceDate:self.startTime] - self.timeSincePause;
@@ -400,6 +455,9 @@ NSString* const kTickingAnim = @"tickingAnim";
         // 完成计时
         self.clockStatus = XZXClockStatusFinish;
         self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
+        
+        self.endTime = [XZXDateUtil dateByAddingSeconds:self.setTimeLength - self.timeLength toDate:self.startTime];
+        NSLog(@"self.stop:%@", self.endTime);
         
         [self.countDownTimer invalidate];
         self.countDownTimer = nil;

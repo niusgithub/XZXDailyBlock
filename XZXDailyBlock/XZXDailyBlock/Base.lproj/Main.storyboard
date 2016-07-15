@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--CalendarVC-->
@@ -24,18 +23,11 @@
                                 <action selector="leftBarButtonItemClick:" destination="MYR-WT-QH5" id="jUi-m5-w1C"/>
                             </connections>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem title="Clock" id="8Br-hi-jEi">
-                                <connections>
-                                    <action selector="startTickTock:" destination="MYR-WT-QH5" id="KwZ-qL-Jtl"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Today" id="j7T-hp-2Ow">
-                                <connections>
-                                    <action selector="jumpToToday:" destination="MYR-WT-QH5" id="aA8-n1-dAG"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="Today" id="j7T-hp-2Ow">
+                            <connections>
+                                <action selector="jumpToToday:" destination="MYR-WT-QH5" id="aA8-n1-dAG"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Udb-Ba-6IE" userLabel="First Responder" sceneMemberID="firstResponder"/>

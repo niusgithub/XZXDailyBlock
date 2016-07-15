@@ -31,7 +31,8 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 @property (nonatomic, strong) XZXCalendarViewModel *viewModel;
 
-@property (nonatomic, strong) XZXDayBlockCV *dateBlockCV;
+@property (nonatomic, strong) XZXDayBlockCV *dayBlockCV;
+@property (nonatomic, strong) UIButton *startEventBtn;
 
 @property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
@@ -75,8 +76,8 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     self.navigationItem.backBarButtonItem = backItem;
     
     //
-    CGFloat width = [[UIScreen mainScreen] bounds].size.width;
-    self.sideLength = (width - 80) / 7;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    self.sideLength = (screenWidth - 80) / 7;
     
     CGFloat collectionViewHeight = 8 + (_sideLength + 10) * 6;
     
@@ -96,7 +97,20 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     dayBlockCV.delegate = self;
     dayBlockCV.dataSource = self;
     [self.view addSubview:dayBlockCV];
-    self.dateBlockCV = dayBlockCV;
+    self.dayBlockCV = dayBlockCV;
+    
+    //[UIScreen mainScreen].bounds.size.height-44
+    NSLog(@"height:%f--%f",[UIScreen mainScreen].bounds.size.height-44,collectionViewHeight + 50);
+    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, collectionViewHeight + 50, screenWidth - 20, 44)];
+    [startEventBtn setImage:[UIImage imageNamed:@"clock"] forState:UIControlStateNormal];
+    [startEventBtn setTitle:@"开始" forState:UIControlStateNormal];
+    [startEventBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    startEventBtn.backgroundColor = [UIColor whiteColor];
+    startEventBtn.layer.borderWidth = 1.f;
+    startEventBtn.layer.borderColor = [UIColor grayColor].CGColor;
+    [startEventBtn addTarget:self action:@selector(startTickTock) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:startEventBtn];
+    self.startEventBtn = startEventBtn;
     
     
     [self initViewModel];
@@ -116,7 +130,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 - (void)bindViewModel {
     self.title = self.viewModel.title;
     
-    [self.dateBlockCV registerClass:[XZXDayBlockCVCell class] forCellWithReuseIdentifier:kCalendarDateBlockCellIdentifier];
+    [self.dayBlockCV registerClass:[XZXDayBlockCVCell class] forCellWithReuseIdentifier:kCalendarDateBlockCellIdentifier];
     
     // React collectionView:didSelectItemAtIndexPath:
     @weakify(self)
@@ -136,11 +150,11 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
          dayEventVC.modalPresentationStyle = UIModalPresentationFullScreen;
          [self.navigationController pushViewController:dayEventVC animated:YES];
      }];
-    self.dateBlockCV.delegate = nil;
-    self.dateBlockCV.delegate = self;
+    self.dayBlockCV.delegate = nil;
+    self.dayBlockCV.delegate = self;
     
     // 5个月份中间的月份calendar为当前月 起始item为84 item87在正中间
-    [self.dateBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    [self.dayBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -247,10 +261,10 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 - (IBAction)jumpToToday:(UIBarButtonItem *)sender {
     // 暂定方法实现
-    [self.dateBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    [self.dayBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
 
-- (IBAction)startTickTock:(UIBarButtonItem *)sender {
+- (IBAction)startTickTock {
     XZXClock *clock = [[XZXClock alloc] init];
     [self presentViewController:clock animated:YES completion:nil];
 }
