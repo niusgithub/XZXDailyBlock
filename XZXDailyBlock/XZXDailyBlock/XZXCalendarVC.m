@@ -77,6 +77,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     
     //
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat screenHeigth = [[UIScreen mainScreen] bounds].size.height;
     self.sideLength = (screenWidth - 80) / 7;
     
     CGFloat collectionViewHeight = 8 + (_sideLength + 10) * 6;
@@ -99,9 +100,8 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [self.view addSubview:dayBlockCV];
     self.dayBlockCV = dayBlockCV;
     
-    //[UIScreen mainScreen].bounds.size.height-44
-    NSLog(@"height:%f--%f",[UIScreen mainScreen].bounds.size.height-44,collectionViewHeight + 50);
-    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, collectionViewHeight + 50, screenWidth - 20, 44)];
+    //y:screenHeigth-64-44-20
+    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, screenHeigth-128, screenWidth - 20, 44)];
     [startEventBtn setImage:[UIImage imageNamed:@"clock"] forState:UIControlStateNormal];
     [startEventBtn setTitle:@"开始" forState:UIControlStateNormal];
     [startEventBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];

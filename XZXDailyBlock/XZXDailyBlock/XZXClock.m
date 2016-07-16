@@ -11,6 +11,8 @@
 #import "XZXClockViewModel.h"
 #import "XZXDateUtil.h"
 
+#import "UIView+XZX.h"
+
 #import <DKNightVersion/DKNightVersion.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
@@ -21,6 +23,10 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     XZXClockStatusStop,
     XZXClockStatusCancel,
     XZXClockStatusFinish
+};
+
+typedef NS_ENUM(NSInteger, XZXErrInfo) {
+    XZXErrInfoEmptyEvent
 };
 
 NSString* const kFlipStartAnim = @"flipTAnim";
@@ -53,6 +59,9 @@ NSString* const kTickingAnim = @"tickingAnim";
 // clock control
 @property (nonatomic, strong) UIButton *cancelBtn;
 
+// event
+@property (nonatomic, strong) UITextField *eventTextField;
+
 @property (nonatomic, strong) CAKeyframeAnimation *addOneSecond;
 //@property (nonatomic, assign) CGRect clockViewOriginFrame;
 @property (nonatomic, assign) XZXClockStatus clockStatus;
@@ -71,6 +80,17 @@ NSString* const kTickingAnim = @"tickingAnim";
     [self bindViewModel];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // 监听键盘
+    // 键盘的frame(位置)即将改变, 就会发出UIKeyboardWillChangeFrameNotification
+    // 键盘即将弹出, 就会发出UIKeyboardWillShowNotification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    // 键盘即将隐藏, 就会发出UIKeyboardWillHideNotification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
 /**
  *  初始化各个视图
  */
@@ -78,7 +98,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     
     // 完成设置后在UserDefault取出
-    CGFloat width = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     
     // back button
     UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 20, 40, 40)];
@@ -97,10 +117,10 @@ NSString* const kTickingAnim = @"tickingAnim";
     //    self.eventsView = eventsView;
     
     // clock view
-    CGFloat clockViewD = width * 0.6;
-    CGFloat clockViewR = width * 0.3;
-    CGFloat centerX = width/2;
-    CGFloat centerY = 64 + width/2;
+    CGFloat clockViewD = screenWidth * 0.6;
+    CGFloat clockViewR = screenWidth * 0.3;
+    CGFloat centerX = screenWidth/2;
+    CGFloat centerY = 64 + screenWidth/2;
 
     //    UIVisualEffectView *clockView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     //    clockView.frame = CGRectMake(centerX-clockViewR, centerY-clockViewR, clockViewD, clockViewD);
@@ -143,13 +163,21 @@ NSString* const kTickingAnim = @"tickingAnim";
     [cancelBtn addTarget:self action:@selector(cancelButtonOnclick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cancelBtn];
     self.cancelBtn = cancelBtn;
+    
+    UITextField *eventTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, centerY+clockViewR+70, screenWidth-20, 44)];
+    eventTextField.text = @"新的任务";
+    eventTextField.textAlignment = NSTextAlignmentCenter;
+    eventTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22];
+    [self.view addSubview:eventTextField];
+    self.eventTextField = eventTextField;
 }
 
 - (void)initDefaultSetting {
 //    self.level = 0;
     self.clockStatus = XZXClockStatusStop;
     
-    self.setTimeLength = 1 * 60;
+    // 25*60
+    self.setTimeLength = 1500;
     self.timeLength = _setTimeLength;
 }
 
@@ -161,6 +189,22 @@ NSString* const kTickingAnim = @"tickingAnim";
      subscribeNext:^(id x) {
         NSLog(@"status:%@",x);
     }];
+    
+    
+    // 需要combine多个信号
+    //RAC(self.eventTextField, enabled) =
+    
+    [self.eventTextField.rac_textSignal
+     map:^id(NSString *eventText) {
+         return @([self isValiEventText:eventText]);
+     }];
+    
+    [[self.eventTextField.rac_textSignal
+     filter:^BOOL(NSString *eventText) {
+         return eventText.length == 0;
+     }] subscribeNext:^(id x) {
+         [self showErrInfo:XZXErrInfoEmptyEvent];
+     }];
 }
 
 // deprecated 实现复杂且不好看
@@ -201,6 +245,10 @@ NSString* const kTickingAnim = @"tickingAnim";
 
 
 #pragma mark - Click Event
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.eventTextField endEditing:YES];
+}
 
 - (void)backButtonOnClick {
     self.clockStatus = XZXClockStatusStop;
@@ -470,6 +518,107 @@ NSString* const kTickingAnim = @"tickingAnim";
     } else {
         return [NSString stringWithFormat:@"%ld", time];
     }
+}
+
+
+#pragma mark - Event Text
+
+- (BOOL)isValiEventText:(NSString *)text {
+    return [text isEqualToString:@"新的任务"];
+}
+
+
+#pragma mark - Err Info
+
+- (void)showErrInfo:(XZXErrInfo)errInfo {
+    
+    // 1.创建一个UILabel
+    UILabel *countLabel = [[UILabel alloc] init];
+    
+    // 2.显示文字
+    switch (errInfo) {
+        case XZXErrInfoEmptyEvent:
+            countLabel.text = @"没有任务内容";
+            break;
+    }
+    
+    // 3.设置背景
+    countLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"timeline_new_status_background"]];
+    countLabel.textAlignment = NSTextAlignmentCenter;
+    countLabel.textColor = [UIColor whiteColor];
+    
+    // 4.设置frame
+    countLabel.width = self.view.width;
+    countLabel.height = 35;
+    countLabel.x = 0;
+    countLabel.y = 64 - countLabel.height;
+    
+    // 5.添加到导航控制器的view
+    [self.navigationController.view insertSubview:countLabel belowSubview:self.navigationController.navigationBar];
+    
+    // 6.动画
+    CGFloat duration = 0.8;
+    countLabel.alpha = 0.5;
+    [UIView animateWithDuration:duration animations:^{
+        // 往下移动一个label的高度
+        countLabel.transform = CGAffineTransformMakeTranslation(0, countLabel.height);
+        countLabel.alpha = 1.0;
+    } completion:^(BOOL finished) { // 向下移动完毕
+        
+        // 延迟delay秒后，再执行动画
+        CGFloat delay = 1.0;
+        
+        /**
+         UIViewAnimationOptionCurveEaseInOut            = 0 << 16, // 开始：由慢到快，结束：由快到慢
+         UIViewAnimationOptionCurveEaseIn               = 1 << 16, // 由慢到块
+         UIViewAnimationOptionCurveEaseOut              = 2 << 16, // 由快到慢
+         UIViewAnimationOptionCurveLinear               = 3 << 16, // 线性，匀速
+         */
+        [UIView animateWithDuration:duration delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            
+            // 恢复到原来的位置
+            countLabel.transform = CGAffineTransformIdentity;
+            countLabel.alpha = 0.5;
+            
+        } completion:^(BOOL finished) {
+            
+            // 删除控件
+            [countLabel removeFromSuperview];
+        }];
+    }];
+}
+
+#pragma mark - Keyboard Notification
+/**
+ *  键盘即将隐藏
+ */
+- (void)keyboardWillHide:(NSNotification *)note
+{
+    // 1.键盘弹出需要的时间
+    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    // 2.动画
+    [UIView animateWithDuration:duration animations:^{
+        self.eventTextField.transform = CGAffineTransformIdentity;
+    }];
+}
+
+/**
+ *  键盘即将弹出
+ */
+- (void)keyboardWillShow:(NSNotification *)note
+{
+    // 1.键盘弹出需要的时间
+    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    // 2.动画
+    [UIView animateWithDuration:duration animations:^{
+        // 取出键盘高度
+        CGRect keyboardF = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        CGFloat keyboardH = keyboardF.size.height;
+        CGFloat transformH = ([UIScreen mainScreen].bounds.size.height - (keyboardH+44))- self.eventTextField.frame.origin.y;
+        self.eventTextField.transform = CGAffineTransformMakeTranslation(0, transformH);
+    }];
 }
 
 - (void)dealloc {

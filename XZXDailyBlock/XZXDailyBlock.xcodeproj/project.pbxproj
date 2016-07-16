@@ -33,6 +33,7 @@
 		E00B22D21D2BE18A00FF8241 /* XZXWeekCVLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22D11D2BE18A00FF8241 /* XZXWeekCVLayout.m */; };
 		E00B22D61D2C0D7C00FF8241 /* XZXEventDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22D51D2C0D7C00FF8241 /* XZXEventDetailVC.m */; };
 		E00B22DA1D2C0E2000FF8241 /* XZXEventDatilViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22D91D2C0E2000FF8241 /* XZXEventDatilViewModel.m */; };
+		E046CCE81D3A90BA0081FB45 /* UIView+XZX.m in Sources */ = {isa = PBXBuildFile; fileRef = E046CCE71D3A90BA0081FB45 /* UIView+XZX.m */; };
 		E085F0971D07EAF200E91362 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0961D07EAF200E91362 /* main.m */; };
 		E085F09A1D07EAF200E91362 /* XZXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* XZXAppDelegate.m */; };
 		E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F09E1D07EAF200E91362 /* Main.storyboard */; };
@@ -115,6 +116,8 @@
 		E00B22D51D2C0D7C00FF8241 /* XZXEventDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXEventDetailVC.m; sourceTree = "<group>"; };
 		E00B22D81D2C0E2000FF8241 /* XZXEventDatilViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXEventDatilViewModel.h; sourceTree = "<group>"; };
 		E00B22D91D2C0E2000FF8241 /* XZXEventDatilViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXEventDatilViewModel.m; sourceTree = "<group>"; };
+		E046CCE61D3A90BA0081FB45 /* UIView+XZX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XZX.h"; sourceTree = "<group>"; };
+		E046CCE71D3A90BA0081FB45 /* UIView+XZX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XZX.m"; sourceTree = "<group>"; };
 		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E085F0981D07EAF200E91362 /* XZXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXAppDelegate.h; sourceTree = "<group>"; };
@@ -374,6 +377,8 @@
 				E00B22B91D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m */,
 				E085F0981D07EAF200E91362 /* XZXAppDelegate.h */,
 				E085F0991D07EAF200E91362 /* XZXAppDelegate.m */,
+				E046CCE61D3A90BA0081FB45 /* UIView+XZX.h */,
+				E046CCE71D3A90BA0081FB45 /* UIView+XZX.m */,
 				E085F0A31D07EAF200E91362 /* LaunchScreen.storyboard */,
 				E085F0A61D07EAF200E91362 /* Info.plist */,
 			);
@@ -609,6 +614,7 @@
 				E003F1231D0C35D900C4D140 /* XZXDayBlockCVCell.m in Sources */,
 				E00B228B1D1099FB00FF8241 /* XZXCalendarViewModel.m in Sources */,
 				E00B22B21D1A66AD00FF8241 /* XZXDayBlockCV.m in Sources */,
+				E046CCE81D3A90BA0081FB45 /* UIView+XZX.m in Sources */,
 				E0C8DF0F1D2EB66600896159 /* XZXClock.m in Sources */,
 				E00B22AC1D1844D000FF8241 /* XZXDayEventVCViewModel.m in Sources */,
 				E00B22DA1D2C0E2000FF8241 /* XZXEventDatilViewModel.m in Sources */,
