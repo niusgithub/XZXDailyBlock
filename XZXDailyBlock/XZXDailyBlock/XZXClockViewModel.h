@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface XZXClockViewModel : NSObject
+
+@property (nonatomic, readonly) RACCommand *finishCommand;
 
 @end

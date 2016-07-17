@@ -25,8 +25,8 @@ typedef NS_ENUM(NSInteger, XZXClockStatus) {
     XZXClockStatusFinish
 };
 
-typedef NS_ENUM(NSInteger, XZXErrInfo) {
-    XZXErrInfoEmptyEvent
+typedef NS_ENUM(NSInteger, XZXInfo) {
+    XZXInfoEmptyEvent
 };
 
 NSString* const kFlipStartAnim = @"flipTAnim";
@@ -61,6 +61,10 @@ NSString* const kTickingAnim = @"tickingAnim";
 
 // event
 @property (nonatomic, strong) UITextField *eventTextField;
+//@property (nonatomic, strong) UILabel *timeLengthLabel;
+
+// signal
+@property (nonatomic, strong) RACSignal *eventTextValidSignal;
 
 @property (nonatomic, strong) CAKeyframeAnimation *addOneSecond;
 //@property (nonatomic, assign) CGRect clockViewOriginFrame;
@@ -75,7 +79,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     
     [self initDefaultSetting];
     
-    [self initialize];
+    [self initViews];
     
     [self bindViewModel];
 }
@@ -94,7 +98,7 @@ NSString* const kTickingAnim = @"tickingAnim";
 /**
  *  初始化各个视图
  */
-- (void)initialize {
+- (void)initViews {
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     
     // 完成设置后在UserDefault取出
@@ -108,22 +112,12 @@ NSString* const kTickingAnim = @"tickingAnim";
     [self.view addSubview:backBtn];
     self.backBtn = backBtn;
     
-    
-    // event block view
-    //    UIView *eventsView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, width, _sideLength)];
-    ////    eventsView.backgroundColor = [UIColor clearColor];
-    //    eventsView.backgroundColor = [UIColor redColor];
-    //    [self.view addSubview:eventsView];
-    //    self.eventsView = eventsView;
-    
     // clock view
     CGFloat clockViewD = screenWidth * 0.6;
     CGFloat clockViewR = screenWidth * 0.3;
     CGFloat centerX = screenWidth/2;
-    CGFloat centerY = 64 + screenWidth/2;
-
-    //    UIVisualEffectView *clockView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
-    //    clockView.frame = CGRectMake(centerX-clockViewR, centerY-clockViewR, clockViewD, clockViewD);
+    CGFloat centerY = screenWidth/2;
+    
     UIView *clockView = [[UIView alloc] initWithFrame:CGRectMake(centerX-clockViewR, centerY-clockViewR, clockViewD, clockViewD)];
     clockView.backgroundColor = [UIColor clearColor];
     [clockView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clockViewOnClick)]];
@@ -164,12 +158,34 @@ NSString* const kTickingAnim = @"tickingAnim";
     [self.view addSubview:cancelBtn];
     self.cancelBtn = cancelBtn;
     
-    UITextField *eventTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, centerY+clockViewR+70, screenWidth-20, 44)];
-    eventTextField.text = @"新的任务";
+    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:@"新的任务"];
+    [placeholder setAttributes:@{
+                                NSForegroundColorAttributeName : [UIColor darkGrayColor],
+                                }
+                         range:NSMakeRange(0, 4)];
+    
+    UITextField *eventTextField = [[UITextField alloc] initWithFrame:CGRectMake(40, centerY+clockViewR+70, screenWidth-80, 35)];
+    eventTextField.placeholder = @"新的任务";
+    eventTextField.attributedPlaceholder = placeholder;
     eventTextField.textAlignment = NSTextAlignmentCenter;
-    eventTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22];
+    eventTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:24];
+    eventTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self.view addSubview:eventTextField];
     self.eventTextField = eventTextField;
+    
+    // centerY+clockViewR+70+10+35
+//    UILabel *timeLengthLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, centerY+clockViewR+115, screenWidth-80, 35)];
+//    timeLengthLabel.text = @"任务时长";
+//    timeLengthLabel.textColor = [UIColor grayColor];
+//    timeLengthLabel.textAlignment = NSTextAlignmentCenter;
+//    timeLengthLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22];
+//    timeLengthLabel.layer.borderWidth = 1.0f;
+//    timeLengthLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    timeLengthLabel.userInteractionEnabled = YES;
+//    [self.view addSubview:timeLengthLabel];
+//    self.timeLengthLabel = timeLengthLabel;
+//    
+//    UIPickerView *timeLengthPicker = [[UIPickerView alloc] init];
 }
 
 - (void)initDefaultSetting {
@@ -177,71 +193,52 @@ NSString* const kTickingAnim = @"tickingAnim";
     self.clockStatus = XZXClockStatusStop;
     
     // 25*60
-    self.setTimeLength = 1500;
+//    self.setTimeLength = 1500;
+    self.setTimeLength = 60;
     self.timeLength = _setTimeLength;
 }
 
 - (void)bindViewModel {
-//    [[RACObserve(self, level) distinctUntilChanged] subscribeNext:^(id x) {
-//        [self changePointerColorWithLevel:[x integerValue]];
-//    }];
     [RACObserve(self, clockStatus)
      subscribeNext:^(id x) {
-        NSLog(@"status:%@",x);
+         NSLog(@"status:%@",x);
+         self.eventTextField.enabled = [x integerValue]==3;
+         
+         // 计时结束 向realm写入数据
+         if ([x integerValue]==5) {
+//             [self ];
+         }
     }];
-    
     
     // 需要combine多个信号
     //RAC(self.eventTextField, enabled) =
     
-    [self.eventTextField.rac_textSignal
-     map:^id(NSString *eventText) {
-         return @([self isValiEventText:eventText]);
-     }];
+//    [self.eventTextField.rac_textSignal
+//     map:^id(NSString *eventText) {
+//         return @([self isValiEventText:eventText]);
+//     }];
     
-    [[self.eventTextField.rac_textSignal
-     filter:^BOOL(NSString *eventText) {
-         return eventText.length == 0;
-     }] subscribeNext:^(id x) {
-         [self showErrInfo:XZXErrInfoEmptyEvent];
-     }];
+    self.eventTextValidSignal = [[self.eventTextField.rac_textSignal
+                                 map:^id(NSString *eventText) {
+                                     return @(eventText.length <= 0);
+                                 }] distinctUntilChanged];
+    [self.eventTextValidSignal subscribeNext:^(id x) {
+        if ([x integerValue]) {
+            self.eventTextField.layer.borderWidth = 1.0f;
+            self.eventTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            [self showInfo:XZXInfoEmptyEvent];
+        } else {
+            self.eventTextField.layer.borderWidth = 0;
+            self.eventTextField.backgroundColor = [UIColor clearColor];
+        }
+    }];
+    
+//    UITapGestureRecognizer *tap = [UITapGestureRecognizer new];
+//    [self.timeLengthLabel addGestureRecognizer:tap];
+//    [tap.rac_gestureSignal subscribeNext:^(id x) {
+//        NSLog(@"点击了时长");
+//    }];
 }
-
-// deprecated 实现复杂且不好看
-// 四个时间段 四种不同的指针渐变色
-//- (void)changePointerColorWithLevel:(NSInteger)level {
-//    __weak __typeof__(self) weakSelf = self;
-//    switch (level) {
-//        case 0:
-//            self.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
-//            break;
-//        case 1: {
-//            [UIView animateWithDuration:self.setTimeLength/4 delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV1);
-//            } completion:NULL];
-//        }
-//            break;
-//        case 2: {
-//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV2);
-//            } completion:NULL];
-//        }
-//            break;
-//        case 3: {
-//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
-//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV3);
-//            } completion:NULL];
-//        }
-//            break;
-//            // 只有全部完成才会LV4
-//        case 4:
-//            self.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
-//            break;
-//    }
-//}
 
 
 #pragma mark - Click Event
@@ -263,6 +260,11 @@ NSString* const kTickingAnim = @"tickingAnim";
  */
 - (void)clockViewOnClick {
     // 判断状态
+    if (self.eventTextField.text.length < 1) {
+        [self showInfo:XZXInfoEmptyEvent];
+        return;
+    }
+    
     // 开始
     if (self.clockStatus == XZXClockStatusStop) {
         self.clockStatus = XZXClockStatusTicking;
@@ -528,45 +530,56 @@ NSString* const kTickingAnim = @"tickingAnim";
 }
 
 
-#pragma mark - Err Info
+#pragma mark - Show Info
 
-- (void)showErrInfo:(XZXErrInfo)errInfo {
+- (void)showInfo:(XZXInfo)errInfo {
     
     // 1.创建一个UILabel
+    UIView *errInfoView = [[UIView alloc] init];
     UILabel *countLabel = [[UILabel alloc] init];
     
     // 2.显示文字
     switch (errInfo) {
-        case XZXErrInfoEmptyEvent:
-            countLabel.text = @"没有任务内容";
+        case XZXInfoEmptyEvent:
+            countLabel.text = @"请新建任务内容";
             break;
     }
     
     // 3.设置背景
-    countLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"timeline_new_status_background"]];
+    errInfoView.dk_backgroundColorPicker = DKColorPickerWithKey(LV3);
+    countLabel.backgroundColor = [UIColor clearColor];
     countLabel.textAlignment = NSTextAlignmentCenter;
     countLabel.textColor = [UIColor whiteColor];
     
     // 4.设置frame
+    errInfoView.width = self.view.width;
+    errInfoView.height = 55;
+    errInfoView.x = 0;
+    errInfoView.y = -55;
+    //errInfoView.y = -errInfoView.height;
+    
     countLabel.width = self.view.width;
     countLabel.height = 35;
     countLabel.x = 0;
-    countLabel.y = 64 - countLabel.height;
+    countLabel.y = 20;
+    
+    [errInfoView addSubview:countLabel];
+//    countLabel.y = -countLabel.height+20;
     
     // 5.添加到导航控制器的view
-    [self.navigationController.view insertSubview:countLabel belowSubview:self.navigationController.navigationBar];
+    [self.view addSubview:errInfoView];
     
     // 6.动画
     CGFloat duration = 0.8;
-    countLabel.alpha = 0.5;
+    errInfoView.alpha = 0.3;
     [UIView animateWithDuration:duration animations:^{
         // 往下移动一个label的高度
-        countLabel.transform = CGAffineTransformMakeTranslation(0, countLabel.height);
-        countLabel.alpha = 1.0;
+        errInfoView.transform = CGAffineTransformMakeTranslation(0, errInfoView.height);
+        errInfoView.alpha = 1.0;
     } completion:^(BOOL finished) { // 向下移动完毕
         
         // 延迟delay秒后，再执行动画
-        CGFloat delay = 1.0;
+        CGFloat delay = 1.5;
         
         /**
          UIViewAnimationOptionCurveEaseInOut            = 0 << 16, // 开始：由慢到快，结束：由快到慢
@@ -577,13 +590,13 @@ NSString* const kTickingAnim = @"tickingAnim";
         [UIView animateWithDuration:duration delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
             
             // 恢复到原来的位置
-            countLabel.transform = CGAffineTransformIdentity;
-            countLabel.alpha = 0.5;
+            errInfoView.transform = CGAffineTransformIdentity;
+            errInfoView.alpha = 0.3;
             
         } completion:^(BOOL finished) {
             
             // 删除控件
-            [countLabel removeFromSuperview];
+            [errInfoView removeFromSuperview];
         }];
     }];
 }
@@ -616,7 +629,7 @@ NSString* const kTickingAnim = @"tickingAnim";
         // 取出键盘高度
         CGRect keyboardF = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
         CGFloat keyboardH = keyboardF.size.height;
-        CGFloat transformH = ([UIScreen mainScreen].bounds.size.height - (keyboardH+44))- self.eventTextField.frame.origin.y;
+        CGFloat transformH = ([UIScreen mainScreen].bounds.size.height - (keyboardH+40))- self.eventTextField.frame.origin.y;
         self.eventTextField.transform = CGAffineTransformMakeTranslation(0, transformH);
     }];
 }
@@ -625,3 +638,39 @@ NSString* const kTickingAnim = @"tickingAnim";
     [_countDownTimer invalidate];
 }
 @end
+
+// deprecated 实现复杂且不好看
+// 四个时间段 四种不同的指针渐变色
+//- (void)changePointerColorWithLevel:(NSInteger)level {
+//    __weak __typeof__(self) weakSelf = self;
+//    switch (level) {
+//        case 0:
+//            self.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV0);
+//            break;
+//        case 1: {
+//            [UIView animateWithDuration:self.setTimeLength/4 delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV1);
+//            } completion:NULL];
+//        }
+//            break;
+//        case 2: {
+//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV2);
+//            } completion:NULL];
+//        }
+//            break;
+//        case 3: {
+//            [UIView animateWithDuration:8.f delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
+//                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//                strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV3);
+//            } completion:NULL];
+//        }
+//            break;
+//            // 只有全部完成才会LV4
+//        case 4:
+//            self.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
+//            break;
+//    }
+//}
