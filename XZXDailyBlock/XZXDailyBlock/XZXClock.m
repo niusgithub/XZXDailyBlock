@@ -9,21 +9,14 @@
 #import "XZXClock.h"
 #import "XZXDayEvent.h"
 #import "XZXClockViewModel.h"
+#import "XZXClockVMServicesImpl.h"
 #import "XZXDateUtil.h"
 
 #import "UIView+XZX.h"
 
+
 #import <DKNightVersion/DKNightVersion.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
-
-typedef NS_ENUM(NSInteger, XZXClockStatus) {
-    XZXClockStatusTicking,
-    XZXClockStatusPause,
-    XZXClockStatusOnResume,
-    XZXClockStatusStop,
-    XZXClockStatusCancel,
-    XZXClockStatusFinish
-};
 
 typedef NS_ENUM(NSInteger, XZXInfo) {
     XZXInfoEmptyEvent
@@ -36,13 +29,11 @@ NSString* const kTickingAnim = @"tickingAnim";
 @interface XZXClock ()
 //@property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, strong) XZXClockViewModel *viewModel;
+@property (nonatomic, strong) XZXClockVMServicesImpl *viewModelServices;
 //@property (nonatomic, weak) XZXDayEvent *currentEvent;
 //@property (nonatomic, strong) NSArray<XZXDayEvent *> *todayEvents;
 
 @property (nonatomic, strong) UIButton *backBtn;
-
-@property (nonatomic, strong) UIView *eventsView;
-@property (nonatomic, strong) UILabel *eventTitle;
 
 // clock View
 @property (nonatomic, strong) UIView *clockView;
@@ -93,6 +84,14 @@ NSString* const kTickingAnim = @"tickingAnim";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     // 键盘即将隐藏, 就会发出UIKeyboardWillHideNotification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.viewModelServices = [XZXClockVMServicesImpl new];
+        self.viewModel = [[XZXClockViewModel alloc] initWithServices:_viewModelServices];
+    }
+    return self;
 }
 
 /**
@@ -199,14 +198,22 @@ NSString* const kTickingAnim = @"tickingAnim";
 }
 
 - (void)bindViewModel {
+    
+    RAC(self.viewModel, clockStatus) = RACObserve(self, clockStatus);
+    //RAC(self.viewModel, date)
+    RAC(self.viewModel, startTime) = RACObserve(self, startTime);
+    RAC(self.viewModel, endTime) = RACObserve(self, endTime);
+    RAC(self.viewModel, eventAbstruct) = self.eventTextField.rac_textSignal;
+    
+    
     [RACObserve(self, clockStatus)
      subscribeNext:^(id x) {
          NSLog(@"status:%@",x);
          self.eventTextField.enabled = [x integerValue]==3;
          
          // 计时结束 向realm写入数据
-         if ([x integerValue]==5) {
-//             [self ];
+         if ([x integerValue] == XZXClockStatusFinish) {
+             [self.viewModel.eventFinishCommand execute:nil];
          }
     }];
     
@@ -405,13 +412,14 @@ NSString* const kTickingAnim = @"tickingAnim";
         [UIView animateWithDuration:self.setTimeLength delay:0.f options:UIViewAnimationOptionCurveLinear animations:^{
             __strong __typeof__(weakSelf) strongSelf = weakSelf;
             strongSelf.pointerView.dk_backgroundColorPicker = DKColorPickerWithKey(LV4);
-        } completion:^(BOOL finished) {
-            // 被中断也会进入该方法
-            __strong __typeof__(weakSelf) strongSelf = weakSelf;
-            
-            self.endTime = [XZXDateUtil dateByAddingSeconds:strongSelf.setTimeLength - strongSelf.timeLength toDate:strongSelf.startTime];
-            NSLog(@"self.stop:%@", self.endTime);
-        }];
+        } completion:nil];
+//         ^(BOOL finished) {
+//            // 被中断也会进入该方法
+//            __strong __typeof__(weakSelf) strongSelf = weakSelf;
+//            
+//            self.endTime = [XZXDateUtil dateByAddingSeconds:strongSelf.setTimeLength - strongSelf.timeLength toDate:strongSelf.startTime];
+//            NSLog(@"self.stop:%@", self.endTime);
+//        }];
     }
 }
 
@@ -503,11 +511,9 @@ NSString* const kTickingAnim = @"tickingAnim";
     // 停止计时
     if (self.timeLength <= 0) {
         // 完成计时
-        self.clockStatus = XZXClockStatusFinish;
         self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
-        
         self.endTime = [XZXDateUtil dateByAddingSeconds:self.setTimeLength - self.timeLength toDate:self.startTime];
-        NSLog(@"self.stop:%@", self.endTime);
+        self.clockStatus = XZXClockStatusFinish;
         
         [self.countDownTimer invalidate];
         self.countDownTimer = nil;

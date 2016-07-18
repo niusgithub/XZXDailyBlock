@@ -17,4 +17,8 @@
              };
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"date:%@--startTime:%@--endTime:%@--eventAbstruct:%@", self.date, self.startTime, self.endTime, self.eventAbstruct];
+}
+
 @end

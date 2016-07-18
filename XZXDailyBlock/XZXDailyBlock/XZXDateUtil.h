@@ -43,4 +43,8 @@
 + (NSString *)dateStringOfMonthAndDay:(NSDate *)date;
 
 + (NSString *)dateStringOfYMD:(NSDate *)date;
+
++ (NSString *)dateStringOfYYMMDD:(NSDate *)date;
+
++ (NSDate *)dateOfYMD:(NSDate *)date;
 @end

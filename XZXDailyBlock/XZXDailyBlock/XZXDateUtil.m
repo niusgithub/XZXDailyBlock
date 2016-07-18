@@ -118,4 +118,18 @@ static id sharedDateUtil;
     return [formatter stringFromDate:date];
 }
 
++ (NSString *)dateStringOfYYMMDD:(NSDate *)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyyMMdd"];
+    
+    return [formatter stringFromDate:date];
+}
+
++ (NSDate *)dateOfYMD:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    components.hour = 0;
+    return [calendar dateFromComponents:components];
+}
+
 @end

@@ -7,8 +7,13 @@
 //
 
 #import "XZXDay.h"
+#import "XZXDateUtil.h"
 
 @implementation XZXDay
+
++ (NSArray *)indexedProperties {
+    return @[@"date"];
+}
 
 - (void)calculateDayLevel {
     

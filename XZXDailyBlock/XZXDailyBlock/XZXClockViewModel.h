@@ -8,9 +8,27 @@
 
 #import <Foundation/Foundation.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "XZXClockVMServices.h"
+
+typedef NS_ENUM(NSInteger, XZXClockStatus) {
+    XZXClockStatusTicking,
+    XZXClockStatusPause,
+    XZXClockStatusOnResume,
+    XZXClockStatusStop,
+    XZXClockStatusCancel,
+    XZXClockStatusFinish
+};
 
 @interface XZXClockViewModel : NSObject
 
-@property (nonatomic, readonly) RACCommand *finishCommand;
+//@property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) NSDate *startTime;
+@property (nonatomic, strong) NSDate *endTime;
+@property (nonatomic, copy) NSString *eventAbstruct;
+
+@property (nonatomic, readonly) RACCommand *eventFinishCommand;
+@property (nonatomic, assign) XZXClockStatus clockStatus;
+
+- (instancetype)initWithServices:(id<XZXClockVMServices>)services;
 
 @end
