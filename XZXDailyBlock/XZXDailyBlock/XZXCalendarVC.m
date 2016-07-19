@@ -264,7 +264,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [self.dayBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
 
-- (IBAction)startTickTock {
+- (void)startTickTock {
     XZXClock *clock = [[XZXClock alloc] init];
     [self presentViewController:clock animated:YES completion:nil];
 }

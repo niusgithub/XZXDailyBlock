@@ -19,6 +19,7 @@
 //    XZXDayEventLevel4
 //};
 
+@property (nonatomic, copy) NSString *eventID;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSDate *startTime;
 @property (nonatomic, strong) NSDate *endTime;

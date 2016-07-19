@@ -222,11 +222,7 @@ static id sharedDateHelper;
     return [self monthsFromDate:_minDate toDate:_maxDate];
 }
 
-//---------------------------
-//temp
-//---------------------------
-#warning temp
-- (NSDate *)tempDateForIndex:(NSInteger)index {
+- (NSDate *)dateForIndex:(NSInteger)index {
     NSUInteger rows = index / 7;
     NSUInteger colums = index % 7;
     NSUInteger daysOffset = 7*rows + colums;

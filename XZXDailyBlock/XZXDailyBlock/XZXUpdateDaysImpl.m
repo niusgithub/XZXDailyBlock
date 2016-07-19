@@ -29,17 +29,24 @@
 //}
 
 - (void)addDayEvent:(XZXDayEvent *)event toDay:(XZXDay *)day {
-//    NSMutableArray *tempArray = [day.events mutableCopy];
-//    [tempArray addObject:event];
-//    day.events = [tempArray copy];
-    
-    
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    [realm addObject:event];
-    [realm addObject:day];
-//    [day.events addObject:event];
-    [realm commitWriteTransaction];
+    __block XZXDay *blockDay = day;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"dateID=%@", blockDay.dateID];
+        //
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        RLMResults<XZXDay *> *dayResults = [XZXDay objectsWithPredicate:pred];
+        if (dayResults.count<1) {
+            [blockDay calculateDayLevel];
+            [realm addObject:blockDay];
+        } else {
+            blockDay = [dayResults firstObject];
+            [blockDay.events addObject:event];
+            [blockDay calculateDayLevel];
+        }
+        [realm commitWriteTransaction];
+    });
 }
 
 @end

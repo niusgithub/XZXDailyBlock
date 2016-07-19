@@ -28,14 +28,14 @@
 }
 
 - (void)initialize {
-    [self fetchTemporaryData];
+    [self fetchDate];
 }
 
-#warning temp
-- (void)fetchTemporaryData {
+
+- (void)fetchDate {
     id<XZXFetchDays> temp = [self.services getServices];
     
-    XZXCalendarPage *page = [temp temporayData];
+    XZXCalendarPage *page = [temp date4Page];
     
     for (int i = 0; i < page.days.count; ++i) {
         XZXDay *day = page.days[i];

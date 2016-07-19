@@ -11,12 +11,17 @@
 
 @implementation XZXDay
 
++ (NSString *)primaryKey {
+    return @"dateID";
+}
+
 + (NSArray *)indexedProperties {
     return @[@"date"];
 }
 
 - (void)calculateDayLevel {
-    
+    // ceil 向上取整   floor 向下取整
+    self.dayLevel = ceil(self.events.count/2);
 }
 
 - (NSString *)description {

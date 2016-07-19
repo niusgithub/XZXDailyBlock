@@ -46,5 +46,7 @@
 
 + (NSString *)dateStringOfYYMMDD:(NSDate *)date;
 
++ (NSString *)dateStringOfYMDHM:(NSDate *)date;
+
 + (NSDate *)dateOfYMD:(NSDate *)date;
 @end

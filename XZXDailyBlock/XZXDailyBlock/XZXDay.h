@@ -20,9 +20,12 @@
 
 @interface XZXDay : RLMObject
 
+@property (nonatomic, copy) NSString *dateID;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) RLMArray<XZXDayEvent *><XZXDayEvent> *events;
 @property (nonatomic, assign) NSInteger dayLevel;
+
+- (void)calculateDayLevel;
 
 @end
 

@@ -17,7 +17,6 @@
 
 - (RACSignal *)realmSearchSingal:(NSDate *)date;
 
-#warning temp
-- (XZXCalendarPage *)temporayData;
+- (XZXCalendarPage *)date4Page;
 
 @end

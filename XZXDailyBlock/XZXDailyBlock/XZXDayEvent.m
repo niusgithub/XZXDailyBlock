@@ -11,6 +11,10 @@
 
 @implementation XZXDayEvent
 
++ (NSString *)primaryKey {
+    return @"eventID";
+}
+
 + (NSDictionary *)linkingObjectsProperties {
     return @{
              @"owners": [RLMPropertyDescriptor descriptorWithClass:XZXDay.class propertyName:@"events"]

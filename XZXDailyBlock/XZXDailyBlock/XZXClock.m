@@ -115,7 +115,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     CGFloat clockViewD = screenWidth * 0.6;
     CGFloat clockViewR = screenWidth * 0.3;
     CGFloat centerX = screenWidth/2;
-    CGFloat centerY = screenWidth/2;
+    CGFloat centerY = screenWidth/2+64;
     
     UIView *clockView = [[UIView alloc] initWithFrame:CGRectMake(centerX-clockViewR, centerY-clockViewR, clockViewD, clockViewD)];
     clockView.backgroundColor = [UIColor clearColor];
@@ -167,7 +167,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     eventTextField.placeholder = @"新的任务";
     eventTextField.attributedPlaceholder = placeholder;
     eventTextField.textAlignment = NSTextAlignmentCenter;
-    eventTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:24];
+    eventTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:30];
     eventTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self.view addSubview:eventTextField];
     self.eventTextField = eventTextField;
@@ -213,6 +213,8 @@ NSString* const kTickingAnim = @"tickingAnim";
          
          // 计时结束 向realm写入数据
          if ([x integerValue] == XZXClockStatusFinish) {
+             
+             
              [self.viewModel.eventFinishCommand execute:nil];
          }
     }];

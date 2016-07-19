@@ -45,6 +45,6 @@
 //- (NSString *)dateStringOfMonthAndDay:(NSDate *)date;
 
 
-- (NSDate *)tempDateForIndex:(NSInteger)index;
+- (NSDate *)dateForIndex:(NSInteger)index;
 
 @end

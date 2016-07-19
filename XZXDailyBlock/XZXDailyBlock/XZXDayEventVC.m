@@ -127,7 +127,8 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    XZXDayBlockCVCellViewModel *dayBlockVM = self.viewModel.dayBlockVMs[self.selectedItemIndex];
+    return dayBlockVM.dayEventVMs.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

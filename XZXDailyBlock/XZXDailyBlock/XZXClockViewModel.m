@@ -35,7 +35,6 @@
         
         self.eventFinishCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
             @strongify(self)
-            NSLog(@"eventFinishCommand");
             [self addDayEvent];
             return [[[[RACSignal empty] logAll] delay:1.0] logAll];
         }];
@@ -55,23 +54,18 @@
 - (void)addDayEvent {
     //添加event到相应的day中
     NSDate *currentDate = [XZXDateUtil dateOfYMD:[NSDate date]];
-    NSLog(@"currentDate:%@   date:%@",currentDate, [NSDate date]);
-
     
     XZXDayEvent *event = [[XZXDayEvent alloc] init];
+    event.eventID = [XZXDateUtil dateStringOfYMDHM:self.startTime];
     event.date = currentDate;
     event.startTime = self.startTime;
     event.endTime = self.endTime;
     event.eventAbstruct = self.eventAbstruct;
     
     XZXDay *day = [XZXDay new];
+    day.dateID = [XZXDateUtil dateStringOfYYMMDD:currentDate];
     day.date = currentDate;
-//    NSPredicate *pred = [NSPredicate predicateWithFormat:@"date=%@", currentDate];
-//    RLMResults<XZXDayEvent *> *events = [XZXDayEvent objectsWithPredicate:pred];
-//    day.events = [events copy];
     [day.events addObject:event];
-    
-    NSLog(@"event:%@ ~~ day:%@",event,day);
     
     id<XZXUpdateDays> service = [self.services getServices];
     [service addDayEvent:event toDay:day];
