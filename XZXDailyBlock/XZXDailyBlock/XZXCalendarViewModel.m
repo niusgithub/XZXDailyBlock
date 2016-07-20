@@ -8,8 +8,8 @@
 
 #import "XZXCalendarViewModel.h"
 #import "XZXDayBlockCVCellViewModel.h"
-
 #import "XZXCalendarPage.h"
+#import "XZXDateUtil.h"
 
 @interface XZXCalendarViewModel ()
 @property (nonatomic, weak) id<XZXCalendarVMServices> services;
@@ -28,15 +28,20 @@
 }
 
 - (void)initialize {
-    self.title = @"AIMeow";
-    
     [self fetchDate];
 }
 
 - (void)fetchDate {
-    id<XZXFetchDays> temp = [self.services getServices];
+    id<XZXFetchDays> fetchDateSerivce = [self.services getServices];
     
-    XZXCalendarPage *page = [temp date4Page];
+    self.title = [XZXDateUtil dateStringOfHomeTitleWithMouthOffset:0];
+    
+//    for (NSString *s in [NSCalendar currentCalendar].monthSymbols) {
+//        NSLog(@"weekSymbols:%@",s);
+//    }
+    
+    
+    XZXCalendarPage *page = [fetchDateSerivce date4Page];
     
     for (int i = 0; i < page.days.count; ++i) {
         XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:page.days[i]];

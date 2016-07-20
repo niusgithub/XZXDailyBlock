@@ -41,7 +41,7 @@
             if (dayResults.count > 0) {
                 day = [dayResults firstObject];
                 //day.dayLevel = day
-                NSLog(@"exist day:%@ eventCount:%ld",day,day.events.count);
+//                NSLog(@"exist day:%@ eventCount:%ld",day,day.events.count);
             } else {
                 // 当天没有活动不会记录在realm中，只提供首页的显示用XZXDay
                 day.date = date;
@@ -109,5 +109,9 @@
     
     return page;
 }
+
+//- (NSDate *)today {
+//    return [XZXDateUtil localDateOfDate:[NSDate date]];
+//}
 
 @end

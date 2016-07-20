@@ -19,4 +19,6 @@
 
 - (XZXCalendarPage *)date4Page;
 
+//- (NSDate *)today;
+
 @end

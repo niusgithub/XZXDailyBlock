@@ -83,7 +83,6 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     [self.weekCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndexPath inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     
     
-    
     UITableView *dayEventTV = [[UITableView alloc] initWithFrame:CGRectMake(0, self.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - self.height) style:UITableViewStylePlain];
     dayEventTV.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     dayEventTV.delegate = self;

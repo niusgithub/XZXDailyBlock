@@ -42,6 +42,8 @@
 
 + (NSString *)dateStringOfMonthAndDay:(NSDate *)date;
 
++ (NSString *)dateStringOfHomeTitleWithMouthOffset:(NSInteger)offset;
+
 + (NSString *)dateStringOfYMD:(NSDate *)date;
 
 + (NSString *)dateStringOfYYMMDD:(NSDate *)date;

@@ -111,6 +111,18 @@ static id sharedDateUtil;
     return [formatter stringFromDate:date];
 }
 
++ (NSString *)dateStringOfHomeTitleWithMouthOffset:(NSInteger)offset {
+    
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate:[NSDate date]];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth fromDate:[[NSDate date] dateByAddingTimeInterval:interval]];
+    //
+    components.month +=offset;
+    // components.month从1开始
+    return [NSString stringWithFormat:@"%@ %ld", [NSCalendar currentCalendar].monthSymbols[components.month-1],components.year];
+}
+
 + (NSString *)dateStringOfYMD:(NSDate *)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy/MM/dd"];

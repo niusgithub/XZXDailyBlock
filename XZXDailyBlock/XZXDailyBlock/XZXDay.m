@@ -21,7 +21,11 @@
 
 - (void)calculateDayLevel {
     // ceil 向上取整   floor 向下取整
-    self.dayLevel = ceil(self.events.count/2);
+    if (self.events.count <= 8) {
+        self.dayLevel = ceil(self.events.count / 2.0);
+    } else {
+        self.dayLevel = 4;
+    }
 }
 
 - (NSString *)description {

@@ -62,6 +62,14 @@
 }
 
 - (void)layoutSubviews {
+    // 取消UICollectionView的隐式动画，然而和月历跳转周历时的布局抖动无关
+//    [CATransaction begin];
+//    [CATransaction setDisableActions:YES];
+//    
+//    self.titleLabel.frame = self.bounds;
+//    
+//    [CATransaction commit];
+    
     self.titleLabel.frame = self.bounds;
 }
 

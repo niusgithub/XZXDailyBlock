@@ -12,8 +12,6 @@
 
 @implementation XZXDayEventTVCell
 
-
-
 - (void)configureCellWithViewModel:(XZXDayEventTVCellViewModel *)viewModel {
     self.startTimeLabel.text = viewModel.startTime;
     self.endTimeLabel.text = viewModel.endTime;

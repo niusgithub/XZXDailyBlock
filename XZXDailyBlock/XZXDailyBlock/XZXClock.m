@@ -213,8 +213,6 @@ NSString* const kTickingAnim = @"tickingAnim";
          
          // 计时结束 向realm写入数据
          if ([x integerValue] == XZXClockStatusFinish) {
-             
-             
              [self.viewModel.eventFinishCommand execute:nil];
          }
     }];
@@ -514,7 +512,8 @@ NSString* const kTickingAnim = @"tickingAnim";
     if (self.timeLength <= 0) {
         // 完成计时
         self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
-        self.endTime = [XZXDateUtil dateByAddingSeconds:self.setTimeLength - self.timeLength toDate:self.startTime];
+//        self.endTime = [XZXDateUtil dateByAddingSeconds:self.setTimeLength - self.timeLength toDate:self.startTime];
+        self.endTime = [NSDate date];
         self.clockStatus = XZXClockStatusFinish;
         
         [self.countDownTimer invalidate];
