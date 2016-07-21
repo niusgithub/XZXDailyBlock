@@ -21,6 +21,7 @@
 #import "XZXDateUtil.h"
 #import "XZXCalendarUtil.h"
 
+#import <AVOSCloud/AVOSCloud.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <DKNightVersion/DKNightVersion.h>
 
@@ -49,18 +50,22 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 @implementation XZXCalendarVC
 
-#pragma mark - initialize
-
-- (void)initViewModel {
-    self.viewModelServices = [XZXCalendarVMServicesImpl new];
-    self.viewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
-}
-
-
 #pragma mark - life cycle
+
+//- (void)crash {
+//    [NSException raise:NSGenericException format:@"测试，模拟崩溃"];
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //Test
+//    AVObject *testObject = [AVObject objectWithClassName:@"TestObject"];
+//    [testObject setObject:@"bar" forKey:@"foo"];
+//    [testObject save];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self crash];
+//    });
     
     // 透明navigationBar
 //        self.navigationController.navigationBar.translucent = YES;
@@ -70,7 +75,6 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];;
-    
     
     //
     self.navigationController.delegate = self;
@@ -130,11 +134,20 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 //FIXME: bad code 需要用RAC实现
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(@"viewWillAppear");
     
     [self initViewModel];
     [self.dayBlockCV reloadData];
 }
+
+
+#pragma mark - initialize
+
+- (void)initViewModel {
+    self.viewModelServices = [XZXCalendarVMServicesImpl new];
+    self.viewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
+}
+
+
 
 - (void)bindViewModel {
     self.title = self.viewModel.title;

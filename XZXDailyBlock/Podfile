@@ -5,6 +5,7 @@ target 'XZXDailyBlock' do
 
 pod 'AFNetworking', '~> 3.0'
 pod 'AVOSCloud'
+pod 'AVOSCloudCrashReporting'
 pod 'DKNightVersion'
 pod 'Masonry'
 pod 'ReactiveCocoa', '2.5'

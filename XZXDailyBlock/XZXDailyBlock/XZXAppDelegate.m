@@ -7,6 +7,8 @@
 //
 
 #import "XZXAppDelegate.h"
+#import <AVOSCloud/AVOSCloud.h>
+#import "AVOSCloudCrashReporting.h"
 
 @interface XZXAppDelegate ()
 
@@ -17,6 +19,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //AVOSCloud
+    //崩溃报告
+    [AVOSCloudCrashReporting enable];
+    
+    [AVOSCloud setApplicationId:@"hLjOfUjeDqeGWXlyeTU2DiMj-gzGzoHsz" clientKey:@"1jLtH1xn7U7bI1QK1GKvyAOB"];
+    // 跟踪统计
+    [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    
     return YES;
 }
 
