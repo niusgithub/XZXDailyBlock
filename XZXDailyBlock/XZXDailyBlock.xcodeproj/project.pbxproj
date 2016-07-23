@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3ADDFADF0ED9886C71FBB6B3 /* libPods-XZXDailyBlock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61DAD466FC8C797782EAFD58 /* libPods-XZXDailyBlock.a */; };
+		4E3CD50551BC05871B4D6F06 /* Pods_XZXDailyBlock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACEB6782FB78A6EEBDF54E7A /* Pods_XZXDailyBlock.framework */; };
 		E003F1131D0BF4B300C4D140 /* XZXCalendarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F1111D0BF4B300C4D140 /* XZXCalendarVC.m */; };
 		E003F11C1D0C110400C4D140 /* XZXDay.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F11B1D0C110400C4D140 /* XZXDay.m */; };
 		E003F1231D0C35D900C4D140 /* XZXDayBlockCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F1211D0C35D900C4D140 /* XZXDayBlockCVCell.m */; };
@@ -64,9 +64,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		61DAD466FC8C797782EAFD58 /* libPods-XZXDailyBlock.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XZXDailyBlock.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AA9EA26FE8C894537708B90 /* Pods-XZXDailyBlock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlock/Pods-XZXDailyBlock.debug.xcconfig"; sourceTree = "<group>"; };
 		AA7FB275B6980A618D84E228 /* Pods-XZXDailyBlock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlock.release.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlock/Pods-XZXDailyBlock.release.xcconfig"; sourceTree = "<group>"; };
+		ACEB6782FB78A6EEBDF54E7A /* Pods_XZXDailyBlock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XZXDailyBlock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E003F1101D0BF4B300C4D140 /* XZXCalendarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXCalendarVC.h; sourceTree = "<group>"; };
 		E003F1111D0BF4B300C4D140 /* XZXCalendarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXCalendarVC.m; sourceTree = "<group>"; };
 		E003F11A1D0C110400C4D140 /* XZXDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDay.h; sourceTree = "<group>"; };
@@ -123,6 +123,7 @@
 		E046CCF61D3CC93D0081FB45 /* XZXClockVMServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXClockVMServices.h; sourceTree = "<group>"; };
 		E046CCF71D3CCBF80081FB45 /* XZXClockVMServicesImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXClockVMServicesImpl.h; sourceTree = "<group>"; };
 		E046CCF81D3CCBF80081FB45 /* XZXClockVMServicesImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXClockVMServicesImpl.m; sourceTree = "<group>"; };
+		E046CD001D43B4510081FB45 /* XZXMetamacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXMetamacro.h; sourceTree = "<group>"; };
 		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E085F0981D07EAF200E91362 /* XZXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXAppDelegate.h; sourceTree = "<group>"; };
@@ -150,7 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3ADDFADF0ED9886C71FBB6B3 /* libPods-XZXDailyBlock.a in Frameworks */,
+				4E3CD50551BC05871B4D6F06 /* Pods_XZXDailyBlock.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,7 +175,7 @@
 		C4D3C9AC2440097D3DE6B2B1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				61DAD466FC8C797782EAFD58 /* libPods-XZXDailyBlock.a */,
+				ACEB6782FB78A6EEBDF54E7A /* Pods_XZXDailyBlock.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -395,6 +396,7 @@
 				E085F0991D07EAF200E91362 /* XZXAppDelegate.m */,
 				E085F0A31D07EAF200E91362 /* LaunchScreen.storyboard */,
 				E085F0A61D07EAF200E91362 /* Info.plist */,
+				E046CD001D43B4510081FB45 /* XZXMetamacro.h */,
 			);
 			name = DailyBlock;
 			sourceTree = "<group>";

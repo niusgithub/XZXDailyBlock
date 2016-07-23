@@ -13,6 +13,7 @@
 #import "XZXDayEventTVCell.h"
 #import "XZXWeekCVLayout.h"
 #import "XZXDayBlockCVCellViewModel.h"
+#import "XZXMetamacro.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <DKNightVersion/DKNightVersion.h>
@@ -23,10 +24,10 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 
 @interface XZXDayEventVC () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
 @property (strong, nonatomic) XZXHorizontalWeekCV *weekCV;
+@property (nonatomic, strong) XZXWeekCVLayout *weekCVLayout;
 @property (nonatomic, strong) UITableView *dayEventTV;
 @property (nonatomic, strong) XZXDayEventVCViewModel *viewModel;
 @property (nonatomic, strong) XZXCalendarVMServicesImpl *viewModelServices;
-@property (nonatomic, strong) XZXWeekCVLayout *weekLayout;
 
 @property (nonatomic, assign) CGFloat sideLength;
 @end
@@ -54,19 +55,25 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     // "Pixel" is a solid white 1x1 image.
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];
     
+    [self initViews];
     
-    CGFloat width = [[UIScreen mainScreen] bounds].size.width;
-    self.sideLength = (width - 80) / 7;
+    [self initViewModel];
+    
+    [self bindViewModel];
+}
+
+- (void)initViews {
+    self.sideLength = (MainScreenWidth - 80) / 7;
     
     XZXWeekCVLayout *layout = [[XZXWeekCVLayout alloc] init];
     layout.itemSize = CGSizeMake(_sideLength, _sideLength);
     layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8); // top left bottom right 其实只用了top和left
     layout.minimunLineSpacing = 10;
     layout.minimumInteritemSpacing = 10;
-    self.weekLayout = layout;
+    self.weekCVLayout = layout;
     
     // XZXHorizontalWeekCV
-    XZXHorizontalWeekCV *weekCV = [[XZXHorizontalWeekCV alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, self.height) collectionViewLayout:self.weekLayout];
+    XZXHorizontalWeekCV *weekCV = [[XZXHorizontalWeekCV alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, self.height) collectionViewLayout:self.weekCVLayout];
     weekCV.backgroundColor = [UIColor clearColor];
     weekCV.showsVerticalScrollIndicator = NO;
     weekCV.showsHorizontalScrollIndicator = NO;
@@ -79,7 +86,6 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     [self.weekCV registerClass:[XZXDayBlockCVCell class] forCellWithReuseIdentifier:kWeekDateBlockCellIdentifier];
     
     NSInteger itemIndexPath = self.selectedItemIndex - self.selectedItemIndex%7 + 3;
-    
     [self.weekCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndexPath inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     
     
@@ -91,10 +97,6 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     self.dayEventTV = dayEventTV;
     
     [self.dayEventTV registerNib:[UINib nibWithNibName:@"XZXDayEventTVCell" bundle:nil] forCellReuseIdentifier:kWeekDateEventCellIdentifier];
-    
-    [self initViewModel];
-    
-    [self bindViewModel];
 }
 
 - (void)initViewModel {
@@ -103,7 +105,6 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 }
 
 - (void)bindViewModel {
-//    self.title = self.viewModel.dayBlockVMs[self.selectedItemIndex].titleOfDate;
     @weakify(self);
     
     RAC(self, title) = [[RACObserve(self, selectedItemIndex) distinctUntilChanged]

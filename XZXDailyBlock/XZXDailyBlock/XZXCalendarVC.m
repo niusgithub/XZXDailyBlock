@@ -7,6 +7,7 @@
 //
 
 #import "XZXCalendarVC.h"
+#import "XZXMetamacro.h"
 
 #import "XZXDayBlockCV.h"
 #import "XZXDayBlockCVCell.h"
@@ -17,13 +18,14 @@
 #import "XZXClock.h"
 
 #import "XZXTransitionAnimator.h"
+
 #import "XZXCalendarVMServicesImpl.h"
 #import "XZXDateUtil.h"
-#import "XZXCalendarUtil.h"
 
 #import <AVOSCloud/AVOSCloud.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <DKNightVersion/DKNightVersion.h>
+
 
 NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
@@ -33,13 +35,9 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 @property (nonatomic, strong) XZXCalendarViewModel *viewModel;
 
 @property (nonatomic, strong) XZXDayBlockCV *dayBlockCV;
-@property (nonatomic, strong) XZXDayBlockCVLayout *monthLayout;
+@property (nonatomic, strong) XZXDayBlockCVLayout *dayBlockCVLayout;
 @property (nonatomic, strong) UIButton *startEventBtn;
 
-@property (nonatomic, strong) XZXCalendarUtil *calendarUtil;
-
-@property (nonatomic, assign) CGFloat screenWidth;
-@property (nonatomic, assign) CGFloat screenHeigth;
 @property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
 @property (nonatomic, assign) NSInteger pageNumber;
@@ -52,10 +50,6 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 #pragma mark - life cycle
 
-//- (void)crash {
-//    [NSException raise:NSGenericException format:@"测试，模拟崩溃"];
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -66,69 +60,21 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [self crash];
 //    });
-    
-    // 透明navigationBar
-//        self.navigationController.navigationBar.translucent = YES;
-//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"TransparentPixel"] forBarMetrics:UIBarMetricsDefault];
-//        [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
 
-    [self.navigationController.navigationBar setTranslucent:NO];
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];;
-    
-    //
-    self.navigationController.delegate = self;
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"月历" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backItem;
-    
-    //
-    self.screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    self.screenHeigth = [[UIScreen mainScreen] bounds].size.height;
-    self.sideLength = (_screenWidth - 80) / 7;
-    self.pageNumber = 2;
-    
-    CGFloat collectionViewHeight = 8 + (_sideLength + 10) * 6;
-    
-    // collectionView
-    XZXDayBlockCVLayout *layout = [[XZXDayBlockCVLayout alloc] init];
-    layout.itemSize = CGSizeMake(_sideLength, _sideLength);
-    layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
-    layout.minimunLineSpacing = 10;
-    layout.minimumInteritemSpacing = 10;
-    self.monthLayout = layout;
-    
-    XZXDayBlockCV *dayBlockCV = [[XZXDayBlockCV alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, collectionViewHeight) collectionViewLayout:self.monthLayout];
-    dayBlockCV.backgroundColor = [UIColor clearColor];
-    dayBlockCV.showsVerticalScrollIndicator = NO;
-    dayBlockCV.showsHorizontalScrollIndicator = NO;
-    dayBlockCV.pagingEnabled = YES;
-    dayBlockCV.delegate = self;
-    dayBlockCV.dataSource = self;
-    [self.view addSubview:dayBlockCV];
-    self.dayBlockCV = dayBlockCV;
-    
-    //y:screenHeigth-64-44
-    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, _screenHeigth-108, _screenWidth, 44)];
-    [startEventBtn setImage:[UIImage imageNamed:@"clock"] forState:UIControlStateNormal];
-    [startEventBtn setTitle:@"开始" forState:UIControlStateNormal];
-    [startEventBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    startEventBtn.backgroundColor = [UIColor whiteColor];
-    startEventBtn.layer.borderWidth = 1.f;
-    startEventBtn.layer.borderColor = [UIColor grayColor].CGColor;
-    [startEventBtn addTarget:self action:@selector(startTickTock) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:startEventBtn];
-    self.startEventBtn = startEventBtn;
+    [self initViews];
     
     [self initViewModel];
     
     [self bindViewModel];
     
-    self.calendarUtil = [[XZXCalendarUtil alloc] init];
+    [self bindRAC];
     
     // DKNightVersion
-    [DKColorTable sharedColorTable].file = @"XZXColor.txt";
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     self.dk_manager.themeVersion = @"SEA";
+    
+    // 5个月份中间的月份calendar为当前月 起始item为84 item87在第一行正中间
+    [self.dayBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
 
 //FIXME: bad code 需要用RAC实现
@@ -142,32 +88,84 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 #pragma mark - initialize
 
-- (void)initViewModel {
-    self.viewModelServices = [XZXCalendarVMServicesImpl new];
-    self.viewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
-}
-
-
-
-- (void)bindViewModel {
-    self.title = self.viewModel.title;
+- (void)initViews {
+    // NavigationBar
+    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];;
+    
+    // 替换NavigationBar返回按钮
+    self.navigationController.delegate = self;
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"月历" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
+    
+    // CollectionView
+    self.sideLength = (MainScreenWidth - 80) / 7;
+    self.pageNumber = 2;
+    
+    CGFloat collectionViewHeight = 8 + (_sideLength + 10) * 6;
+    
+    XZXDayBlockCVLayout *layout = [[XZXDayBlockCVLayout alloc] init];
+    layout.itemSize = CGSizeMake(_sideLength, _sideLength);
+    layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
+    layout.minimunLineSpacing = 10;
+    layout.minimumInteritemSpacing = 10;
+    self.dayBlockCVLayout = layout;
+    
+    XZXDayBlockCV *dayBlockCV = [[XZXDayBlockCV alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, collectionViewHeight) collectionViewLayout:self.dayBlockCVLayout];
+    dayBlockCV.backgroundColor = [UIColor clearColor];
+    dayBlockCV.showsVerticalScrollIndicator = NO;
+    dayBlockCV.showsHorizontalScrollIndicator = NO;
+    dayBlockCV.pagingEnabled = YES;
+    dayBlockCV.delegate = self;
+    dayBlockCV.dataSource = self;
+    [self.view addSubview:dayBlockCV];
+    self.dayBlockCV = dayBlockCV;
     
     [self.dayBlockCV registerClass:[XZXDayBlockCVCell class] forCellWithReuseIdentifier:kCalendarDateBlockCellIdentifier];
     
-    // React collectionView:didSelectItemAtIndexPath:
+    // UIButton
+    //y:screenHeigth-64-44
+    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, MainScreenHeight-108, MainScreenWidth, 44)];
+    [startEventBtn setImage:[UIImage imageNamed:@"clock"] forState:UIControlStateNormal];
+    [startEventBtn setTitle:@"开始" forState:UIControlStateNormal];
+    [startEventBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    startEventBtn.backgroundColor = [UIColor whiteColor];
+    startEventBtn.layer.borderWidth = 1.f;
+    startEventBtn.layer.borderColor = [UIColor grayColor].CGColor;
+    //[startEventBtn addTarget:self action:@selector(startTickTock) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:startEventBtn];
+    self.startEventBtn = startEventBtn;
+}
+
+- (void)initViewModel {
+    self.viewModelServices = [XZXCalendarVMServicesImpl new];
+    self.viewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
+    // RAC(self, viewModel)
+}
+
+
+- (void)bindViewModel {
+    RAC(self, title) = [[RACObserve(self, pageNumber) distinctUntilChanged]
+                        map:^id(id value) {
+                            return [XZXDateUtil dateStringOfHomeTitleWithMouthOffset:self.pageNumber-2];
+                        }];
+}
+
+- (void)bindRAC {
     @weakify(self)
+    
+    // collectionView:didSelectItemAtIndexPath:
     [[self rac_signalForSelector:@selector(collectionView:didSelectItemAtIndexPath:) fromProtocol:@protocol(UICollectionViewDelegate)]
      subscribeNext:^(RACTuple *value) {
          @strongify(self)
          
          self.collectionViewSplitY = ([(NSIndexPath *)value.second item] % 42 / 7 + 1) * (self.sideLength + 10) + 5;
-         //NSLog(@"Y : %f", self.collectionViewSplitY);
+         //XZXLog(@"Y : %f", self.collectionViewSplitY);
          
-         //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-         //XZXDayEventVC *vc = [sb instantiateViewControllerWithIdentifier:@"XZXDEViewController"];
          XZXDayEventVC *dayEventVC = [[XZXDayEventVC alloc] init];
          dayEventVC.selectedItemIndex = [(NSIndexPath *)value.second item];
-         dayEventVC.height =  15 + self.sideLength;
+         dayEventVC.height =  15 + self.sideLength; // 上10 下5
          
          dayEventVC.modalPresentationStyle = UIModalPresentationFullScreen;
          [self.navigationController pushViewController:dayEventVC animated:YES];
@@ -175,13 +173,18 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     self.dayBlockCV.delegate = nil;
     self.dayBlockCV.delegate = self;
     
-    // 5个月份中间的月份calendar为当前月 起始item为84 item87在正中间
-    [self.dayBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-    
-    RAC(self, title) = [[RACObserve(self, pageNumber) distinctUntilChanged]
-                        map:^id(id value) {
-                            return [XZXDateUtil dateStringOfHomeTitleWithMouthOffset:self.pageNumber-2];
-                        }];
+    //
+    self.startEventBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            @strongify(self)
+            XZXClock *clock = [[XZXClock alloc] init];
+            [self presentViewController:clock animated:YES completion:^{
+                [subscriber sendCompleted];
+            }];
+            
+            return nil;
+        }];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -213,14 +216,6 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     return cell;
 }
 
-
-//#pragma mark - 
-//
-//- (void)reloadDateForCell:(XZXDayBlockCVCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-//    
-//}
-
-
 //#pragma mark - UICollectionView Delegate FlowLayout
 
 //- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
@@ -243,7 +238,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 //}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    self.pageNumber = scrollView.contentOffset.x/_screenWidth;
+    self.pageNumber = scrollView.contentOffset.x/MainScreenWidth;
 }
 
 
@@ -292,9 +287,13 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [self.dayBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
 
-- (void)startTickTock {
-    XZXClock *clock = [[XZXClock alloc] init];
-    [self presentViewController:clock animated:YES completion:nil];
-}
+//- (void)startTickTock {
+//    XZXClock *clock = [[XZXClock alloc] init];
+//    [self presentViewController:clock animated:YES completion:nil];
+//}
+
+//- (void)crash {
+//    [NSException raise:NSGenericException format:@"测试，模拟崩溃"];
+//}
 
 @end

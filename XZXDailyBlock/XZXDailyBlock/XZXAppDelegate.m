@@ -8,6 +8,7 @@
 
 #import "XZXAppDelegate.h"
 #import <AVOSCloud/AVOSCloud.h>
+#import <DKNightVersion/DKNightVersion.h>
 #import "AVOSCloudCrashReporting.h"
 
 @interface XZXAppDelegate ()
@@ -28,6 +29,9 @@
     // 跟踪统计
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
+    
+    //DKNightVersion
+    [DKColorTable sharedColorTable].file = @"XZXColor.txt";
     
     return YES;
 }
