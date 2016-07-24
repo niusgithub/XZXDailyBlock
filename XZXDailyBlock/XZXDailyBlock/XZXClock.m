@@ -14,7 +14,6 @@
 
 #import "UIView+XZX.h"
 
-
 #import <DKNightVersion/DKNightVersion.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
@@ -81,12 +80,35 @@ NSString* const kTickingAnim = @"tickingAnim";
     // 监听键盘
     // 键盘的frame(位置)即将改变, 就会发出UIKeyboardWillChangeFrameNotification
     // 键盘即将弹出, 就会发出UIKeyboardWillShowNotification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     // 键盘即将隐藏, 就会发出UIKeyboardWillHideNotification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    // 监听键盘
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillShowNotification object:nil]
-     subscribeNext:^(id x) {
+     subscribeNext:^(NSNotification *noti) {
+         // 1.键盘弹出需要的时间
+         CGFloat duration = [noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
          
+         // 2.动画
+         [UIView animateWithDuration:duration animations:^{
+             // 取出键盘高度
+             CGRect keyboardF = [noti.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+             CGFloat keyboardH = keyboardF.size.height;
+             CGFloat transformH = ([UIScreen mainScreen].bounds.size.height - (keyboardH+40))- self.eventTextField.frame.origin.y;
+             self.eventTextField.transform = CGAffineTransformMakeTranslation(0, transformH);
+         }];
+     }];
+    
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillHideNotification object:nil]
+     subscribeNext:^(NSNotification *noti) {
+         // 1.键盘弹出需要的时间
+         CGFloat duration = [noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+         
+         // 2.动画
+         [UIView animateWithDuration:duration animations:^{
+             self.eventTextField.transform = CGAffineTransformIdentity;
+         }];
      }];
 }
 
@@ -233,8 +255,9 @@ NSString* const kTickingAnim = @"tickingAnim";
                                  map:^id(NSString *eventText) {
                                      return @(eventText.length <= 0);
                                  }] distinctUntilChanged];
+    
     [self.eventTextValidSignal subscribeNext:^(id x) {
-        if ([x integerValue]) {
+        if ([x boolValue]) {
             self.eventTextField.layer.borderWidth = 1.0f;
             self.eventTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
             [self showInfo:XZXInfoEmptyEvent];
@@ -355,7 +378,6 @@ NSString* const kTickingAnim = @"tickingAnim";
     self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
 }
-
 
 - (void)pauseTicking {
     // 暂停指针动画
@@ -543,14 +565,14 @@ NSString* const kTickingAnim = @"tickingAnim";
 
 #pragma mark - Show Info
 
-- (void)showInfo:(XZXInfo)errInfo {
+- (void)showInfo:(XZXInfo)info {
     
     // 1.创建一个UILabel
     UIView *errInfoView = [[UIView alloc] init];
     UILabel *countLabel = [[UILabel alloc] init];
     
     // 2.显示文字
-    switch (errInfo) {
+    switch (info) {
         case XZXInfoEmptyEvent:
             countLabel.text = @"请新建任务内容";
             break;
@@ -590,7 +612,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     } completion:^(BOOL finished) { // 向下移动完毕
         
         // 延迟delay秒后，再执行动画
-        CGFloat delay = 1.5;
+        CGFloat delay = 1.0;
         
         /**
          UIViewAnimationOptionCurveEaseInOut            = 0 << 16, // 开始：由慢到快，结束：由快到慢
@@ -612,43 +634,45 @@ NSString* const kTickingAnim = @"tickingAnim";
     }];
 }
 
+- (void)dealloc {
+    [_countDownTimer invalidate];
+    // RAC已经做了处理
+    // [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+@end
+
 #pragma mark - Keyboard Notification
 /**
  *  键盘即将隐藏
  */
-- (void)keyboardWillHide:(NSNotification *)note
-{
-    // 1.键盘弹出需要的时间
-    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    // 2.动画
-    [UIView animateWithDuration:duration animations:^{
-        self.eventTextField.transform = CGAffineTransformIdentity;
-    }];
-}
+//- (void)keyboardWillHide:(NSNotification *)note
+//{
+//    // 1.键盘弹出需要的时间
+//    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+//    
+//    // 2.动画
+//    [UIView animateWithDuration:duration animations:^{
+//        self.eventTextField.transform = CGAffineTransformIdentity;
+//    }];
+//}
 
 /**
  *  键盘即将弹出
  */
-- (void)keyboardWillShow:(NSNotification *)note
-{
-    // 1.键盘弹出需要的时间
-    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    // 2.动画
-    [UIView animateWithDuration:duration animations:^{
-        // 取出键盘高度
-        CGRect keyboardF = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        CGFloat keyboardH = keyboardF.size.height;
-        CGFloat transformH = ([UIScreen mainScreen].bounds.size.height - (keyboardH+40))- self.eventTextField.frame.origin.y;
-        self.eventTextField.transform = CGAffineTransformMakeTranslation(0, transformH);
-    }];
-}
-
-- (void)dealloc {
-    [_countDownTimer invalidate];
-}
-@end
+//- (void)keyboardWillShow:(NSNotification *)note
+//{
+//    // 1.键盘弹出需要的时间
+//    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+//    
+//    // 2.动画
+//    [UIView animateWithDuration:duration animations:^{
+//        // 取出键盘高度
+//        CGRect keyboardF = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//        CGFloat keyboardH = keyboardF.size.height;
+//        CGFloat transformH = ([UIScreen mainScreen].bounds.size.height - (keyboardH+40))- self.eventTextField.frame.origin.y;
+//        self.eventTextField.transform = CGAffineTransformMakeTranslation(0, transformH);
+//    }];
+//}
 
 // deprecated 实现复杂且不好看
 // 四个时间段 四种不同的指针渐变色

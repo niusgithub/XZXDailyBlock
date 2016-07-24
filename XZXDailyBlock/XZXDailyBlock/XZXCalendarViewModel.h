@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "XZXCalendarVMServicesImpl.h"
-
 #import "XZXDayBlockCVCellViewModel.h"
 
 @interface XZXCalendarViewModel : NSObject

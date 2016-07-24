@@ -7,10 +7,9 @@
 //
 
 #import "XZXDayEventVCViewModel.h"
-#import "XZXDayEventTVCellViewModel.h"
 #import "XZXDay.h"
-#import "XZXDayEvent.h"
-#import "XZXCalendarPage.h"
+
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface XZXDayEventVCViewModel ()
 @property (nonatomic, weak) id<XZXCalendarVMServices> services;
@@ -22,27 +21,38 @@
     if (self = [super init]) {
         self.dayBlockVMs = [NSMutableArray new];
         self.services = services;
-        [self initialize];
+        RAC(self, dayBlockVMs) = [self fetchDaysFromRealmSignal];
+        //[self initialize];
     }
     return self;
 }
 
-- (void)initialize {
-    [self fetchDate];
-}
+//- (void)initialize {
+//    [self fetchDate];
+//}
+//
+//
+//- (void)fetchDate {
+//    id<XZXFetchDays> temp = [self.services getServices];
+//    
+//    XZXCalendarPage *page = [temp date4Page];
+//    
+//    for (int i = 0; i < page.days.count; ++i) {
+//        XZXDay *day = page.days[i];
+//        
+//        XZXDayBlockCVCellViewModel *dayBlockViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:day];
+//        [self.dayBlockVMs addObject:dayBlockViewModel];
+//    }
+//}
 
-
-- (void)fetchDate {
-    id<XZXFetchDays> temp = [self.services getServices];
+- (RACSignal *)fetchDaysFromRealmSignal {
+    id<XZXFetchDays> service = [self.services getServices];
     
-    XZXCalendarPage *page = [temp date4Page];
-    
-    for (int i = 0; i < page.days.count; ++i) {
-        XZXDay *day = page.days[i];
-        
-        XZXDayBlockCVCellViewModel *dayBlockViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:day];
-        [self.dayBlockVMs addObject:dayBlockViewModel];
-    }
+    return [[service fetchDaysFromRealm] map:^id(NSArray *array) {
+         return [[[array rac_sequence] map:^id(XZXDay *day) {
+             return [[XZXDayBlockCVCellViewModel alloc] initWithDay:day];
+         }] array];
+     }];
 }
 
 @end

@@ -11,6 +11,8 @@
 #import "XZXCalendarPage.h"
 #import "XZXDateUtil.h"
 
+#import <ReactiveCocoa/ReactiveCocoa.h>
+
 @interface XZXCalendarViewModel ()
 @property (nonatomic, weak) id<XZXCalendarVMServices> services;
 @end
@@ -19,35 +21,47 @@
 
 - (instancetype)initWithServices:(id<XZXCalendarVMServices>)services {
     if (self = [super init]) {
-        self.cellViewModels = [[NSMutableArray alloc] initWithCapacity:42];
+        self.title = [XZXDateUtil dateStringOfHomeTitleWithMouthOffset:0];
         _services = services;
-        [self initialize];
+        self.cellViewModels = [NSMutableArray new];
+        
+        RAC(self, cellViewModels) = [self fetchDaysFromRealmSignal];
+        //[self initialize];
     }
-    
     return self;
 }
 
-- (void)initialize {
-    [self fetchDate];
+- (RACSignal *)fetchDaysFromRealmSignal {
+    id<XZXFetchDays> service = [self.services getServices];
+    
+    return [[service fetchDaysFromRealm] map:^id(NSArray *array) {
+        return [[[array rac_sequence] map:^id(XZXDay *day) {
+            return [[XZXDayBlockCVCellViewModel alloc] initWithDay:day];
+        }] array];
+    }];
 }
 
-- (void)fetchDate {
-    id<XZXFetchDays> fetchDateSerivce = [self.services getServices];
-    
-    self.title = [XZXDateUtil dateStringOfHomeTitleWithMouthOffset:0];
-    
-//    for (NSString *s in [NSCalendar currentCalendar].monthSymbols) {
-//        NSLog(@"weekSymbols:%@",s);
+//- (void)initialize {
+//    [self fetchDate];
+//}
+//
+//- (void)fetchDate {
+//    id<XZXFetchDays> fetchDateSerivce = [self.services getServices];
+//    
+//    self.title = [XZXDateUtil dateStringOfHomeTitleWithMouthOffset:0];
+//    
+////    for (NSString *s in [NSCalendar currentCalendar].monthSymbols) {
+////        NSLog(@"weekSymbols:%@",s);
+////    }
+//    
+//    
+//    XZXCalendarPage *page = [fetchDateSerivce date4Page];
+//    
+//    for (int i = 0; i < page.days.count; ++i) {
+//        XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:page.days[i]];
+//        
+//        [self.cellViewModels addObject:cellViewModel];
 //    }
-    
-    
-    XZXCalendarPage *page = [fetchDateSerivce date4Page];
-    
-    for (int i = 0; i < page.days.count; ++i) {
-        XZXDayBlockCVCellViewModel *cellViewModel = [[XZXDayBlockCVCellViewModel alloc] initWithDay:page.days[i]];
-        
-        [self.cellViewModels addObject:cellViewModel];
-    }
-}
+//}
 
 @end

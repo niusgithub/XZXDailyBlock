@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Reactivecocoa/Reactivecocoa.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @import UIKit;
 
@@ -15,9 +15,12 @@
 
 @protocol XZXFetchDays <NSObject>
 
-- (RACSignal *)realmSearchSingal:(NSDate *)date;
+- (RACSignal *)fetchDaysFromRealm;
 
-- (XZXCalendarPage *)date4Page;
+// 可以通过调用一个封装AFN的Util实现
+- (RACSignal *)fetchDaysFromServer;
+
+//- (XZXCalendarPage *)date4Page;
 
 //- (NSDate *)today;
 

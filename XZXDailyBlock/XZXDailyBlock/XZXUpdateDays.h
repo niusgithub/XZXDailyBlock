@@ -13,7 +13,7 @@
 
 @protocol XZXUpdateDays <NSObject>
 
-- (RACSignal *)updateDays:(NSArray *)days;
+//- (RACSignal *)updateDays:(NSArray *)days;
 
 - (void)addDayEvent:(XZXDayEvent *)event toDay:(XZXDay *)day;
 

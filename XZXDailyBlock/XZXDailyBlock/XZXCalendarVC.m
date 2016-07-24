@@ -32,7 +32,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 @interface XZXCalendarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) XZXCalendarVMServicesImpl *viewModelServices;
-@property (nonatomic, strong) XZXCalendarViewModel *viewModel;
+@property (nonatomic, strong) XZXCalendarViewModel *calendarViewModel;
 
 @property (nonatomic, strong) XZXDayBlockCV *dayBlockCV;
 @property (nonatomic, strong) XZXDayBlockCVLayout *dayBlockCVLayout;
@@ -119,6 +119,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     dayBlockCV.pagingEnabled = YES;
     dayBlockCV.delegate = self;
     dayBlockCV.dataSource = self;
+    
     [self.view addSubview:dayBlockCV];
     self.dayBlockCV = dayBlockCV;
     
@@ -133,14 +134,13 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     startEventBtn.backgroundColor = [UIColor whiteColor];
     startEventBtn.layer.borderWidth = 1.f;
     startEventBtn.layer.borderColor = [UIColor grayColor].CGColor;
-    //[startEventBtn addTarget:self action:@selector(startTickTock) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:startEventBtn];
     self.startEventBtn = startEventBtn;
 }
 
 - (void)initViewModel {
     self.viewModelServices = [XZXCalendarVMServicesImpl new];
-    self.viewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
+    self.calendarViewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
     // RAC(self, viewModel)
 }
 
@@ -209,7 +209,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     
     XZXDayBlockCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCalendarDateBlockCellIdentifier forIndexPath:indexPath];
     
-    XZXDayBlockCVCellViewModel *cellViewModel = self.viewModel.cellViewModels[indexPath.item];
+    XZXDayBlockCVCellViewModel *cellViewModel = self.calendarViewModel.cellViewModels[indexPath.item];
     
     [cell configureCellWithViewModel:cellViewModel];
     
