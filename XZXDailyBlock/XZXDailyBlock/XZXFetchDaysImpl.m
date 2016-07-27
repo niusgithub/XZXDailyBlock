@@ -68,6 +68,10 @@
 //    return [[[[RACSignal empty] logAll] delay:1.0] logAll];
 //}
 
+/*
+ 暂不改动原因：在for循环中每次开启异步线程执行单条查询消耗估计比现在还大
+ 优化思路：将Realm查询解耦放在XZXDBHelper中，在fetchDaysFromRealm中只通过minDate和maxDate查询。
+ */
 - (RACSignal *)fetchDaysFromRealm {
     @weakify(self)
     

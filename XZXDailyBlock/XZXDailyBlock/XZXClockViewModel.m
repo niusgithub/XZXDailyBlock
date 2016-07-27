@@ -26,17 +26,9 @@
         self.services = services;
         
         @weakify(self)
-//        self.eventFinishCommand = [[RACCommand alloc] initWithEnabled:[self eventFinishSignal] signalBlock:^RACSignal *(id input) {
-//            @strongify(self)
-//            NSLog(@"eventFinishCommand");
-//            [self addDayEvent];
-//            return [[[[RACSignal empty] logAll] delay:1.0] logAll];
-//        }];
-        
         self.eventFinishCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
             @strongify(self)
-            [self addDayEvent];
-            return [[[[RACSignal empty] logAll] delay:1.0] logAll];
+            return [self addDayEvent];
         }];
     }
     
@@ -51,7 +43,7 @@
             }];    
 }
 
-- (void)addDayEvent {
+- (RACSignal *)addDayEvent {
     //添加event到相应的day中
     NSDate *currentDate = [XZXDateUtil dateOfYMD:[NSDate date]];
     
@@ -68,7 +60,9 @@
     [day.events addObject:event];
     
     id<XZXUpdateDays> service = [self.services getServices];
-    [service addDayEvent:event toDay:day];
+//    [service addDayEvent:event toDay:day];
+    
+    return [service addToDBDayEvent:event toDay:day];
 }
 
 @end

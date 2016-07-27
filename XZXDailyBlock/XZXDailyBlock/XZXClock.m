@@ -12,6 +12,7 @@
 #import "XZXClockVMServicesImpl.h"
 #import "XZXDateUtil.h"
 
+#import "XZXMetamacro.h"
 #import "UIView+XZX.h"
 
 #import <DKNightVersion/DKNightVersion.h>
@@ -234,7 +235,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     
     [RACObserve(self, clockStatus)
      subscribeNext:^(id x) {
-         NSLog(@"status:%@",x);
+         XZXLog(@"status:%@",x);
          self.eventTextField.enabled = [x integerValue]==3;
          
          // 计时结束 向realm写入数据
@@ -366,7 +367,7 @@ NSString* const kTickingAnim = @"tickingAnim";
 
     // animation
     CAKeyframeAnimation *tickingAnim = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    //tickingAnim.keyPath = @"position";
+    // tickingAnim.keyPath = @"position";
     tickingAnim.path = [UIBezierPath bezierPathWithArcCenter:self.clockView.center radius:(self.clockView.frame.size.width-_pointerViewR)/2 startAngle:-M_PI_2 endAngle:M_PI_2*3 clockwise:YES].CGPath;
     tickingAnim.duration = 60.f;
     tickingAnim.repeatCount = self.timeLength/60;

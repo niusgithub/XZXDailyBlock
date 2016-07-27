@@ -9,6 +9,8 @@
 #import "XZXUpdateDaysImpl.h"
 #import "XZXDay.h"
 #import "XZXDayEvent.h"
+#import "XZXDBHelper.h"
+#import "XZXMetamacro.h"
 
 #import <Realm/Realm.h>
 
@@ -28,25 +30,40 @@
 //    return [[[[RACSignal empty] logAll] delay:1.0] logAll];
 //}
 
-- (void)addDayEvent:(XZXDayEvent *)event toDay:(XZXDay *)day {
-    __block XZXDay *blockDay = day;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+- (RACSignal *)addToDBDayEvent:(XZXDayEvent *)event toDay:(XZXDay *)day {
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        [XZXDBHelper insertRealmWithEvent:event toDay:day success:^{
+            [subscriber sendCompleted];
+        } failure:^(NSError *error) {
+            XZXLog(@"addToRealmDayEvent ERR:%@",error);
+            [subscriber sendError:[NSError errorWithDomain:@"addToRealmDayEvent" code:0 userInfo:@{NSLocalizedDescriptionKey: @"Insert DB error."}]];
+        }];
         
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"dateID=%@", blockDay.dateID];
-        //
-        RLMRealm *realm = [RLMRealm defaultRealm];
-        [realm beginWriteTransaction];
-        RLMResults<XZXDay *> *dayResults = [XZXDay objectsWithPredicate:pred];
-        if (dayResults.count<1) {
-            [blockDay calculateDayLevel];
-            [realm addObject:blockDay];
-        } else {
-            blockDay = [dayResults firstObject];
-            [blockDay.events addObject:event];
-            [blockDay calculateDayLevel];
-        }
-        [realm commitWriteTransaction];
-    });
+        return nil;
+    }];
 }
+
+
+//- (void)addDayEvent:(XZXDayEvent *)event toDay:(XZXDay *)day {
+//    __block XZXDay *blockDay = day;
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        
+//        //NSPredicate *pred = [NSPredicate predicateWithFormat:@"dateID=%@", blockDay.dateID];
+//        //RLMResults<XZXDay *> *dayResults = [XZXDay objectsWithPredicate:pred];
+//        RLMRealm *realm = [RLMRealm defaultRealm];
+//        [realm beginWriteTransaction];
+//        RLMResults<XZXDay *> *dayResults = [XZXDay objectsWhere:@"dateID=%@", day.dateID];
+//        
+//        if (dayResults.count<1) {
+//            [blockDay calculateDayLevel];
+//            [realm addObject:blockDay];
+//        } else {
+//            blockDay = [dayResults firstObject];
+//            [blockDay.events addObject:event];
+//            [blockDay calculateDayLevel];
+//        }
+//        [realm commitWriteTransaction];
+//    });
+//}
 
 @end
