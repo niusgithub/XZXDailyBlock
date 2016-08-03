@@ -127,13 +127,18 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     
     // UIButton
     //y:screenHeigth-64-44
-    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, MainScreenHeight-108, MainScreenWidth, 44)];
-    [startEventBtn setImage:[UIImage imageNamed:@"clock"] forState:UIControlStateNormal];
-    [startEventBtn setTitle:@"开始" forState:UIControlStateNormal];
+    //UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, MainScreenHeight-108, MainScreenWidth, 44)];
+    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth-65, MainScreenHeight-64-70, 50, 50)];
+    [startEventBtn setImage:[UIImage imageNamed:@"addNew"] forState:UIControlStateNormal];
+    // [startEventBtn setTitle:@"开始" forState:UIControlStateNormal];
+    // startEventBtn.layer.borderWidth = 1.f;
+    // startEventBtn.layer.borderColor = [UIColor grayColor].CGColor;
     [startEventBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    startEventBtn.backgroundColor = [UIColor whiteColor];
-    startEventBtn.layer.borderWidth = 1.f;
-    startEventBtn.layer.borderColor = [UIColor grayColor].CGColor;
+    startEventBtn.backgroundColor = [UIColor redColor];
+    startEventBtn.layer.shadowOpacity = 0.5f;
+    startEventBtn.layer.shadowOffset = CGSizeMake(0, 5);
+    startEventBtn.layer.shadowRadius = 5.0f;
+    startEventBtn.layer.cornerRadius = 25.f;
     [self.view addSubview:startEventBtn];
     self.startEventBtn = startEventBtn;
 }

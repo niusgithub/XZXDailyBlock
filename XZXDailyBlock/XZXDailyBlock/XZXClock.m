@@ -275,6 +275,35 @@ NSString* const kTickingAnim = @"tickingAnim";
 //    }];
 }
 
+- (void)currentEventFinished {
+    // 完成计时
+    self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
+    self.endTime = [NSDate date];
+    self.clockStatus = XZXClockStatusFinish;
+    //
+    [self.countDownTimer invalidate];
+    self.countDownTimer = nil;
+    
+    
+    // 显示本地通知
+    UILocalNotification *localNoti = [[UILocalNotification alloc] init];
+    localNoti.timeZone = [NSTimeZone defaultTimeZone];
+    localNoti.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+    localNoti.soundName = UILocalNotificationDefaultSoundName;
+    
+    localNoti.alertBody = [NSString stringWithFormat:@"%@完成，休息一下吧。", self.eventTextField.text];
+    //localNoti.repeatInterval = 0;
+    localNoti.alertAction = @"打开";
+//    localNoti.alertLaunchImage=@"Default";
+//    localNoti.applicationIconBadgeNumber = 1;
+    
+//    NSDictionary* infoDic = [NSDictionary dictionaryWithObject:@"XZXDailyBlock" forKey:@"localNoti"];
+//    localNoti.userInfo = infoDic;
+    //发送通知
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
+//    [[UIApplication sharedApplication] presentLocalNotificationNow:localNoti];
+}
+
 
 #pragma mark - Click Event
 
@@ -537,14 +566,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     
     // 停止计时
     if (self.timeLength <= 0) {
-        // 完成计时
-        self.clockLabel.text = [NSString stringWithFormat:@"休息片刻"];
-//        self.endTime = [XZXDateUtil dateByAddingSeconds:self.setTimeLength - self.timeLength toDate:self.startTime];
-        self.endTime = [NSDate date];
-        self.clockStatus = XZXClockStatusFinish;
-        
-        [self.countDownTimer invalidate];
-        self.countDownTimer = nil;
+        [self currentEventFinished];
     }
 }
 
@@ -642,7 +664,7 @@ NSString* const kTickingAnim = @"tickingAnim";
 }
 @end
 
-#pragma mark - Keyboard Notification
+//#pragma mark - Keyboard Notification
 /**
  *  键盘即将隐藏
  */
