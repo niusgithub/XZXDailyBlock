@@ -14,6 +14,7 @@
 
 #import "XZXMetamacro.h"
 #import "UIView+XZX.h"
+#import "XZXClock+LocalNoti.h"
 
 #import <DKNightVersion/DKNightVersion.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
@@ -50,8 +51,7 @@ NSString* const kTickingAnim = @"tickingAnim";
 // clock control
 @property (nonatomic, strong) UIButton *cancelBtn;
 
-// event
-@property (nonatomic, strong) UITextField *eventTextField;
+
 //@property (nonatomic, strong) UILabel *timeLengthLabel;
 
 // signal
@@ -283,25 +283,6 @@ NSString* const kTickingAnim = @"tickingAnim";
     //
     [self.countDownTimer invalidate];
     self.countDownTimer = nil;
-    
-    
-    // 显示本地通知
-    UILocalNotification *localNoti = [[UILocalNotification alloc] init];
-    localNoti.timeZone = [NSTimeZone defaultTimeZone];
-    localNoti.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    localNoti.soundName = UILocalNotificationDefaultSoundName;
-    
-    localNoti.alertBody = [NSString stringWithFormat:@"%@完成，休息一下吧。", self.eventTextField.text];
-    //localNoti.repeatInterval = 0;
-    localNoti.alertAction = @"打开";
-//    localNoti.alertLaunchImage=@"Default";
-//    localNoti.applicationIconBadgeNumber = 1;
-    
-//    NSDictionary* infoDic = [NSDictionary dictionaryWithObject:@"XZXDailyBlock" forKey:@"localNoti"];
-//    localNoti.userInfo = infoDic;
-    //发送通知
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
-//    [[UIApplication sharedApplication] presentLocalNotificationNow:localNoti];
 }
 
 
@@ -407,6 +388,12 @@ NSString* const kTickingAnim = @"tickingAnim";
     // NSTimer
     self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
+    
+    [self showLocalNotiWithTimeIntervalSinceNow:60];
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self canelLocalNoti];
+//    });
 }
 
 - (void)pauseTicking {
@@ -414,6 +401,8 @@ NSString* const kTickingAnim = @"tickingAnim";
     [self pauseLayer:self.pointerView.layer];
     // 改变clockLabel文字并翻转
     [self flipClockView];
+    // 取消本地推送
+    [self canelLocalNoti];
     // 淡入取消按钮
     [UIView animateWithDuration:0.25 animations:^{
         self.cancelBtn.alpha = 1.0;
@@ -438,6 +427,10 @@ NSString* const kTickingAnim = @"tickingAnim";
     // 新建NSTimer并启动
     self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
+    
+    // 恢复本地推送
+    NSTimeInterval pastTime = [[NSDate date] timeIntervalSinceDate:self.startTime] - self.timeSincePause;
+    [self showLocalNotiWithTimeIntervalSinceNow:self.setTimeLength - pastTime];
 }
 
 
@@ -591,8 +584,8 @@ NSString* const kTickingAnim = @"tickingAnim";
 - (void)showInfo:(XZXInfo)info {
     
     // 1.创建一个UILabel
-    UIView *errInfoView = [[UIView alloc] init];
-    UILabel *countLabel = [[UILabel alloc] init];
+    UIView *errInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, -55, self.view.width, 55)];
+    UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.width, 35)];
     
     // 2.显示文字
     switch (info) {
@@ -607,25 +600,24 @@ NSString* const kTickingAnim = @"tickingAnim";
     countLabel.textAlignment = NSTextAlignmentCenter;
     countLabel.textColor = [UIColor whiteColor];
     
-    // 4.设置frame
-    errInfoView.width = self.view.width;
-    errInfoView.height = 55;
-    errInfoView.x = 0;
-    errInfoView.y = -55;
-    //errInfoView.y = -errInfoView.height;
-    
-    countLabel.width = self.view.width;
-    countLabel.height = 35;
-    countLabel.x = 0;
-    countLabel.y = 20;
+//    // 4.设置frame
+//    errInfoView.width = self.view.width;
+//    errInfoView.height = 55;
+//    errInfoView.x = 0;
+//    errInfoView.y = -55;
+//    //errInfoView.y = -errInfoView.height;
+//    
+//    countLabel.width = self.view.width;
+//    countLabel.height = 35;
+//    countLabel.x = 0;
+//    countLabel.y = 20;
     
     [errInfoView addSubview:countLabel];
-//    countLabel.y = -countLabel.height+20;
     
-    // 5.添加到导航控制器的view
+    // 4.添加到导航控制器的view
     [self.view addSubview:errInfoView];
     
-    // 6.动画
+    // 5.动画
     CGFloat duration = 0.8;
     errInfoView.alpha = 0.3;
     [UIView animateWithDuration:duration animations:^{
@@ -644,13 +636,11 @@ NSString* const kTickingAnim = @"tickingAnim";
          UIViewAnimationOptionCurveLinear               = 3 << 16, // 线性，匀速
          */
         [UIView animateWithDuration:duration delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            
             // 恢复到原来的位置
             errInfoView.transform = CGAffineTransformIdentity;
             errInfoView.alpha = 0.3;
             
         } completion:^(BOOL finished) {
-            
             // 删除控件
             [errInfoView removeFromSuperview];
         }];

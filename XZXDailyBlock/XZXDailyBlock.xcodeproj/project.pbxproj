@@ -36,6 +36,7 @@
 		E046CCE81D3A90BA0081FB45 /* UIView+XZX.m in Sources */ = {isa = PBXBuildFile; fileRef = E046CCE71D3A90BA0081FB45 /* UIView+XZX.m */; };
 		E046CCF21D3CC3E60081FB45 /* XZXUpdateDaysImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E046CCF11D3CC3E60081FB45 /* XZXUpdateDaysImpl.m */; };
 		E046CCF91D3CCBF80081FB45 /* XZXClockVMServicesImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E046CCF81D3CCBF80081FB45 /* XZXClockVMServicesImpl.m */; };
+		E061CC7D1D53B7C800051639 /* XZXClock+LocalNoti.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC7C1D53B7C800051639 /* XZXClock+LocalNoti.m */; };
 		E085F0971D07EAF200E91362 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0961D07EAF200E91362 /* main.m */; };
 		E085F09A1D07EAF200E91362 /* XZXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* XZXAppDelegate.m */; };
 		E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F09E1D07EAF200E91362 /* Main.storyboard */; };
@@ -127,6 +128,8 @@
 		E046CCF71D3CCBF80081FB45 /* XZXClockVMServicesImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXClockVMServicesImpl.h; sourceTree = "<group>"; };
 		E046CCF81D3CCBF80081FB45 /* XZXClockVMServicesImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXClockVMServicesImpl.m; sourceTree = "<group>"; };
 		E046CD001D43B4510081FB45 /* XZXMetamacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXMetamacro.h; sourceTree = "<group>"; };
+		E061CC7B1D53B7C800051639 /* XZXClock+LocalNoti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XZXClock+LocalNoti.h"; sourceTree = "<group>"; };
+		E061CC7C1D53B7C800051639 /* XZXClock+LocalNoti.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XZXClock+LocalNoti.m"; sourceTree = "<group>"; };
 		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E085F0981D07EAF200E91362 /* XZXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXAppDelegate.h; sourceTree = "<group>"; };
@@ -428,6 +431,8 @@
 			children = (
 				E0C8DF0D1D2EB66600896159 /* XZXClock.h */,
 				E0C8DF0E1D2EB66600896159 /* XZXClock.m */,
+				E061CC7B1D53B7C800051639 /* XZXClock+LocalNoti.h */,
+				E061CC7C1D53B7C800051639 /* XZXClock+LocalNoti.m */,
 			);
 			name = Clock;
 			sourceTree = "<group>";
@@ -673,6 +678,7 @@
 				E00B22B61D1A74A800FF8241 /* XZXFetchDaysImpl.m in Sources */,
 				E003F1131D0BF4B300C4D140 /* XZXCalendarVC.m in Sources */,
 				E085F0971D07EAF200E91362 /* main.m in Sources */,
+				E061CC7D1D53B7C800051639 /* XZXClock+LocalNoti.m in Sources */,
 				E003F13F1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m in Sources */,
 				E003F11C1D0C110400C4D140 /* XZXDay.m in Sources */,
 				E00B22A31D182A1E00FF8241 /* XZXDayEventTVCell.m in Sources */,

@@ -81,6 +81,8 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.startEventBtn.hidden = NO;
+    
     [self initViewModel];
     [self.dayBlockCV reloadData];
 }
@@ -128,18 +130,19 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     // UIButton
     //y:screenHeigth-64-44
     //UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, MainScreenHeight-108, MainScreenWidth, 44)];
-    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth-65, MainScreenHeight-64-70, 50, 50)];
+    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth-65, MainScreenHeight-75, 50, 50)];
     [startEventBtn setImage:[UIImage imageNamed:@"addNew"] forState:UIControlStateNormal];
     // [startEventBtn setTitle:@"开始" forState:UIControlStateNormal];
     // startEventBtn.layer.borderWidth = 1.f;
     // startEventBtn.layer.borderColor = [UIColor grayColor].CGColor;
     [startEventBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     startEventBtn.backgroundColor = [UIColor redColor];
-    startEventBtn.layer.shadowOpacity = 0.5f;
-    startEventBtn.layer.shadowOffset = CGSizeMake(0, 5);
+    startEventBtn.layer.shadowOpacity = 0.4f;
+    startEventBtn.layer.shadowOffset = CGSizeMake(0, 8);
     startEventBtn.layer.shadowRadius = 5.0f;
     startEventBtn.layer.cornerRadius = 25.f;
-    [self.view addSubview:startEventBtn];
+//    [self.view addSubview:startEventBtn];
+    [[UIApplication sharedApplication].keyWindow addSubview:startEventBtn];
     self.startEventBtn = startEventBtn;
 }
 
@@ -182,6 +185,9 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     self.startEventBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             @strongify(self)
+            
+            self.startEventBtn.hidden = YES;
+            
             XZXClock *clock = [[XZXClock alloc] init];
             [self presentViewController:clock animated:YES completion:^{
                 [subscriber sendCompleted];

@@ -10,4 +10,7 @@
 
 @interface XZXClock : UIViewController
 
+// event
+@property (nonatomic, strong) UITextField *eventTextField;
+
 @end
