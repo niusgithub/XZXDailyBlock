@@ -18,7 +18,7 @@
 - (RACSignal *)fetchDaysFromRealm;
 
 // 可以通过调用一个封装AFN的Util实现
-- (RACSignal *)fetchDaysFromServer;
+//- (RACSignal *)fetchDaysFromServer;
 
 //- (XZXCalendarPage *)date4Page;
 

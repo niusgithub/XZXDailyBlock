@@ -37,6 +37,8 @@
 		E046CCF21D3CC3E60081FB45 /* XZXUpdateDaysImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E046CCF11D3CC3E60081FB45 /* XZXUpdateDaysImpl.m */; };
 		E046CCF91D3CCBF80081FB45 /* XZXClockVMServicesImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E046CCF81D3CCBF80081FB45 /* XZXClockVMServicesImpl.m */; };
 		E061CC7D1D53B7C800051639 /* XZXClock+LocalNoti.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC7C1D53B7C800051639 /* XZXClock+LocalNoti.m */; };
+		E061CC861D5782F700051639 /* GooeySlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC831D5782F700051639 /* GooeySlideMenu.m */; };
+		E061CC871D5782F700051639 /* SlideMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC851D5782F700051639 /* SlideMenuButton.m */; };
 		E085F0971D07EAF200E91362 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0961D07EAF200E91362 /* main.m */; };
 		E085F09A1D07EAF200E91362 /* XZXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* XZXAppDelegate.m */; };
 		E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F09E1D07EAF200E91362 /* Main.storyboard */; };
@@ -130,6 +132,10 @@
 		E046CD001D43B4510081FB45 /* XZXMetamacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXMetamacro.h; sourceTree = "<group>"; };
 		E061CC7B1D53B7C800051639 /* XZXClock+LocalNoti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XZXClock+LocalNoti.h"; sourceTree = "<group>"; };
 		E061CC7C1D53B7C800051639 /* XZXClock+LocalNoti.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XZXClock+LocalNoti.m"; sourceTree = "<group>"; };
+		E061CC821D5782F700051639 /* GooeySlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooeySlideMenu.h; sourceTree = "<group>"; };
+		E061CC831D5782F700051639 /* GooeySlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooeySlideMenu.m; sourceTree = "<group>"; };
+		E061CC841D5782F700051639 /* SlideMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuButton.h; sourceTree = "<group>"; };
+		E061CC851D5782F700051639 /* SlideMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuButton.m; sourceTree = "<group>"; };
 		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E085F0981D07EAF200E91362 /* XZXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXAppDelegate.h; sourceTree = "<group>"; };
@@ -218,6 +224,7 @@
 		E00B22961D1822EF00FF8241 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				E061CC811D5782BE00051639 /* Menu */,
 				E003F1101D0BF4B300C4D140 /* XZXCalendarVC.h */,
 				E003F1111D0BF4B300C4D140 /* XZXCalendarVC.m */,
 				E003F1201D0C35D900C4D140 /* XZXDayBlockCVCell.h */,
@@ -294,6 +301,17 @@
 				E046CCE71D3A90BA0081FB45 /* UIView+XZX.m */,
 			);
 			name = Category;
+			sourceTree = "<group>";
+		};
+		E061CC811D5782BE00051639 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				E061CC821D5782F700051639 /* GooeySlideMenu.h */,
+				E061CC831D5782F700051639 /* GooeySlideMenu.m */,
+				E061CC841D5782F700051639 /* SlideMenuButton.h */,
+				E061CC851D5782F700051639 /* SlideMenuButton.m */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 		E085F0891D07EAF200E91362 = {
@@ -682,8 +700,10 @@
 				E003F13F1D0F3D2C00C4D140 /* XZXHorizontalWeekCV.m in Sources */,
 				E003F11C1D0C110400C4D140 /* XZXDay.m in Sources */,
 				E00B22A31D182A1E00FF8241 /* XZXDayEventTVCell.m in Sources */,
+				E061CC861D5782F700051639 /* GooeySlideMenu.m in Sources */,
 				E00B22C91D219AFF00FF8241 /* XZXDayBlockCVLayout.m in Sources */,
 				E0067CB81D48E98E00D6E594 /* XZXDBHelper.m in Sources */,
+				E061CC871D5782F700051639 /* SlideMenuButton.m in Sources */,
 				E0C8DF131D2EB6A500896159 /* XZXClockViewModel.m in Sources */,
 				E00B22BA1D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m in Sources */,
 				E00B22D21D2BE18A00FF8241 /* XZXWeekCVLayout.m in Sources */,

@@ -227,13 +227,12 @@ NSString* const kTickingAnim = @"tickingAnim";
 - (void)bindViewModel {
     
     RAC(self.viewModel, clockStatus) = RACObserve(self, clockStatus);
-    //RAC(self.viewModel, date)
     RAC(self.viewModel, startTime) = RACObserve(self, startTime);
     RAC(self.viewModel, endTime) = RACObserve(self, endTime);
     RAC(self.viewModel, eventAbstruct) = self.eventTextField.rac_textSignal;
     
     
-    [RACObserve(self, clockStatus)
+    [[RACObserve(self, clockStatus) distinctUntilChanged]
      subscribeNext:^(id x) {
          XZXLog(@"status:%@",x);
          self.eventTextField.enabled = [x integerValue]==3;

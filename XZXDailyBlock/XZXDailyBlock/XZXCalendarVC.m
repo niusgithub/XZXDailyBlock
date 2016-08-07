@@ -16,6 +16,7 @@
 
 #import "XZXDayEventVC.h"
 #import "XZXClock.h"
+#import "GooeySlideMenu.h"
 
 #import "XZXTransitionAnimator.h"
 
@@ -37,6 +38,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 @property (nonatomic, strong) XZXDayBlockCV *dayBlockCV;
 @property (nonatomic, strong) XZXDayBlockCVLayout *dayBlockCVLayout;
 @property (nonatomic, strong) UIButton *startEventBtn;
+@property (nonatomic, strong) GooeySlideMenu *menu;
 
 @property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
@@ -144,6 +146,12 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 //    [self.view addSubview:startEventBtn];
     [[UIApplication sharedApplication].keyWindow addSubview:startEventBtn];
     self.startEventBtn = startEventBtn;
+    
+    // GooeySlideMenu
+    self.menu = [[GooeySlideMenu alloc] initWithTitles:@[@"首页",@"个人",@"设置"]];
+    self.menu.menuClickBlock = ^(NSInteger index,NSString *title,NSInteger titleCounts){
+        NSLog(@"index:%ld title:%@ titleCounts:%ld",index,title,titleCounts);
+    };
 }
 
 - (void)initViewModel {
@@ -189,7 +197,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
             self.startEventBtn.hidden = YES;
             
             XZXClock *clock = [[XZXClock alloc] init];
-            [self presentViewController:clock animated:YES completion:^{
+            [self.parentViewController presentViewController:clock animated:YES completion:^{
                 [subscriber sendCompleted];
             }];
             
@@ -273,23 +281,25 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     return nil;
 }
 
-#warning temp
+
 - (IBAction)leftBarButtonItemClick:(UIBarButtonItem *)sender {
-    self.clickTimes++;
-    switch (_clickTimes % 4) {
-        case 1:
-            self.dk_manager.themeVersion = @"SUCCULENT";
-            break;
-        case 2:
-            self.dk_manager.themeVersion = @"VIOLET";
-            break;
-        case 3:
-            self.dk_manager.themeVersion = @"GITHUB";
-            break;
-        case 0:
-            self.dk_manager.themeVersion = @"SEA";
-            break;
-    }
+    [self.menu trigger];
+    
+//    self.clickTimes++;
+//    switch (_clickTimes % 4) {
+//        case 1:
+//            self.dk_manager.themeVersion = @"SUCCULENT";
+//            break;
+//        case 2:
+//            self.dk_manager.themeVersion = @"VIOLET";
+//            break;
+//        case 3:
+//            self.dk_manager.themeVersion = @"GITHUB";
+//            break;
+//        case 0:
+//            self.dk_manager.themeVersion = @"SEA";
+//            break;
+//    }
 }
 
 - (IBAction)jumpToToday:(UIBarButtonItem *)sender {
