@@ -1,18 +1,18 @@
 //
-//  GooeySlideMenu.m
+//  XZXGooeySlideMenu.m
 //  AnimationDemo_slideMenu
 //
 //  Created by 陈知行 on 16/3/15.
 //  Copyright © 2016年 陈知行. All rights reserved.
 //
 
-#import "GooeySlideMenu.h"
-#import "SlideMenuButton.h"
+#import "XZXGooeySlideMenu.h"
+#import "XZXSlideMenuButton.h"
 
 static const CGFloat menuBlankWidth = 50;
 static const CGFloat buttonSpace = 30;
 
-@interface GooeySlideMenu ()
+@interface XZXGooeySlideMenu ()
 
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, assign) NSInteger animationCount; // 动画计数器
@@ -28,7 +28,7 @@ static const CGFloat buttonSpace = 30;
 
 @end
 
-@implementation GooeySlideMenu
+@implementation XZXGooeySlideMenu
 
 - (instancetype)initWithTitles:(NSArray *)titles {
     return [self initWithTitles:titles buttonHeight:40.f menuColor:[UIColor colorWithRed:0 green:0.722 blue:1 alpha:1] backBlurStyle:UIBlurEffectStyleDark];
@@ -82,7 +82,7 @@ static const CGFloat buttonSpace = 30;
         
         for (NSInteger i = 0; i < titles.count; ++i) {
             NSString *title = titles[i];
-            SlideMenuButton *home_button = [[SlideMenuButton alloc]initWithTitle:title];
+            XZXSlideMenuButton *home_button = [[XZXSlideMenuButton alloc]initWithTitle:title];
             if (i >= titles.count / 2) {
                 index_up ++;
                 home_button.center = CGPointMake(_kWindow.frame.size.width/4, _kWindow.frame.size.height/2 + _menuButtonHeight*index_up + buttonSpace*index_up + buttonSpace/2 + _menuButtonHeight/2);
@@ -107,7 +107,7 @@ static const CGFloat buttonSpace = 30;
         for (NSInteger i = 0; i < titles.count; i++) {
             index --;
             NSString *title = titles[i];
-            SlideMenuButton *home_button = [[SlideMenuButton alloc]initWithTitle:title];
+            XZXSlideMenuButton *home_button = [[XZXSlideMenuButton alloc]initWithTitle:title];
             home_button.center = CGPointMake(_kWindow.frame.size.width/4, _kWindow.frame.size.height/2 - _menuButtonHeight*index - 20*index);
             home_button.bounds = CGRectMake(0, 0, _kWindow.frame.size.width/2 - 20*2, _menuButtonHeight);
             home_button.buttonColor = _menuColor;

@@ -1,5 +1,5 @@
 //
-//  GooeySlideMenu.h
+//  XZXGooeySlideMenu.h
 //  AnimationDemo_slideMenu
 //
 //  Created by 陈知行 on 16/3/15.
@@ -10,7 +10,7 @@
 
 typedef void (^MenuButtonClickBlock)(NSInteger index, NSString *title, NSInteger titleCounts);
 
-@interface GooeySlideMenu : UIView
+@interface XZXGooeySlideMenu : UIView
 
 @property (nonatomic, copy) MenuButtonClickBlock menuClickBlock;
 

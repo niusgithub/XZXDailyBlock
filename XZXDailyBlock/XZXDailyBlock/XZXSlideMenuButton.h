@@ -1,5 +1,5 @@
 //
-//  SlideMenuButton.h
+//  XZXSlideMenuButton.h
 //  AnimationDemo_slideMenu
 //
 //  Created by 陈知行 on 16/3/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SlideMenuButton : UIView
+@interface XZXSlideMenuButton : UIView
 
 @property (nonatomic, strong) UIColor *buttonColor;
 @property (nonatomic, copy) void (^buttonClickBlock)(void);

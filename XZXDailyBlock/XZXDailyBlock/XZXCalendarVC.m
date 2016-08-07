@@ -16,7 +16,7 @@
 
 #import "XZXDayEventVC.h"
 #import "XZXClock.h"
-#import "GooeySlideMenu.h"
+#import "XZXGooeySlideMenu.h"
 
 #import "XZXTransitionAnimator.h"
 
@@ -38,7 +38,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 @property (nonatomic, strong) XZXDayBlockCV *dayBlockCV;
 @property (nonatomic, strong) XZXDayBlockCVLayout *dayBlockCVLayout;
 @property (nonatomic, strong) UIButton *startEventBtn;
-@property (nonatomic, strong) GooeySlideMenu *menu;
+@property (nonatomic, strong) XZXGooeySlideMenu *menu;
 
 @property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
@@ -148,7 +148,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     self.startEventBtn = startEventBtn;
     
     // GooeySlideMenu
-    self.menu = [[GooeySlideMenu alloc] initWithTitles:@[@"首页",@"个人",@"设置"]];
+    self.menu = [[XZXGooeySlideMenu alloc] initWithTitles:@[@"首页",@"个人",@"设置"]];
     self.menu.menuClickBlock = ^(NSInteger index,NSString *title,NSInteger titleCounts){
         NSLog(@"index:%ld title:%@ titleCounts:%ld",index,title,titleCounts);
     };

@@ -1,18 +1,18 @@
 //
-//  SlideMenuButton.m
+//  XZXSlideMenuButton.m
 //  AnimationDemo_slideMenu
 //
 //  Created by 陈知行 on 16/3/15.
 //  Copyright © 2016年 陈知行. All rights reserved.
 //
 
-#import "SlideMenuButton.h"
+#import "XZXSlideMenuButton.h"
 
-@interface SlideMenuButton ()
+@interface XZXSlideMenuButton ()
 @property (nonatomic, copy) NSString *buttonTitle;
 @end
 
-@implementation SlideMenuButton
+@implementation XZXSlideMenuButton
 
 - (instancetype)initWithTitle:(NSString *)title {
     if (self = [super init]) {
