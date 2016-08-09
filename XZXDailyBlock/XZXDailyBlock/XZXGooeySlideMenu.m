@@ -8,6 +8,7 @@
 
 #import "XZXGooeySlideMenu.h"
 #import "XZXSlideMenuButton.h"
+#import "XZXMenuLoginView.h"
 
 static const CGFloat menuBlankWidth = 50;
 static const CGFloat buttonSpace = 30;
@@ -65,10 +66,28 @@ static const CGFloat buttonSpace = 30;
         self.menuColor = menuColor;
         self.menuButtonHeight = height;
         
+        
+        [self addLoginView];
         [self addButtons:titles];
     }
     return self;
 }
+
+- (void)addLoginView {
+    XZXMenuLoginView *loginView = [[XZXMenuLoginView alloc] initWithFrame:CGRectMake(20, 64, _kWindow.frame.size.width/2-40, _kWindow.frame.size.width/2-40)];
+    [self addSubview:loginView];
+}
+
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    return 3;
+//}
+//
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+//    UITableViewCell *cell = [[UITableViewCell alloc] init];
+//    cell.textLabel.text = [NSString stringWithFormat:@"第%ld行", indexPath.row];
+//    
+//    return cell;
+//}
 
 - (void)addButtons:(NSArray *)titles {
     if (titles.count % 2 == 0) { // 按钮数为偶数时的布局

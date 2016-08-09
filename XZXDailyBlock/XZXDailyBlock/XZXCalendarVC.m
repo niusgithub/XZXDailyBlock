@@ -148,8 +148,8 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     self.startEventBtn = startEventBtn;
     
     // GooeySlideMenu
-    self.menu = [[XZXGooeySlideMenu alloc] initWithTitles:@[@"首页",@"个人",@"设置"]];
-    self.menu.menuClickBlock = ^(NSInteger index,NSString *title,NSInteger titleCounts){
+    self.menu = [[XZXGooeySlideMenu alloc] initWithTitles:@[@"设置",@"关于"]];
+    self.menu.menuClickBlock = ^(NSInteger index, NSString *title, NSInteger titleCounts){
         NSLog(@"index:%ld title:%@ titleCounts:%ld",index,title,titleCounts);
     };
 }

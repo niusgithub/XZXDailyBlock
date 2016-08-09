@@ -23,7 +23,7 @@
                                 <action selector="leftBarButtonItemClick:" destination="MYR-WT-QH5" id="jUi-m5-w1C"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Today" id="j7T-hp-2Ow">
+                        <barButtonItem key="rightBarButtonItem" title="今天" id="j7T-hp-2Ow">
                             <connections>
                                 <action selector="jumpToToday:" destination="MYR-WT-QH5" id="aA8-n1-dAG"/>
                             </connections>

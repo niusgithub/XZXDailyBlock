@@ -39,6 +39,7 @@
 		E061CC7D1D53B7C800051639 /* XZXClock+LocalNoti.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC7C1D53B7C800051639 /* XZXClock+LocalNoti.m */; };
 		E061CC861D5782F700051639 /* XZXGooeySlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC831D5782F700051639 /* XZXGooeySlideMenu.m */; };
 		E061CC871D5782F700051639 /* XZXSlideMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC851D5782F700051639 /* XZXSlideMenuButton.m */; };
+		E061CC8A1D58C10500051639 /* XZXMenuLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC891D58C10500051639 /* XZXMenuLoginView.m */; };
 		E085F0971D07EAF200E91362 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0961D07EAF200E91362 /* main.m */; };
 		E085F09A1D07EAF200E91362 /* XZXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* XZXAppDelegate.m */; };
 		E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F09E1D07EAF200E91362 /* Main.storyboard */; };
@@ -136,6 +137,8 @@
 		E061CC831D5782F700051639 /* XZXGooeySlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXGooeySlideMenu.m; sourceTree = "<group>"; };
 		E061CC841D5782F700051639 /* XZXSlideMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXSlideMenuButton.h; sourceTree = "<group>"; };
 		E061CC851D5782F700051639 /* XZXSlideMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXSlideMenuButton.m; sourceTree = "<group>"; };
+		E061CC881D58C10500051639 /* XZXMenuLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXMenuLoginView.h; sourceTree = "<group>"; };
+		E061CC891D58C10500051639 /* XZXMenuLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXMenuLoginView.m; sourceTree = "<group>"; };
 		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E085F0981D07EAF200E91362 /* XZXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXAppDelegate.h; sourceTree = "<group>"; };
@@ -310,6 +313,8 @@
 				E061CC831D5782F700051639 /* XZXGooeySlideMenu.m */,
 				E061CC841D5782F700051639 /* XZXSlideMenuButton.h */,
 				E061CC851D5782F700051639 /* XZXSlideMenuButton.m */,
+				E061CC881D58C10500051639 /* XZXMenuLoginView.h */,
+				E061CC891D58C10500051639 /* XZXMenuLoginView.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -688,6 +693,7 @@
 				E0C8DF0F1D2EB66600896159 /* XZXClock.m in Sources */,
 				E00B22AC1D1844D000FF8241 /* XZXDayEventVCViewModel.m in Sources */,
 				E00B22DA1D2C0E2000FF8241 /* XZXEventDatilViewModel.m in Sources */,
+				E061CC8A1D58C10500051639 /* XZXMenuLoginView.m in Sources */,
 				E00B22921D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.m in Sources */,
 				E00B22A91D182D8B00FF8241 /* XZXDayEventTVCellViewModel.m in Sources */,
 				E003F12F1D0D5A0B00C4D140 /* XZXTransitionAnimator.m in Sources */,
