@@ -6,6 +6,10 @@
 build/
 DerivedData
 
+## Pods
+XZXDailyBlock/Podfile.lock
+XZXDailyBlock/Pods/
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
