@@ -65,7 +65,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
     [self initViews];
     
-    [self initViewModel];
+//    [self initViewModel];
     
     [self bindViewModel];
     
@@ -79,7 +79,6 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [self.dayBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
 
-//FIXME: bad code 需要用RAC实现
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     

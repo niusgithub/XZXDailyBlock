@@ -57,9 +57,16 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     
     [self initViews];
     
+    [self bindViewModel];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [self initViewModel];
     
-    [self bindViewModel];
+    [self.weekCV reloadData];
+    [self.dayEventTV reloadData];
 }
 
 - (void)initViews {
@@ -132,6 +139,7 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    XZXLog(@"cellForRowAtIndexPath");
     XZXDayBlockCVCellViewModel *dayBlockVM = self.viewModel.dayBlockVMs[self.selectedItemIndex];
     XZXDayEventTVCellViewModel *dayEventVM = dayBlockVM.dayEventVMs[indexPath.row];
     

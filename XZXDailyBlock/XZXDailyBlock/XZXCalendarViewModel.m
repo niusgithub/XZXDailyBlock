@@ -41,6 +41,12 @@
     }];
 }
 
+//- (XZXDayBlockCVCellViewModel *)fetchTodayVM {
+//    id<XZXFetchDays> service = [self.services getServices];
+//    // 与Realm中NSDate格式统一   [XZXDateUtil dateOfYMD:[NSDate date]]
+//    return [[XZXDayBlockCVCellViewModel alloc] initWithDay:[service fetchDayWithDate:[XZXDateUtil dateOfYMD:[NSDate date]]]];
+//}
+
 //- (void)initialize {
 //    [self fetchDate];
 //}

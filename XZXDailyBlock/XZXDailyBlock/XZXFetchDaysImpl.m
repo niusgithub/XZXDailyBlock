@@ -88,23 +88,28 @@
     }];
     
     return [fetchDaysSignal map:^id(NSArray *array) {
-        return [[array.rac_sequence map:^id(NSDate* date) {
-            XZXDay *day = [[XZXDay alloc] init];
-            
-            RLMResults<XZXDay *> *dayResults = [XZXDay objectsWhere:@"date=%@", date];
-            if (dayResults.count > 0) {
-                day = [dayResults firstObject];
-                // day.dayLevel = day
-                // NSLog(@"exist day:%@ eventCount:%ld",day,day.events.count);
-            } else {
-                // 当天没有活动不会记录在realm中，只提供首页的显示用XZXDay
-                day.date = date;
-                day.dayLevel = 0;
-            }
-            
-            return day;
+        return [[array.rac_sequence map:^id(NSDate *date) {
+            return [self fetchDayWithDate:date];
         }] array];
     }];
+}
+
+- (XZXDay *)fetchDayWithDate:(NSDate *)date {
+    
+    XZXDay *day = [[XZXDay alloc] init];
+    
+    RLMResults<XZXDay *> *dayResults = [XZXDay objectsWhere:@"date=%@", date];
+    if (dayResults.count > 0) {
+        day = [dayResults firstObject];
+        // day.dayLevel = day
+        // NSLog(@"exist day:%@ eventCount:%ld",day,day.events.count);
+    } else {
+        // 当天没有活动不会记录在realm中，只提供首页的显示用XZXDay
+        day.date = date;
+        day.dayLevel = 0;
+    }
+    
+    return day;
 }
 
 #warning temp

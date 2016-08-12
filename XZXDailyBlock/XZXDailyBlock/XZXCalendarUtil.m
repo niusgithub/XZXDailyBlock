@@ -205,8 +205,6 @@ static id sharedDateHelper;
     NSDate *day = [self.calendar dateByAddingComponents:components toDate:date options:0];
     //components.day = NSUIntegerMax;
     
-    //NSLog(@"date:%@",day);
-    
     return day;
 }
 

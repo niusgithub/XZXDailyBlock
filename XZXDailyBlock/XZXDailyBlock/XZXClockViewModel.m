@@ -28,6 +28,10 @@
         @weakify(self)
         self.eventFinishCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
             @strongify(self)
+            // 通知
+//            NSNotification *noti = [NSNotification notificationWithName:@"XZXNeedReloadData" object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotification:noti];
+            
             return [self addDayEvent];
         }];
     }
@@ -60,7 +64,6 @@
     [day.events addObject:event];
     
     id<XZXUpdateDays> service = [self.services getServices];
-//    [service addDayEvent:event toDay:day];
     
     return [service addToDBDayEvent:event toDay:day];
 }

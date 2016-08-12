@@ -11,11 +11,13 @@
 
 @import UIKit;
 
-@class XZXCalendarPage;
+@class XZXDay;
 
 @protocol XZXFetchDays <NSObject>
 
 - (RACSignal *)fetchDaysFromRealm;
+
+//- (XZXDay *)fetchDayWithDate:(NSDate *)date;
 
 // 可以通过调用一个封装AFN的Util实现
 //- (RACSignal *)fetchDaysFromServer;

@@ -20,7 +20,8 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
 typedef NS_ENUM(NSInteger, XZXInfo) {
-    XZXInfoEmptyEvent
+    XZXInfoEmptyEvent,
+    XZXInfoEventFinished
 };
 
 NSString* const kFlipStartAnim = @"flipTAnim";
@@ -231,7 +232,6 @@ NSString* const kTickingAnim = @"tickingAnim";
     RAC(self.viewModel, endTime) = RACObserve(self, endTime);
     RAC(self.viewModel, eventAbstruct) = self.eventTextField.rac_textSignal;
     
-    
     [[RACObserve(self, clockStatus) distinctUntilChanged]
      subscribeNext:^(id x) {
          XZXLog(@"status:%@",x);
@@ -239,6 +239,7 @@ NSString* const kTickingAnim = @"tickingAnim";
          
          // 计时结束 向realm写入数据
          if ([x integerValue] == XZXClockStatusFinish) {
+             [self showInfo:XZXInfoEventFinished];
              [self.viewModel.eventFinishCommand execute:nil];
          }
     }];
@@ -388,7 +389,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
     
-    [self showLocalNotiWithTimeIntervalSinceNow:60];
+    [self showLocalNotiWithTimeIntervalSinceNow:self.setTimeLength];
     
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [self canelLocalNoti];
@@ -590,6 +591,9 @@ NSString* const kTickingAnim = @"tickingAnim";
     switch (info) {
         case XZXInfoEmptyEvent:
             countLabel.text = @"请新建任务内容";
+            break;
+        case XZXInfoEventFinished:
+            countLabel.text = @"任务完成";
             break;
     }
     
