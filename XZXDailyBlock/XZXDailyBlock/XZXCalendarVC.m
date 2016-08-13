@@ -17,11 +17,14 @@
 #import "XZXDayEventVC.h"
 #import "XZXClock.h"
 #import "XZXGooeySlideMenu.h"
+#import "YYFPSLabel.h"
 
 #import "XZXTransitionAnimator.h"
 
 #import "XZXCalendarVMServicesImpl.h"
 #import "XZXDateUtil.h"
+
+#import "UIView+XZX.h"
 
 #import <AVOSCloud/AVOSCloud.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
@@ -44,6 +47,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
 @property (nonatomic, assign) NSInteger pageNumber;
 
+@property (nonatomic, assign) BOOL needReloadData;
 #warning temp
 @property (nonatomic, assign) NSInteger clickTimes;
 @end
@@ -65,7 +69,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
     [self initViews];
     
-//    [self initViewModel];
+    [self initViewModel];
     
     [self bindViewModel];
     
@@ -84,14 +88,19 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     
     self.startEventBtn.hidden = NO;
     
-    [self initViewModel];
-    [self.dayBlockCV reloadData];
+    if (self.needReloadData) {
+        [self initViewModel];
+        [self.dayBlockCV reloadData];
+        self.needReloadData = NO;
+    }
 }
 
 
 #pragma mark - initialize
 
 - (void)initViews {
+    self.needReloadData = NO;
+    
     // NavigationBar
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
@@ -147,16 +156,50 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     self.startEventBtn = startEventBtn;
     
     // GooeySlideMenu
-    self.menu = [[XZXGooeySlideMenu alloc] initWithTitles:@[@"设置",@"关于"]];
+    self.menu = [[XZXGooeySlideMenu alloc] initWithTitles:@[@"设置",@"关于",@"主题色"]];
+    @weakify(self)
     self.menu.menuClickBlock = ^(NSInteger index, NSString *title, NSInteger titleCounts){
-        NSLog(@"index:%ld title:%@ titleCounts:%ld",index,title,titleCounts);
+        @strongify(self)
+        
+        switch (index) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:{
+                self.clickTimes++;
+                switch (self.clickTimes % 4) {
+                    case 1:
+                        self.dk_manager.themeVersion = @"SUCCULENT";
+                        break;
+                    case 2:
+                        self.dk_manager.themeVersion = @"VIOLET";
+                        break;
+                    case 3:
+                        self.dk_manager.themeVersion = @"GITHUB";
+                        break;
+                    case 0:
+                        self.dk_manager.themeVersion = @"SEA";
+                        self.clickTimes = 0;
+                        break;
+                }
+            }
+            default:
+                break;
+        }
     };
+    
+    // YYFPSLabel
+    YYFPSLabel *fpsL = [YYFPSLabel new];
+    fpsL.x = 70;
+    fpsL.y = 20;
+    [[UIApplication sharedApplication].keyWindow addSubview:fpsL];
+    
 }
 
 - (void)initViewModel {
     self.viewModelServices = [XZXCalendarVMServicesImpl new];
     self.calendarViewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
-    // RAC(self, viewModel)
 }
 
 
@@ -165,6 +208,11 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
                         map:^id(id value) {
                             return [XZXDateUtil dateStringOfHomeTitleWithMouthOffset:self.pageNumber-2];
                         }];
+    
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"XZXNeedReloadData" object:nil]
+     subscribeNext:^(NSNotification *noti) {
+         self.needReloadData = YES;
+     }];
 }
 
 - (void)bindRAC {
@@ -180,6 +228,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
          
          XZXDayEventVC *dayEventVC = [[XZXDayEventVC alloc] init];
          dayEventVC.selectedItemIndex = [(NSIndexPath *)value.second item];
+         dayEventVC.startEventBtn = self.startEventBtn;
          dayEventVC.height =  15 + self.sideLength; // 上10 下5
          
          dayEventVC.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -269,36 +318,16 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
-- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
-    if (UINavigationControllerOperationPush == operation) {
-        return [[XZXTransitionAnimator alloc] initWithDuration:0.3 splitLineY:_collectionViewSplitY barHeight:15 + self.sideLength];
-    }
-    
-    if (UINavigationControllerOperationPop == operation) {
-        return nil;
-    }
-    return nil;
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+                                  animationControllerForOperation:(UINavigationControllerOperation)operation
+                                               fromViewController:(UIViewController *)fromVC
+                                                 toViewController:(UIViewController *)toVC {
+    return [[XZXTransitionAnimator alloc] initWithDuration:0.4 operation:operation splitLineY:_collectionViewSplitY barHeight:15 + self.sideLength];
 }
 
 
 - (IBAction)leftBarButtonItemClick:(UIBarButtonItem *)sender {
     [self.menu trigger];
-    
-//    self.clickTimes++;
-//    switch (_clickTimes % 4) {
-//        case 1:
-//            self.dk_manager.themeVersion = @"SUCCULENT";
-//            break;
-//        case 2:
-//            self.dk_manager.themeVersion = @"VIOLET";
-//            break;
-//        case 3:
-//            self.dk_manager.themeVersion = @"GITHUB";
-//            break;
-//        case 0:
-//            self.dk_manager.themeVersion = @"SEA";
-//            break;
-//    }
 }
 
 - (IBAction)jumpToToday:(UIBarButtonItem *)sender {
@@ -306,11 +335,6 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     self.pageNumber = 2;
     [self.dayBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
-
-//- (void)startTickTock {
-//    XZXClock *clock = [[XZXClock alloc] init];
-//    [self presentViewController:clock animated:YES completion:nil];
-//}
 
 //- (void)crash {
 //    [NSException raise:NSGenericException format:@"测试，模拟崩溃"];

@@ -11,6 +11,9 @@
 
 @interface XZXTransitionAnimator : NSObject <UIViewControllerAnimatedTransitioning>
 
-- (instancetype)initWithDuration:(NSTimeInterval)duration splitLineY:(CGFloat)splitLineY barHeight:(CGFloat)height;
+- (instancetype)initWithDuration:(NSTimeInterval)duration
+                       operation:(UINavigationControllerOperation)operation
+                      splitLineY:(CGFloat)splitLineY
+                       barHeight:(CGFloat)height;
 
 @end

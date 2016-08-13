@@ -40,6 +40,8 @@
 		E061CC861D5782F700051639 /* XZXGooeySlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC831D5782F700051639 /* XZXGooeySlideMenu.m */; };
 		E061CC871D5782F700051639 /* XZXSlideMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC851D5782F700051639 /* XZXSlideMenuButton.m */; };
 		E061CC8A1D58C10500051639 /* XZXMenuLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC891D58C10500051639 /* XZXMenuLoginView.m */; };
+		E061CC8E1D5EFAE400051639 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC8D1D5EFAE400051639 /* YYFPSLabel.m */; };
+		E061CC911D5EFD8E00051639 /* YYWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC901D5EFD8E00051639 /* YYWeakProxy.m */; };
 		E085F0971D07EAF200E91362 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0961D07EAF200E91362 /* main.m */; };
 		E085F09A1D07EAF200E91362 /* XZXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E085F0991D07EAF200E91362 /* XZXAppDelegate.m */; };
 		E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E085F09E1D07EAF200E91362 /* Main.storyboard */; };
@@ -139,6 +141,10 @@
 		E061CC851D5782F700051639 /* XZXSlideMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXSlideMenuButton.m; sourceTree = "<group>"; };
 		E061CC881D58C10500051639 /* XZXMenuLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXMenuLoginView.h; sourceTree = "<group>"; };
 		E061CC891D58C10500051639 /* XZXMenuLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXMenuLoginView.m; sourceTree = "<group>"; };
+		E061CC8C1D5EFAE400051639 /* YYFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYFPSLabel.h; sourceTree = "<group>"; };
+		E061CC8D1D5EFAE400051639 /* YYFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYFPSLabel.m; sourceTree = "<group>"; };
+		E061CC8F1D5EFD8E00051639 /* YYWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYWeakProxy.h; sourceTree = "<group>"; };
+		E061CC901D5EFD8E00051639 /* YYWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYWeakProxy.m; sourceTree = "<group>"; };
 		E085F0921D07EAF200E91362 /* XZXDailyBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XZXDailyBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E085F0961D07EAF200E91362 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E085F0981D07EAF200E91362 /* XZXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZXAppDelegate.h; sourceTree = "<group>"; };
@@ -319,6 +325,17 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
+		E061CC8B1D5EFA0200051639 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				E061CC8F1D5EFD8E00051639 /* YYWeakProxy.h */,
+				E061CC901D5EFD8E00051639 /* YYWeakProxy.m */,
+				E061CC8C1D5EFAE400051639 /* YYFPSLabel.h */,
+				E061CC8D1D5EFAE400051639 /* YYFPSLabel.m */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
 		E085F0891D07EAF200E91362 = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +369,7 @@
 				E00B228C1D11201600FF8241 /* Utils */,
 				E003F1261D0D3F6600C4D140 /* TransitionAnimation */,
 				E046CCFD1D40B2F20081FB45 /* Category */,
+				E061CC8B1D5EFA0200051639 /* Vendor */,
 				E0B904871D084652002CFE5D /* Recource */,
 				E085F0951D07EAF200E91362 /* Supporting Files */,
 			);
@@ -700,6 +718,7 @@
 				E00B22D61D2C0D7C00FF8241 /* XZXEventDetailVC.m in Sources */,
 				E00B228F1D1120A500FF8241 /* XZXCalendarUtil.m in Sources */,
 				E00B22B61D1A74A800FF8241 /* XZXFetchDaysImpl.m in Sources */,
+				E061CC8E1D5EFAE400051639 /* YYFPSLabel.m in Sources */,
 				E003F1131D0BF4B300C4D140 /* XZXCalendarVC.m in Sources */,
 				E085F0971D07EAF200E91362 /* main.m in Sources */,
 				E061CC7D1D53B7C800051639 /* XZXClock+LocalNoti.m in Sources */,
@@ -710,6 +729,7 @@
 				E00B22C91D219AFF00FF8241 /* XZXDayBlockCVLayout.m in Sources */,
 				E0067CB81D48E98E00D6E594 /* XZXDBHelper.m in Sources */,
 				E061CC871D5782F700051639 /* XZXSlideMenuButton.m in Sources */,
+				E061CC911D5EFD8E00051639 /* YYWeakProxy.m in Sources */,
 				E0C8DF131D2EB6A500896159 /* XZXClockViewModel.m in Sources */,
 				E00B22BA1D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m in Sources */,
 				E00B22D21D2BE18A00FF8241 /* XZXWeekCVLayout.m in Sources */,

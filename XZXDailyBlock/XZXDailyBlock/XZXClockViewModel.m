@@ -29,8 +29,8 @@
         self.eventFinishCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
             @strongify(self)
             // 通知
-//            NSNotification *noti = [NSNotification notificationWithName:@"XZXNeedReloadData" object:nil];
-//            [[NSNotificationCenter defaultCenter] postNotification:noti];
+            NSNotification *noti = [NSNotification notificationWithName:@"XZXNeedReloadData" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotification:noti];
             
             return [self addDayEvent];
         }];

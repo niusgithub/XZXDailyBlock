@@ -13,6 +13,8 @@
 
 @property (nonatomic, assign) NSInteger selectedItemIndex;
 
+@property (nonatomic, weak) UIButton *startEventBtn;
+
 #warning temp
 @property (nonatomic, assign) CGFloat height;
 

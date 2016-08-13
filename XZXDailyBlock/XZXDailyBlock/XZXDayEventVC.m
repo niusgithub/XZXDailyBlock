@@ -30,6 +30,7 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 @property (nonatomic, strong) XZXCalendarVMServicesImpl *viewModelServices;
 
 @property (nonatomic, assign) CGFloat sideLength;
+@property (nonatomic, assign) BOOL needReloadData;
 @end
 
 @implementation XZXDayEventVC
@@ -57,19 +58,27 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
     
     [self initViews];
     
+    [self initViewModel];
+    
     [self bindViewModel];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self initViewModel];
+    self.startEventBtn.hidden = NO;
     
-    [self.weekCV reloadData];
-    [self.dayEventTV reloadData];
+    if (self.needReloadData) {
+        [self initViewModel];
+        [self.weekCV reloadData];
+        [self.dayEventTV reloadData];
+        self.needReloadData = NO;
+    }
 }
 
 - (void)initViews {
+    self.needReloadData = NO;
+    
     self.sideLength = (MainScreenWidth - 80) / 7;
     
     XZXWeekCVLayout *layout = [[XZXWeekCVLayout alloc] init];
@@ -119,6 +128,11 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
                             @strongify(self)
                             return self.viewModel.dayBlockVMs[[value intValue]].titleOfDate;
                         }];
+    
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"XZXNeedReloadData" object:nil]
+     subscribeNext:^(NSNotification *noti) {
+         self.needReloadData = YES;
+     }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -139,7 +153,6 @@ NSString *const kWeekDateEventCellIdentifier = @"wdateEventCVCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XZXLog(@"cellForRowAtIndexPath");
     XZXDayBlockCVCellViewModel *dayBlockVM = self.viewModel.dayBlockVMs[self.selectedItemIndex];
     XZXDayEventTVCellViewModel *dayEventVM = dayBlockVM.dayEventVMs[indexPath.row];
     

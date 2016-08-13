@@ -58,9 +58,10 @@ typedef NSInteger(^pageCalculateBlock)(NSInteger itemNumber);
         } else if (n == 0){
             itemSpacing = self.minimumInteritemSpacing;
         }
-    } else { //如果列数为一列
-        //_column = 1;
     }
+//    else { //如果列数为一列
+//        _column = 1;
+//    }
     
     CGFloat contentHeight = (height - self.sectionInset.top - self.sectionInset.bottom);
     if (contentHeight >= (2*itemHeight + self.minimunLineSpacing)) { //如果行数大于2行
