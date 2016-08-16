@@ -16,6 +16,7 @@
 #import "UIView+XZX.h"
 #import "XZXClock+LocalNoti.h"
 
+#import "YYWeakProxy.h"
 #import <DKNightVersion/DKNightVersion.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
@@ -299,10 +300,6 @@ NSString* const kTickingAnim = @"tickingAnim";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-/**
- *  大量快速点击后会有计时混乱的bug
- */
 - (void)clockViewOnClick {
     // 判断状态
     if (self.eventTextField.text.length < 1) {
@@ -386,7 +383,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     [self.pointerView.layer addAnimation:tickingAnim forKey:kTickingAnim];
     
     // NSTimer
-    self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
+    self.countDownTimer = [NSTimer timerWithTimeInterval:0.1 target:[YYWeakProxy proxyWithTarget:self] selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
     
     [self showLocalNotiWithTimeIntervalSinceNow:self.setTimeLength];
@@ -425,7 +422,7 @@ NSString* const kTickingAnim = @"tickingAnim";
     }];
     
     // 新建NSTimer并启动
-    self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(countingTime) userInfo:nil repeats:YES];
+    self.countDownTimer = [NSTimer timerWithTimeInterval:0.5 target:[YYWeakProxy proxyWithTarget:self] selector:@selector(countingTime) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.countDownTimer forMode:NSRunLoopCommonModes];
     
     // 恢复本地推送

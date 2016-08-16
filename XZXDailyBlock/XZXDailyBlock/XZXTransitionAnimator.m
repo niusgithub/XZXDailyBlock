@@ -139,6 +139,7 @@
 
     } else if(self.operation == UINavigationControllerOperationPop) {
         
+        // add the to- view and send offscreen (we need to do this in order to allow snapshotting)
         toView.frame = [transitionContext finalFrameForViewController:toViewController];
         toView.frame = CGRectOffset(toView.frame, toView.frame.size.width, 0);
         [containerView addSubview:toView];

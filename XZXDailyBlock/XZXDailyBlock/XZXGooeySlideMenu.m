@@ -78,17 +78,6 @@ static const CGFloat buttonSpace = 30;
     [self addSubview:loginView];
 }
 
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return 3;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-//    UITableViewCell *cell = [[UITableViewCell alloc] init];
-//    cell.textLabel.text = [NSString stringWithFormat:@"第%ld行", indexPath.row];
-//    
-//    return cell;
-//}
-
 - (void)addButtons:(NSArray *)titles {
     if (titles.count % 2 == 0) { // 按钮数为偶数时的布局
         NSInteger index_down = titles.count / 2;
@@ -114,10 +103,11 @@ static const CGFloat buttonSpace = 30;
             home_button.buttonColor = _menuColor;
             [self addSubview:home_button];
             
-            __weak typeof(self) WeakSelf = self;
+            __weak typeof(self) weakSelf = self;
             home_button.buttonClickBlock = ^(){
-                [WeakSelf tapToUntrigger];
-                WeakSelf.menuClickBlock(i,title,titles.count);
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf tapToUntrigger];
+                strongSelf.menuClickBlock(i, title ,titles.count);
             };
         }
         
@@ -126,20 +116,20 @@ static const CGFloat buttonSpace = 30;
         for (NSInteger i = 0; i < titles.count; i++) {
             index --;
             NSString *title = titles[i];
-            XZXSlideMenuButton *home_button = [[XZXSlideMenuButton alloc]initWithTitle:title];
+            XZXSlideMenuButton *home_button = [[XZXSlideMenuButton alloc] initWithTitle:title];
             home_button.center = CGPointMake(_kWindow.frame.size.width/4, _kWindow.frame.size.height/2 - _menuButtonHeight*index - 20*index);
             home_button.bounds = CGRectMake(0, 0, _kWindow.frame.size.width/2 - 20*2, _menuButtonHeight);
             home_button.buttonColor = _menuColor;
             [self addSubview:home_button];
             
-            __weak typeof(self) WeakSelf = self;
+            __weak typeof(self) weakSelf = self;
             home_button.buttonClickBlock = ^(){
-                [WeakSelf tapToUntrigger];
-                WeakSelf.menuClickBlock(i,title,titles.count);
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf tapToUntrigger];
+                strongSelf.menuClickBlock(i,title,titles.count);
             };
         }
     }
-    
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -157,7 +147,7 @@ static const CGFloat buttonSpace = 30;
     CGContextFillPath(context);
 }
 
--(void)trigger{
+- (void)trigger{
     if (!_triggered) {
         [_kWindow insertSubview:_blurView belowSubview:self];
         [UIView animateWithDuration:0.3 animations:^{
@@ -198,7 +188,7 @@ static const CGFloat buttonSpace = 30;
     }
 }
 
--(void)animateButtons{
+- (void)animateButtons{
     for (NSInteger i = 0; i < self.subviews.count; i++) {
         
         UIView *menuButton = self.subviews[i];
@@ -210,7 +200,7 @@ static const CGFloat buttonSpace = 30;
     
 }
 
--(void)tapToUntrigger{
+- (void)tapToUntrigger{
     
     __weak __typeof(self) weakSelf = self;
     
@@ -246,7 +236,7 @@ static const CGFloat buttonSpace = 30;
 }
 
 //动画之前调用
--(void)beforeAnimation{
+- (void)beforeAnimation{
     if (self.displayLink == nil) {
         self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkAction:)];
         [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
@@ -255,7 +245,7 @@ static const CGFloat buttonSpace = 30;
 }
 
 //动画完成之后调用
--(void)finishAnimation{
+- (void)finishAnimation{
     self.animationCount --;
     if (self.animationCount == 0) {
         [self.displayLink invalidate];
@@ -263,7 +253,7 @@ static const CGFloat buttonSpace = 30;
     }
 }
 
--(void)displayLinkAction:(CADisplayLink *)dis{
+- (void)displayLinkAction:(CADisplayLink *)dis{
     
     CALayer *sideHelperPresentationLayer   =  (CALayer *)[_helperSideView.layer presentationLayer];
     CALayer *centerHelperPresentationLayer =  (CALayer *)[_helperCenterView.layer presentationLayer];
@@ -274,7 +264,6 @@ static const CGFloat buttonSpace = 30;
     _delta = sideRect.origin.x - centerRect.origin.x;
     
     [self setNeedsDisplay];
-    
 }
 
 @end
