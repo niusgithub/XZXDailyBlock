@@ -38,6 +38,9 @@
 + (NSDate *)dateByAddingSeconds:(NSUInteger)seconds toDate:(NSDate *)formerDate;
 
 
+//---------------------------
+//Formatter
+//---------------------------
 + (NSString *)dateStringOf24H:(NSDate *)date;
 
 + (NSString *)dateStringOfMonthAndDay:(NSDate *)date;

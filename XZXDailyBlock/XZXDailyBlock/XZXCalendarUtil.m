@@ -177,12 +177,12 @@ static id sharedDateHelper;
     return [self.calendar dateFromComponents:components];
 }
 
-- (NSDate *)firstDayOfNextMonth:(NSDate *)date {
-    NSDateComponents *components = [self.calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate:date];
-    components.month++;
-    components.day = 1;
-    return [self.calendar dateFromComponents:components];
-}
+//- (NSDate *)firstDayOfNextMonth:(NSDate *)date {
+//    NSDateComponents *components = [self.calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate:date];
+//    components.month++;
+//    components.day = 1;
+//    return [self.calendar dateFromComponents:components];
+//}
 
 - (NSDate *)dateOfToday:(NSDate *)date {
     NSDateComponents *components = [self.calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate:date];
@@ -190,13 +190,13 @@ static id sharedDateHelper;
     return [self.calendar dateFromComponents:components];
 }
 
-- (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
-    NSUInteger rows = indexPath.item / 7;
-    NSUInteger colums = indexPath.item % 7;
-    NSUInteger daysOffset = 7*rows + colums;
-    
-    return [self dateByAddingDays:daysOffset toDate:_firstDateOfCurrentPage];
-}
+//- (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
+//    NSUInteger rows = indexPath.item / 7;
+//    NSUInteger colums = indexPath.item % 7;
+//    NSUInteger daysOffset = 7*rows + colums;
+//    
+//    return [self dateByAddingDays:daysOffset toDate:_firstDateOfCurrentPage];
+//}
 
 - (NSDate *)dateByAddingDays:(NSUInteger)days toDate:(NSDate *)date {
     //NSLog(@"days:%ld, todate%@",days,date);
@@ -240,54 +240,5 @@ static id sharedDateHelper;
     
     return nil;
 }
-
-
-////---------------------------
-////Tool
-////---------------------------
-//+ (NSDate *)localDateOfDate:(NSDate *)date {
-//    NSTimeZone *zone = [NSTimeZone systemTimeZone];
-//    NSInteger interval = [zone secondsFromGMTForDate:date];
-//    
-//    return [date dateByAddingTimeInterval:interval];
-//}
-//
-//+ (NSInteger)weekdayOfDate:(NSDate *)date {
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    return [calendar ordinalityOfUnit:NSCalendarUnitWeekday inUnit:NSCalendarUnitWeekOfMonth forDate:date];;
-//}
-//
-//+ (NSInteger)dayOfDate:(NSDate *)date {
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    NSDateComponents *component = [calendar components:NSCalendarUnitDay fromDate:date];
-//    return component.day;
-//}
-//
-//+ (NSInteger)hourOfDate:(NSDate *)date {
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    NSDateComponents *component = [calendar components:NSCalendarUnitDay fromDate:date];
-//    return component.hour;
-//}
-//
-//+ (BOOL)isDateToday:(NSDate *)date {
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    return [calendar isDateInToday:date];
-//}
-//
-//+ (NSDate *)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    NSDateComponents *components = [[NSDateComponents alloc] init];
-//    components.year = year;
-//    components.month = month;
-//    components.day = day;
-//    components.hour = 0;
-//    NSDate *date = [calendar dateFromComponents:components];
-//    
-//    return date;
-//}
-
-
-
-
 
 @end

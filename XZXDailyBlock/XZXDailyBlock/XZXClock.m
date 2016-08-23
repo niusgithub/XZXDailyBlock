@@ -87,6 +87,12 @@ NSString* const kTickingAnim = @"tickingAnim";
     // 键盘即将隐藏, 就会发出UIKeyboardWillHideNotification
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+    // NetEase Interview
+//    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"netEase" object:nil]
+//     subscribeNext:^(id x) {
+//         XZXLog(@"主线程收到通知");
+//     }];
+    
     // 监听键盘
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillShowNotification object:nil]
      subscribeNext:^(NSNotification *noti) {
@@ -242,6 +248,11 @@ NSString* const kTickingAnim = @"tickingAnim";
          if ([x integerValue] == XZXClockStatusFinish) {
              [self showInfo:XZXInfoEventFinished];
              [self.viewModel.eventFinishCommand execute:nil];
+             
+//             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                 NSNotification *noti = [NSNotification notificationWithName:@"netEase" object:nil];
+//                 [[NSNotificationCenter defaultCenter] postNotification:noti];
+//             });
          }
     }];
     

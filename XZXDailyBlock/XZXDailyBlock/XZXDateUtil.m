@@ -27,14 +27,14 @@ static id sharedDateUtil;
 //---------------------------
 + (NSDate *)localDateOfDate:(NSDate *)date {
     NSTimeZone *zone = [NSTimeZone systemTimeZone];
-    NSInteger interval = [zone secondsFromGMTForDate:date];
+    NSTimeInterval interval = [zone secondsFromGMTForDate:date];
     
     return [date dateByAddingTimeInterval:interval];
 }
 
 + (NSInteger)weekdayOfDate:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    return [calendar ordinalityOfUnit:NSCalendarUnitWeekday inUnit:NSCalendarUnitWeekOfMonth forDate:date];;
+    return [calendar ordinalityOfUnit:NSCalendarUnitWeekday inUnit:NSCalendarUnitWeekOfMonth forDate:date];
 }
 
 + (NSInteger)dayOfDate:(NSDate *)date {
@@ -120,7 +120,7 @@ static id sharedDateUtil;
     //
     components.month +=offset;
     // components.month从1开始
-    return [NSString stringWithFormat:@"%@ %ld", [NSCalendar currentCalendar].monthSymbols[components.month-1],components.year];
+    return [NSString stringWithFormat:@"%@ %ld", [NSCalendar currentCalendar].monthSymbols[components.month-1], components.year];
 }
 
 + (NSString *)dateStringOfYMD:(NSDate *)date {

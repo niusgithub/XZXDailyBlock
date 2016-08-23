@@ -7,6 +7,8 @@
 //
 
 #import "XZXAppDelegate.h"
+#import "XZXClock.h"
+
 #import <AVOSCloud/AVOSCloud.h>
 #import <DKNightVersion/DKNightVersion.h>
 #import "AVOSCloudCrashReporting.h"
@@ -39,6 +41,19 @@
     }
     
     return YES;
+}
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(nonnull UIApplicationShortcutItem *)shortcutItem completionHandler:(nonnull void (^)(BOOL))completionHandler {
+    if ([shortcutItem.type isEqualToString:@"addEvent"]) {
+        //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        XZXClock *clock = [[XZXClock alloc] init];
+        UIViewController *vc = self.window.rootViewController;
+        [vc presentViewController:clock animated:YES completion:nil];
+    }
+    
+    if (completionHandler) {
+        completionHandler(YES);
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

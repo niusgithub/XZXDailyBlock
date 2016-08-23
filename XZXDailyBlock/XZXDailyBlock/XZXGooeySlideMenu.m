@@ -258,8 +258,8 @@ static const CGFloat buttonSpace = 30;
     CALayer *sideHelperPresentationLayer   =  (CALayer *)[_helperSideView.layer presentationLayer];
     CALayer *centerHelperPresentationLayer =  (CALayer *)[_helperCenterView.layer presentationLayer];
     
-    CGRect centerRect = [[centerHelperPresentationLayer valueForKeyPath:@"frame"]CGRectValue];
-    CGRect sideRect = [[sideHelperPresentationLayer valueForKeyPath:@"frame"]CGRectValue];
+    CGRect centerRect = [[centerHelperPresentationLayer valueForKeyPath:@"frame"] CGRectValue];
+    CGRect sideRect = [[sideHelperPresentationLayer valueForKeyPath:@"frame"] CGRectValue];
     
     _delta = sideRect.origin.x - centerRect.origin.x;
     
