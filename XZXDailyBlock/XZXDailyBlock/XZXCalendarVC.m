@@ -46,7 +46,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 @property (nonatomic, assign) CGFloat sideLength;
 @property (nonatomic, assign) CGFloat collectionViewSplitY;
 @property (nonatomic, assign) NSInteger pageNumber;
-
+@property (nonatomic, assign) NSInteger today;
 @property (nonatomic, assign) BOOL needReloadData;
 #warning temp
 @property (nonatomic, assign) NSInteger clickTimes;
@@ -59,7 +59,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //Test
+    // Test
 //    AVObject *testObject = [AVObject objectWithClassName:@"TestObject"];
 //    [testObject setObject:@"bar" forKey:@"foo"];
 //    [testObject save];
@@ -79,6 +79,8 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     self.dk_manager.themeVersion = @"SEA";
     
+    self.today = [XZXDateUtil dayOfDate:[NSDate date]];
+    
     // 5个月份中间的月份calendar为当前月 起始item为84 item87在第一行正中间
     [self.dayBlockCV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:87 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
@@ -87,6 +89,12 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [super viewWillAppear:animated];
     
     self.startEventBtn.hidden = NO;
+    
+    // 转天判断
+    if ([XZXDateUtil dayOfDate:[NSDate date]] != self.today) {
+        self.needReloadData = YES;
+        self.today = [XZXDateUtil dayOfDate:[NSDate date]];
+    }
     
     if (self.needReloadData) {
         [self initViewModel];

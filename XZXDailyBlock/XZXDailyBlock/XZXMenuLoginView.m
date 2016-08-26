@@ -21,7 +21,7 @@
     if (self = [super initWithFrame:frame]) {
         self.userInteractionEnabled = YES;
         
-        CGFloat avavtarSideLength = frame.size.width*0.6;
+        CGFloat avavtarSideLength = frame.size.width * 0.6;
         
         UIImageView *avatarIV = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width*0.2, 0, avavtarSideLength, avavtarSideLength)];
         avatarIV.image = [UIImage imageNamed:@"defaultAvatar"];
@@ -30,7 +30,6 @@
         self.avatarIV = avatarIV;
         
         UILabel *nameL = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.width*0.6, frame.size.width, frame.size.width*0.4)];
-//        nameL.backgroundColor = [UIColor orangeColor];
         nameL.text = @"Name";
         nameL.textAlignment = NSTextAlignmentCenter;
         [self addSubview:nameL];
