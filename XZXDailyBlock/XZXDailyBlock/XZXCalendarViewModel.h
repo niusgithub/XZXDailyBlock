@@ -6,15 +6,11 @@
 //  Copyright © 2016年 陈知行. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "XZXCalendarVMServicesImpl.h"
+#import "XZXViewModel.h"
 #import "XZXDayBlockCVCellViewModel.h"
 
-@interface XZXCalendarViewModel : NSObject
+@interface XZXCalendarViewModel : XZXViewModel
 
-@property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSMutableArray<XZXDayBlockCVCellViewModel *> *cellViewModels;
-
-- (instancetype)initWithServices:(id<XZXCalendarVMServices>)services;
 
 @end

@@ -26,40 +26,6 @@
 - (instancetype)init {
     if (self = [super init]) {
         self.calendarUtil = [[XZXCalendarUtil alloc] init];
-        //self.dateArray = [NSArray array];
-        
-//        NSMutableArray *dateArray = [NSMutableArray array];
-//        
-//        // index 0~125  前3页
-//        
-//        for (int i = 0; i <=125; ++i) {
-//            XZXDay *day = [[XZXDay alloc] init];
-//            
-//            NSDate *date = [_calendarUtil dateForIndex:i];
-//            
-//            RLMResults<XZXDay *> *dayResults = [XZXDay objectsWhere:@"date=%@", date];
-//            if (dayResults.count > 0) {
-//                day = [dayResults firstObject];
-//                // day.dayLevel = day
-//                // NSLog(@"exist day:%@ eventCount:%ld",day,day.events.count);
-//            } else {
-//                // 当天没有活动不会记录在realm中，只提供首页的显示用XZXDay
-//                day.date = date;
-//                day.dayLevel = 0;
-//            }
-//            [dateArray addObject:day];
-//        }
-//        
-//        // 预留给以后添加计划任务
-//        for (int i = 126; i < 210; ++i) {
-//            XZXDay *day = [[XZXDay alloc] init];
-//            NSDate *date = [_calendarUtil dateForIndex:i];
-//            day.date = date;
-//            day.dayLevel = 0;
-//            
-//            [dateArray addObject:day];
-//        }
-//        self.dateArray = [dateArray copy];
     }
     return self;
 }
@@ -111,17 +77,5 @@
     
     return day;
 }
-
-#warning temp
-//- (XZXCalendarPage *)date4Page {
-//    XZXCalendarPage *page = [[XZXCalendarPage alloc] init];
-//    page.days = [self.dateArray copy];
-//    
-//    return page;
-//}
-
-//- (NSDate *)today {
-//    return [XZXDateUtil localDateOfDate:[NSDate date]];
-//}
 
 @end

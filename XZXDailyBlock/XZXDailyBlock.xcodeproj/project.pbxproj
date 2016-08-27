@@ -41,6 +41,7 @@
 		E0553FA51D708CFC003DC675 /* XZXView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0553FA41D708CFC003DC675 /* XZXView.m */; };
 		E0553FAA1D708F22003DC675 /* XZXViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0553FA91D708F22003DC675 /* XZXViewModel.m */; };
 		E0553FAE1D7098CF003DC675 /* XZXTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0553FAD1D7098CF003DC675 /* XZXTableViewCell.m */; };
+		E0553FB41D717A9B003DC675 /* XZXViewModelServicesImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0553FB31D717A9B003DC675 /* XZXViewModelServicesImpl.m */; };
 		E061CC7D1D53B7C800051639 /* XZXClock+LocalNoti.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC7C1D53B7C800051639 /* XZXClock+LocalNoti.m */; };
 		E061CC861D5782F700051639 /* XZXGooeySlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC831D5782F700051639 /* XZXGooeySlideMenu.m */; };
 		E061CC871D5782F700051639 /* XZXSlideMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC851D5782F700051639 /* XZXSlideMenuButton.m */; };
@@ -146,12 +147,14 @@
 		E0553FA31D708CFC003DC675 /* XZXView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXView.h; sourceTree = "<group>"; };
 		E0553FA41D708CFC003DC675 /* XZXView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXView.m; sourceTree = "<group>"; };
 		E0553FA61D708D24003DC675 /* XZXViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXViewProtocol.h; sourceTree = "<group>"; };
-		E0553FA71D708DDB003DC675 /* XZXViewModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXViewModelProtocol.h; sourceTree = "<group>"; };
 		E0553FA81D708F22003DC675 /* XZXViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXViewModel.h; sourceTree = "<group>"; };
 		E0553FA91D708F22003DC675 /* XZXViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXViewModel.m; sourceTree = "<group>"; };
 		E0553FAB1D7094BF003DC675 /* XZXTableViewCellProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXTableViewCellProtocol.h; sourceTree = "<group>"; };
 		E0553FAC1D7098CF003DC675 /* XZXTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXTableViewCell.h; sourceTree = "<group>"; };
 		E0553FAD1D7098CF003DC675 /* XZXTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXTableViewCell.m; sourceTree = "<group>"; };
+		E0553FB11D717A49003DC675 /* XZXViewModelServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXViewModelServices.h; sourceTree = "<group>"; };
+		E0553FB21D717A9B003DC675 /* XZXViewModelServicesImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXViewModelServicesImpl.h; sourceTree = "<group>"; };
+		E0553FB31D717A9B003DC675 /* XZXViewModelServicesImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXViewModelServicesImpl.m; sourceTree = "<group>"; };
 		E061CC7B1D53B7C800051639 /* XZXClock+LocalNoti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XZXClock+LocalNoti.h"; sourceTree = "<group>"; };
 		E061CC7C1D53B7C800051639 /* XZXClock+LocalNoti.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XZXClock+LocalNoti.m"; sourceTree = "<group>"; };
 		E061CC821D5782F700051639 /* XZXGooeySlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXGooeySlideMenu.h; sourceTree = "<group>"; };
@@ -284,12 +287,12 @@
 		E00B22A51D182D4200FF8241 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				E0553F931D6D3CA4003DC675 /* Menu */,
+				E00B22891D1099FB00FF8241 /* XZXCalendarViewModel.h */,
+				E00B228A1D1099FB00FF8241 /* XZXCalendarViewModel.m */,
 				E00B22BB1D1A7E9D00FF8241 /* XZXCalendarVMServices.h */,
 				E00B22B81D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.h */,
 				E00B22B91D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m */,
-				E00B22891D1099FB00FF8241 /* XZXCalendarViewModel.h */,
-				E00B228A1D1099FB00FF8241 /* XZXCalendarViewModel.m */,
+				E0553F931D6D3CA4003DC675 /* Menu */,
 			);
 			name = Calendar;
 			sourceTree = "<group>";
@@ -341,23 +344,32 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
-		E0553F9B1D708ACA003DC675 /* Base */ = {
+		E0553FAF1D71769C003DC675 /* BaseClass */ = {
 			isa = PBXGroup;
 			children = (
-				E0553FA01D708B89003DC675 /* XZXViewController.h */,
-				E0553FA11D708B89003DC675 /* XZXViewController.m */,
-				E0553F9F1D708B51003DC675 /* XZXViewControllerProtocol.h */,
 				E0553FA31D708CFC003DC675 /* XZXView.h */,
 				E0553FA41D708CFC003DC675 /* XZXView.m */,
 				E0553FA61D708D24003DC675 /* XZXViewProtocol.h */,
-				E0553FA81D708F22003DC675 /* XZXViewModel.h */,
-				E0553FA91D708F22003DC675 /* XZXViewModel.m */,
-				E0553FA71D708DDB003DC675 /* XZXViewModelProtocol.h */,
-				E0553FAB1D7094BF003DC675 /* XZXTableViewCellProtocol.h */,
+				E0553FA01D708B89003DC675 /* XZXViewController.h */,
+				E0553FA11D708B89003DC675 /* XZXViewController.m */,
+				E0553F9F1D708B51003DC675 /* XZXViewControllerProtocol.h */,
 				E0553FAC1D7098CF003DC675 /* XZXTableViewCell.h */,
 				E0553FAD1D7098CF003DC675 /* XZXTableViewCell.m */,
+				E0553FAB1D7094BF003DC675 /* XZXTableViewCellProtocol.h */,
 			);
-			name = Base;
+			name = BaseClass;
+			sourceTree = "<group>";
+		};
+		E0553FB01D7176F1003DC675 /* BaseClass */ = {
+			isa = PBXGroup;
+			children = (
+				E0553FA81D708F22003DC675 /* XZXViewModel.h */,
+				E0553FA91D708F22003DC675 /* XZXViewModel.m */,
+				E0553FB11D717A49003DC675 /* XZXViewModelServices.h */,
+				E0553FB21D717A9B003DC675 /* XZXViewModelServicesImpl.h */,
+				E0553FB31D717A9B003DC675 /* XZXViewModelServicesImpl.m */,
+			);
+			name = BaseClass;
 			sourceTree = "<group>";
 		};
 		E061CC811D5782BE00051639 /* Menu */ = {
@@ -409,7 +421,6 @@
 		E085F0941D07EAF200E91362 /* XZXDailyBlock */ = {
 			isa = PBXGroup;
 			children = (
-				E0553F9B1D708ACA003DC675 /* Base */,
 				E0B904851D08411C002CFE5D /* DailyBlock */,
 				E0067CB51D48E95C00D6E594 /* DataBase */,
 				E0B904821D0840AE002CFE5D /* Model */,
@@ -474,6 +485,7 @@
 			isa = PBXGroup;
 			children = (
 				E085F09E1D07EAF200E91362 /* Main.storyboard */,
+				E0553FAF1D71769C003DC675 /* BaseClass */,
 				E00B22961D1822EF00FF8241 /* Calendar */,
 				E00B22971D18234300FF8241 /* DayEvent */,
 				E00B22D31D2C0D4C00FF8241 /* EventDetail */,
@@ -487,6 +499,7 @@
 			children = (
 				E00B22901D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.h */,
 				E00B22911D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.m */,
+				E0553FB01D7176F1003DC675 /* BaseClass */,
 				E00B22A51D182D4200FF8241 /* Calendar */,
 				E00B22A61D182D5900FF8241 /* DayEvent */,
 				E00B22D71D2C0D8600FF8241 /* EventDetail */,
@@ -765,6 +778,7 @@
 				E00B22AC1D1844D000FF8241 /* XZXDayEventVCViewModel.m in Sources */,
 				E00B22DA1D2C0E2000FF8241 /* XZXEventDatilViewModel.m in Sources */,
 				E061CC8A1D58C10500051639 /* XZXMenuLoginView.m in Sources */,
+				E0553FB41D717A9B003DC675 /* XZXViewModelServicesImpl.m in Sources */,
 				E00B22921D12EE0000FF8241 /* XZXDayBlockCVCellViewModel.m in Sources */,
 				E00B22A91D182D8B00FF8241 /* XZXDayEventTVCellViewModel.m in Sources */,
 				E003F12F1D0D5A0B00C4D140 /* XZXTransitionAnimator.m in Sources */,

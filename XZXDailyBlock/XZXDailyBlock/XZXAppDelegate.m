@@ -32,7 +32,7 @@
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     //DKNightVersion
-    [DKColorTable sharedColorTable].file = @"XZXColor.txt";
+//    [DKColorTable sharedColorTable].file = @"XZXColor.txt";
     
     //如果已经获得发送通知的授权则创建本地通知，否则请求授权(注意：如果不请求授权在设置中是没有对应的通知设置项的，也就是说如果从来没有发送过请求，即使通过设置也打不开消息允许设置)
     if ([[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone) {

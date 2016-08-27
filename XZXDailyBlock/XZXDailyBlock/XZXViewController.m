@@ -21,13 +21,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self xzx_addSubViews];
+    [self xzx_initViews];
     [self xzx_bindViewModel];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self xzx_layoutNavgation];
+    [self xzx_configureNavgation];
     [self xzx_refreshData];
 }
 
@@ -38,11 +38,11 @@
 
 #pragma mark - RAC
 
-- (void)xzx_addSubViews {}
+- (void)xzx_initViews {}
 
 - (void)xzx_bindViewModel {}
 
-- (void)xzx_layoutNavgation {}
+- (void)xzx_configureNavgation {}
 
 - (void)xzx_refreshData {}
 

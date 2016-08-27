@@ -17,7 +17,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.searchService = [XZXFetchDaysImpl new];
+        _searchService = [XZXFetchDaysImpl new];
     }
     return self;
 }

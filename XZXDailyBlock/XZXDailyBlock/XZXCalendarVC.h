@@ -6,9 +6,8 @@
 //  Copyright © 2016年 陈知行. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "XZXCalendarViewModel.h"
+#import "XZXViewController.h"
 
-@interface XZXCalendarVC : UIViewController
+@interface XZXCalendarVC : XZXViewController
 
 @end

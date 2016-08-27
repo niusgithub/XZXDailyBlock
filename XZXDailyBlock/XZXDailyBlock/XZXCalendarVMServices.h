@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XZXViewModelServices.h"
 #import "XZXFetchDays.h"
 
-@protocol XZXCalendarVMServices <NSObject>
+@protocol XZXCalendarVMServices <NSObject, XZXViewModelServices>
 
 - (id<XZXFetchDays>)getServices;
 

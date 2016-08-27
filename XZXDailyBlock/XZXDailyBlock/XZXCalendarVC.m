@@ -9,6 +9,8 @@
 #import "XZXCalendarVC.h"
 #import "XZXMetamacro.h"
 
+#import "XZXCalendarViewModel.h"
+
 #import "XZXDayBlockCV.h"
 #import "XZXDayBlockCVCell.h"
 #import "XZXDayBlockCVLayout.h"
@@ -21,7 +23,7 @@
 
 #import "XZXTransitionAnimator.h"
 
-#import "XZXCalendarVMServicesImpl.h"
+#import "XZXViewModelServicesImpl.h"
 #import "XZXDateUtil.h"
 
 #import "UIView+XZX.h"
@@ -35,7 +37,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 @interface XZXCalendarVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate>
 
-@property (nonatomic, strong) XZXCalendarVMServicesImpl *viewModelServices;
+@property (nonatomic, strong) XZXViewModelServicesImpl *viewModelServices;
 @property (nonatomic, strong) XZXCalendarViewModel *calendarViewModel;
 
 @property (nonatomic, strong) XZXDayBlockCV *dayBlockCV;
@@ -54,6 +56,8 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 
 @implementation XZXCalendarVC
 
+//@dynamic calendarViewModel;
+
 #pragma mark - life cycle
 
 - (void)viewDidLoad {
@@ -67,7 +71,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 //        [self crash];
 //    });
 
-    [self initViews];
+    [self initialize];
     
     [self initViewModel];
     
@@ -76,8 +80,9 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [self bindRAC];
     
     // DKNightVersion
+    [DKColorTable sharedColorTable].file = @"XZXColor.txt";
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
-    self.dk_manager.themeVersion = @"SEA";
+    self.dk_manager.themeVersion = @"NORMAL";
     
     self.today = [XZXDateUtil dayOfDate:[NSDate date]];
     
@@ -104,67 +109,77 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
 }
 
 
+#pragma mark - lazy loading
+
+- (XZXDayBlockCVLayout *)dayBlockCVLayout {
+    if (!_dayBlockCVLayout) {
+        _dayBlockCVLayout = [[XZXDayBlockCVLayout alloc] init];
+        _dayBlockCVLayout.itemSize = CGSizeMake(_sideLength, _sideLength);
+        _dayBlockCVLayout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
+        _dayBlockCVLayout.minimunLineSpacing = 10;
+        _dayBlockCVLayout.minimumInteritemSpacing = 10;
+    }
+    return _dayBlockCVLayout;
+}
+
+- (XZXDayBlockCV *)dayBlockCV {
+    if (!_dayBlockCV) {
+        _sideLength = (MainScreenWidth - 80) / 7;
+        CGFloat collectionViewHeight = 8 + (_sideLength + 10) * 6;
+        
+        _dayBlockCV = [[XZXDayBlockCV alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, collectionViewHeight) collectionViewLayout:self.dayBlockCVLayout];
+        _dayBlockCV.backgroundColor = [UIColor clearColor];
+        _dayBlockCV.showsVerticalScrollIndicator = NO;
+        _dayBlockCV.showsHorizontalScrollIndicator = NO;
+        _dayBlockCV.pagingEnabled = YES;
+        _dayBlockCV.delegate = self;
+        _dayBlockCV.dataSource = self;
+    }
+    
+    return _dayBlockCV;
+}
+
+- (UIButton *)startEventBtn {
+    if (!_startEventBtn) {
+        _startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth-65, MainScreenHeight-75, 50, 50)];
+        [_startEventBtn setImage:[UIImage imageNamed:@"addNew"] forState:UIControlStateNormal];
+        // [startEventBtn setTitle:@"开始" forState:UIControlStateNormal];
+        // startEventBtn.layer.borderWidth = 1.f;
+        // startEventBtn.layer.borderColor = [UIColor grayColor].CGColor;
+        [_startEventBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        _startEventBtn.backgroundColor = [UIColor redColor];
+        _startEventBtn.layer.shadowOpacity = 0.4f;
+        _startEventBtn.layer.shadowOffset = CGSizeMake(0, 8);
+        _startEventBtn.layer.shadowRadius = 5.0f;
+        _startEventBtn.layer.cornerRadius = 25.f;
+    }
+    return _startEventBtn;
+}
+
+- (XZXGooeySlideMenu *)menu {
+    if (!_menu) {
+        _menu = [[XZXGooeySlideMenu alloc] initWithTitles:@[@"设置",@"关于",@"主题色"]];
+    }
+    return _menu;
+}
+
+
 #pragma mark - initialize
 
-- (void)initViews {
+- (void)initialize {
     self.needReloadData = NO;
-    
-    // NavigationBar
-    [self.navigationController.navigationBar setTranslucent:NO];
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];;
-    
-    // 替换NavigationBar返回按钮
-    self.navigationController.delegate = self;
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"月历" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backItem;
-    
-    // CollectionView
-    self.sideLength = (MainScreenWidth - 80) / 7;
     self.pageNumber = 2;
-    
-    CGFloat collectionViewHeight = 8 + (_sideLength + 10) * 6;
-    
-    XZXDayBlockCVLayout *layout = [[XZXDayBlockCVLayout alloc] init];
-    layout.itemSize = CGSizeMake(_sideLength, _sideLength);
-    layout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
-    layout.minimunLineSpacing = 10;
-    layout.minimumInteritemSpacing = 10;
-    self.dayBlockCVLayout = layout;
-    
-    XZXDayBlockCV *dayBlockCV = [[XZXDayBlockCV alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, collectionViewHeight) collectionViewLayout:self.dayBlockCVLayout];
-    dayBlockCV.backgroundColor = [UIColor clearColor];
-    dayBlockCV.showsVerticalScrollIndicator = NO;
-    dayBlockCV.showsHorizontalScrollIndicator = NO;
-    dayBlockCV.pagingEnabled = YES;
-    dayBlockCV.delegate = self;
-    dayBlockCV.dataSource = self;
-    
-    [self.view addSubview:dayBlockCV];
-    self.dayBlockCV = dayBlockCV;
-    
+}
+
+- (void)xzx_initViews {
+    // CollectionView
     [self.dayBlockCV registerClass:[XZXDayBlockCVCell class] forCellWithReuseIdentifier:kCalendarDateBlockCellIdentifier];
+    [self.view addSubview:self.dayBlockCV];
     
-    // UIButton
-    //y:screenHeigth-64-44
-    //UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, MainScreenHeight-108, MainScreenWidth, 44)];
-    UIButton *startEventBtn = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth-65, MainScreenHeight-75, 50, 50)];
-    [startEventBtn setImage:[UIImage imageNamed:@"addNew"] forState:UIControlStateNormal];
-    // [startEventBtn setTitle:@"开始" forState:UIControlStateNormal];
-    // startEventBtn.layer.borderWidth = 1.f;
-    // startEventBtn.layer.borderColor = [UIColor grayColor].CGColor;
-    [startEventBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    startEventBtn.backgroundColor = [UIColor redColor];
-    startEventBtn.layer.shadowOpacity = 0.4f;
-    startEventBtn.layer.shadowOffset = CGSizeMake(0, 8);
-    startEventBtn.layer.shadowRadius = 5.0f;
-    startEventBtn.layer.cornerRadius = 25.f;
-//    [self.view addSubview:startEventBtn];
-    [[UIApplication sharedApplication].keyWindow addSubview:startEventBtn];
-    self.startEventBtn = startEventBtn;
+    // startEventBtn
+    [[UIApplication sharedApplication].keyWindow addSubview:self.startEventBtn];
     
-    // GooeySlideMenu
-    self.menu = [[XZXGooeySlideMenu alloc] initWithTitles:@[@"设置",@"关于",@"主题色"]];
+    // menu
     @weakify(self)
     self.menu.menuClickBlock = ^(NSInteger index, NSString *title, NSInteger titleCounts){
         @strongify(self)
@@ -187,7 +202,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
                         self.dk_manager.themeVersion = @"GITHUB";
                         break;
                     case 0:
-                        self.dk_manager.themeVersion = @"SEA";
+                        self.dk_manager.themeVersion = @"NORMAL";
                         self.clickTimes = 0;
                         break;
                 }
@@ -202,11 +217,22 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     fpsL.x = 70;
     fpsL.y = 20;
     [[UIApplication sharedApplication].keyWindow addSubview:fpsL];
+}
+
+- (void)xzx_configureNavgation {
+    // NavigationBar
+    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Pixel"] forBarMetrics:UIBarMetricsDefault];;
     
+    // 替换NavigationBar返回按钮
+    self.navigationController.delegate = self;
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"月历" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
 }
 
 - (void)initViewModel {
-    self.viewModelServices = [XZXCalendarVMServicesImpl new];
+    self.viewModelServices = [[XZXViewModelServicesImpl alloc] init];
     self.calendarViewModel = [[XZXCalendarViewModel alloc] initWithServices:_viewModelServices];
 }
 

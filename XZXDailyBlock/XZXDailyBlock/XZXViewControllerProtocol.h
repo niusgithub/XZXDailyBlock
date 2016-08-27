@@ -16,8 +16,8 @@
 - (instancetype)initWithViewModel:(id<XZXViewModelProtocol>)viewModel;
 
 - (void)xzx_bindViewModel;
-- (void)xzx_addSubViews;
-- (void)xzx_layoutNavgation;
+- (void)xzx_initViews;
+- (void)xzx_configureNavgation;
 - (void)xzx_refreshData;
 
 @end

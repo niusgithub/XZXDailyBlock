@@ -7,8 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XZXViewModelProtocol.h"
+#import "XZXViewModelServices.h"
 
-@interface XZXViewModel : NSObject <XZXViewModelProtocol>
+#import <ReactiveCocoa/ReactiveCocoa.h>
+
+@interface XZXViewModel : NSObject 
+
+@property (nonatomic, strong, readonly) id<XZXViewModelServices> services;
+@property (nonatomic, copy) NSString *title;
+
+@property (nonatomic, assign) BOOL shouldFetchLocalDataOnViewModelInitialize;
+@property (nonatomic, assign) BOOL shouldRequestRemoteDataOnViewDidLoad;
+
+@property (nonatomic, strong, readonly) RACSubject *willDisappearSignal;
+// A RACSubject object, which representing all errors occurred in view model.
+@property (nonatomic, strong, readonly) RACSubject *errors;
+
+- (instancetype)initWithServices:(id<XZXViewModelServices>)services;
+
+- (void)xzx_initialize;
 
 @end
