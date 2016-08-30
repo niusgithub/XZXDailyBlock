@@ -75,6 +75,13 @@ static const CGFloat buttonSpace = 30;
 
 - (void)addLoginView {
     XZXMenuLoginView *loginView = [[XZXMenuLoginView alloc] initWithFrame:CGRectMake(20, 64, _kWindow.frame.size.width/2-40, _kWindow.frame.size.width/2-40)];
+    
+    __weak typeof(self) weakSelf = self;
+    loginView.viewTapBlock = ^() {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf tapToUntrigger];
+        strongSelf.avatarViewTapBlock();
+    };
     [self addSubview:loginView];
 }
 

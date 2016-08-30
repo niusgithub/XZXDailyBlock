@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48C2E6CF90A7ADFC9D85C690 /* Pods_XZXDailyBlockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9D90916CFB9E92634E9F8 /* Pods_XZXDailyBlockTests.framework */; };
 		4E3CD50551BC05871B4D6F06 /* Pods_XZXDailyBlock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACEB6782FB78A6EEBDF54E7A /* Pods_XZXDailyBlock.framework */; };
+		9410D530E5197DA8EFAEA7C1 /* Pods_XZXDailyBlockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AA50D9B947FAA9DD02FD9A8 /* Pods_XZXDailyBlockUITests.framework */; };
 		E003F1131D0BF4B300C4D140 /* XZXCalendarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F1111D0BF4B300C4D140 /* XZXCalendarVC.m */; };
 		E003F11C1D0C110400C4D140 /* XZXDay.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F11B1D0C110400C4D140 /* XZXDay.m */; };
 		E003F1231D0C35D900C4D140 /* XZXDayBlockCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E003F1211D0C35D900C4D140 /* XZXDayBlockCVCell.m */; };
@@ -27,7 +29,6 @@
 		E00B22B61D1A74A800FF8241 /* XZXFetchDaysImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22B51D1A74A800FF8241 /* XZXFetchDaysImpl.m */; };
 		E00B22BA1D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22B91D1A7D6500FF8241 /* XZXCalendarVMServicesImpl.m */; };
 		E00B22BE1D1A844300FF8241 /* XZXCalendarPage.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22BD1D1A844300FF8241 /* XZXCalendarPage.m */; };
-		E00B22C01D1C30AA00FF8241 /* XZXColor.txt in Resources */ = {isa = PBXBuildFile; fileRef = E00B22BF1D1C30AA00FF8241 /* XZXColor.txt */; };
 		E00B22C91D219AFF00FF8241 /* XZXDayBlockCVLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22C81D219AFF00FF8241 /* XZXDayBlockCVLayout.m */; };
 		E00B22CC1D240F0C00FF8241 /* XZXDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22CB1D240F0C00FF8241 /* XZXDateUtil.m */; };
 		E00B22D21D2BE18A00FF8241 /* XZXWeekCVLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E00B22D11D2BE18A00FF8241 /* XZXWeekCVLayout.m */; };
@@ -42,6 +43,7 @@
 		E0553FAA1D708F22003DC675 /* XZXViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0553FA91D708F22003DC675 /* XZXViewModel.m */; };
 		E0553FAE1D7098CF003DC675 /* XZXTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0553FAD1D7098CF003DC675 /* XZXTableViewCell.m */; };
 		E0553FB41D717A9B003DC675 /* XZXViewModelServicesImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E0553FB31D717A9B003DC675 /* XZXViewModelServicesImpl.m */; };
+		E0553FB61D71F2FE003DC675 /* XZXColor.txt in Resources */ = {isa = PBXBuildFile; fileRef = E00B22BF1D1C30AA00FF8241 /* XZXColor.txt */; };
 		E061CC7D1D53B7C800051639 /* XZXClock+LocalNoti.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC7C1D53B7C800051639 /* XZXClock+LocalNoti.m */; };
 		E061CC861D5782F700051639 /* XZXGooeySlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC831D5782F700051639 /* XZXGooeySlideMenu.m */; };
 		E061CC871D5782F700051639 /* XZXSlideMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E061CC851D5782F700051639 /* XZXSlideMenuButton.m */; };
@@ -77,9 +79,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1CB9D90916CFB9E92634E9F8 /* Pods_XZXDailyBlockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XZXDailyBlockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AA50D9B947FAA9DD02FD9A8 /* Pods_XZXDailyBlockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XZXDailyBlockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AA9EA26FE8C894537708B90 /* Pods-XZXDailyBlock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlock/Pods-XZXDailyBlock.debug.xcconfig"; sourceTree = "<group>"; };
+		840D9ABE987F196700B0C9AA /* Pods-XZXDailyBlockUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlockUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlockUITests/Pods-XZXDailyBlockUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AA7FB275B6980A618D84E228 /* Pods-XZXDailyBlock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlock.release.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlock/Pods-XZXDailyBlock.release.xcconfig"; sourceTree = "<group>"; };
 		ACEB6782FB78A6EEBDF54E7A /* Pods_XZXDailyBlock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XZXDailyBlock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D54F86FD130585C1D14EB3CF /* Pods-XZXDailyBlockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlockTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlockTests/Pods-XZXDailyBlockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E003F1101D0BF4B300C4D140 /* XZXCalendarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXCalendarVC.h; sourceTree = "<group>"; };
 		E003F1111D0BF4B300C4D140 /* XZXCalendarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXCalendarVC.m; sourceTree = "<group>"; };
 		E003F11A1D0C110400C4D140 /* XZXDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXDay.h; sourceTree = "<group>"; };
@@ -187,6 +193,8 @@
 		E0C8DF0E1D2EB66600896159 /* XZXClock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXClock.m; sourceTree = "<group>"; };
 		E0C8DF111D2EB6A500896159 /* XZXClockViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZXClockViewModel.h; sourceTree = "<group>"; };
 		E0C8DF121D2EB6A500896159 /* XZXClockViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZXClockViewModel.m; sourceTree = "<group>"; };
+		E714454F9BBD55279E283F25 /* Pods-XZXDailyBlockUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlockUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlockUITests/Pods-XZXDailyBlockUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		ED776D395F2BEB86F65382E1 /* Pods-XZXDailyBlockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XZXDailyBlockTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-XZXDailyBlockTests/Pods-XZXDailyBlockTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48C2E6CF90A7ADFC9D85C690 /* Pods_XZXDailyBlockTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +218,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9410D530E5197DA8EFAEA7C1 /* Pods_XZXDailyBlockUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +229,8 @@
 			isa = PBXGroup;
 			children = (
 				ACEB6782FB78A6EEBDF54E7A /* Pods_XZXDailyBlock.framework */,
+				1CB9D90916CFB9E92634E9F8 /* Pods_XZXDailyBlockTests.framework */,
+				4AA50D9B947FAA9DD02FD9A8 /* Pods_XZXDailyBlockUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -557,6 +569,10 @@
 			children = (
 				7AA9EA26FE8C894537708B90 /* Pods-XZXDailyBlock.debug.xcconfig */,
 				AA7FB275B6980A618D84E228 /* Pods-XZXDailyBlock.release.xcconfig */,
+				D54F86FD130585C1D14EB3CF /* Pods-XZXDailyBlockTests.debug.xcconfig */,
+				ED776D395F2BEB86F65382E1 /* Pods-XZXDailyBlockTests.release.xcconfig */,
+				E714454F9BBD55279E283F25 /* Pods-XZXDailyBlockUITests.debug.xcconfig */,
+				840D9ABE987F196700B0C9AA /* Pods-XZXDailyBlockUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -589,9 +605,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E085F0C21D07EAF200E91362 /* Build configuration list for PBXNativeTarget "XZXDailyBlockTests" */;
 			buildPhases = (
+				5B96CED568FCDBC1CBD155D7 /* [CP] Check Pods Manifest.lock */,
 				E085F0A71D07EAF200E91362 /* Sources */,
 				E085F0A81D07EAF200E91362 /* Frameworks */,
 				E085F0A91D07EAF200E91362 /* Resources */,
+				D5FFD716E95D2636F79FE1F7 /* [CP] Embed Pods Frameworks */,
+				C78EE016F9B08B8C9272E8C6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -607,9 +626,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E085F0C51D07EAF200E91362 /* Build configuration list for PBXNativeTarget "XZXDailyBlockUITests" */;
 			buildPhases = (
+				510C8520A8A093FB8B1A81F7 /* [CP] Check Pods Manifest.lock */,
 				E085F0B21D07EAF200E91362 /* Sources */,
 				E085F0B31D07EAF200E91362 /* Frameworks */,
 				E085F0B41D07EAF200E91362 /* Resources */,
+				DE129F1A402CA036C782516B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -669,9 +690,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0553FB61D71F2FE003DC675 /* XZXColor.txt in Resources */,
 				E085F0A51D07EAF200E91362 /* LaunchScreen.storyboard in Resources */,
 				E085F0A21D07EAF200E91362 /* Assets.xcassets in Resources */,
-				E00B22C01D1C30AA00FF8241 /* XZXColor.txt in Resources */,
 				E00B22A41D182A1E00FF8241 /* XZXDayEventTVCell.xib in Resources */,
 				E085F0A01D07EAF200E91362 /* Main.storyboard in Resources */,
 			);
@@ -707,6 +728,81 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		510C8520A8A093FB8B1A81F7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5B96CED568FCDBC1CBD155D7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C78EE016F9B08B8C9272E8C6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XZXDailyBlockTests/Pods-XZXDailyBlockTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D5FFD716E95D2636F79FE1F7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XZXDailyBlockTests/Pods-XZXDailyBlockTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE129F1A402CA036C782516B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XZXDailyBlockUITests/Pods-XZXDailyBlockUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E046CCFE1D40FDDD0081FB45 /* ShellScript */ = {
@@ -969,6 +1065,7 @@
 		};
 		E085F0C31D07EAF200E91362 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D54F86FD130585C1D14EB3CF /* Pods-XZXDailyBlockTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = XZXDailyBlockTests/Info.plist;
@@ -981,6 +1078,7 @@
 		};
 		E085F0C41D07EAF200E91362 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED776D395F2BEB86F65382E1 /* Pods-XZXDailyBlockTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = XZXDailyBlockTests/Info.plist;
@@ -993,6 +1091,7 @@
 		};
 		E085F0C61D07EAF200E91362 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E714454F9BBD55279E283F25 /* Pods-XZXDailyBlockUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = XZXDailyBlockUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1004,6 +1103,7 @@
 		};
 		E085F0C71D07EAF200E91362 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 840D9ABE987F196700B0C9AA /* Pods-XZXDailyBlockUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = XZXDailyBlockUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

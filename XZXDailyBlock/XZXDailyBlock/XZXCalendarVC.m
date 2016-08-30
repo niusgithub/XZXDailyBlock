@@ -80,7 +80,6 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     [self bindRAC];
     
     // DKNightVersion
-    [DKColorTable sharedColorTable].file = @"XZXColor.txt";
     self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     self.dk_manager.themeVersion = @"NORMAL";
     
@@ -95,7 +94,7 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     
     self.startEventBtn.hidden = NO;
     
-    // 转天判断
+    // 转天判断 只在跳转回跳后刷新 效果不好
     if ([XZXDateUtil dayOfDate:[NSDate date]] != self.today) {
         self.needReloadData = YES;
         self.today = [XZXDateUtil dayOfDate:[NSDate date]];
@@ -181,6 +180,10 @@ NSString *const kCalendarDateBlockCellIdentifier = @"cdateblockCVCell";
     
     // menu
     @weakify(self)
+    self.menu.avatarViewTapBlock = ^() {
+        NSLog(@"准备登录");
+    };
+    
     self.menu.menuClickBlock = ^(NSInteger index, NSString *title, NSInteger titleCounts){
         @strongify(self)
         

@@ -10,4 +10,6 @@
 
 @interface XZXMenuLoginView : UIView
 
+@property (nonatomic, copy) void (^viewTapBlock)(void);
+
 @end

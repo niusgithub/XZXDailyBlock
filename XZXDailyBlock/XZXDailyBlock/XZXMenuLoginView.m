@@ -40,10 +40,21 @@
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self login];
+    UITouch *touch = [touches anyObject];
+    NSUInteger tapCount = touch.tapCount;
+    switch (tapCount) {
+        case 1:
+            self.viewTapBlock();
+            break;
+            
+        default:
+            break;
+    }
+    //[self login];
 }
 
-- (void)login {
+//- (void)login {
+    
 //    [AVOSCloud requestSmsCodeWithPhoneNumber:@"13545370819" callback:^(BOOL succeeded, NSError *error) {
 //        if(!succeeded) {
 //            NSLog(@"注册失败 ERR:%@",error);
@@ -58,6 +69,6 @@
 //            NSLog(@"注册失败 ERR:%@",error);
 //        }
 //    }];
-}
+//}
 
 @end

@@ -10,9 +10,12 @@
 
 typedef void (^MenuButtonClickBlock)(NSInteger index, NSString *title, NSInteger titleCounts);
 
+typedef void (^AvatarViewTapBlock)(void);
+
 @interface XZXGooeySlideMenu : UIView
 
 @property (nonatomic, copy) MenuButtonClickBlock menuClickBlock;
+@property (nonatomic, copy) AvatarViewTapBlock avatarViewTapBlock;
 
 - (instancetype)initWithTitles:(NSArray *)titles;
 

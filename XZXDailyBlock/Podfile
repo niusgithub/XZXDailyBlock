@@ -10,9 +10,41 @@ pod 'AVOSCloud'
 pod 'AVOSCloudCrashReporting'
 pod 'DKNightVersion'
 pod 'Masonry'
-pod 'ReactiveCocoa'
+pod 'ReactiveCocoa', :podspec => 'https://gist.githubusercontent.com/PaulTaykalo/04f8e2ee25b9d57f03455ccafd541b34/raw/e94f3bec7a9450ecd0f0cdc9b4899deb0b91d758/ReactiveCocoa.podspec.json'
 pod 'Realm'
 pod 'SVProgressHUD'
 pod 'YYText'
 
+end
+
+target 'XZXDailyBlockTests' do
+    
+    use_frameworks!
+    
+    pod 'AFNetworking', '~> 3.0'
+    pod 'AVOSCloud'
+    pod 'AVOSCloudCrashReporting'
+    pod 'DKNightVersion'
+    pod 'Masonry'
+    pod 'ReactiveCocoa', :podspec => 'https://gist.githubusercontent.com/PaulTaykalo/04f8e2ee25b9d57f03455ccafd541b34/raw/e94f3bec7a9450ecd0f0cdc9b4899deb0b91d758/ReactiveCocoa.podspec.json'
+    pod 'Realm'
+    pod 'SVProgressHUD'
+    pod 'YYText'
+
+end
+
+target 'XZXDailyBlockUITests' do
+    
+    use_frameworks!
+    
+    pod 'AFNetworking', '~> 3.0'
+    pod 'AVOSCloud'
+    pod 'AVOSCloudCrashReporting'
+    pod 'DKNightVersion'
+    pod 'Masonry'
+    pod 'ReactiveCocoa', :podspec => 'https://gist.githubusercontent.com/PaulTaykalo/04f8e2ee25b9d57f03455ccafd541b34/raw/e94f3bec7a9450ecd0f0cdc9b4899deb0b91d758/ReactiveCocoa.podspec.json'
+    pod 'Realm'
+    pod 'SVProgressHUD'
+    pod 'YYText'
+    
 end
